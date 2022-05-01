@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration status="DEBUG">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{YYYY-MM-DD} [%t] %-5p %c{1}:%L - %msg%n"/>
+        </Console>
+
+        <RollingFile name="RollingFile" fileName="D:/projects/computer-store/logs/application.log"
+                     filePattern="D:/projects/computer-store/logs/old/app-%d{yyyy-MM-dd-HH}-%i.log.gz">
+            <PatternLayout pattern="%d{YYYY-MM-DD} [%t] %-5p %c{3}:%L - %msg%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="5 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="RollingFileDao" fileName="D:/projects/computer-store/logs/application_dao.log"
+                     filePattern="D:/projects/computer-store/logs/old/app_dao-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern="%d{YYYY-MM-DD} [%t] %-5p %c{3}:%L - %msg%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="5 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.gmail.evanloafakahaitao.computer.store.dao" level="debug">
+            <AppenderRef ref="RollingFileDao"/>
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

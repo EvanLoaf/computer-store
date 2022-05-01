@@ -7,12 +7,15 @@ import com.gmail.evanloafakahaitao.computer.store.servlets.model.AccessMode;
 import com.gmail.evanloafakahaitao.computer.store.servlets.model.CommandEnum;
 import com.gmail.evanloafakahaitao.computer.store.servlets.model.RequestMethodEnum;
 import com.gmail.evanloafakahaitao.computer.store.servlets.model.UserPrincipal;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -127,6 +130,9 @@ public class AuthenticationFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        //TODO remove when done testing
+        Logger logger = LogManager.getLogger(AuthenticationFilter.class);
+        logger.info("My important info {}", LocalDateTime::now);
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);

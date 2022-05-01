@@ -1,6 +1,8 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.impl;
 
 import com.gmail.evanloafakahaitao.computer.store.dao.DatabaseBootDao;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -11,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseBootDaoImpl implements DatabaseBootDao {
+
+    private static final Logger logger = LogManager.getLogger(DatabaseBootDaoImpl.class);
 
     @Override
     public void executeBootFile(Connection connection, String filepath) {
@@ -38,7 +42,7 @@ public class DatabaseBootDaoImpl implements DatabaseBootDao {
                     sb.setLength(0);
                 }
             }
-            System.out.printf("Executed SQL boot file : %s%n", filepath);
+            logger.info("Executed SQL boot file : {}", filepath);
         } catch (FileNotFoundException e) {
             System.out.println("SQL boot file not found");
             e.printStackTrace();
