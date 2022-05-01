@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<csv:schema xmlns:csv="http://www.w3.org/2001/XMLSchema" 
+            xmlns="www.mypcstore.com" 
+            targetNamespace="www.mypcstore.com" 
+            elementFormDefault="qualified">
+    <csv:element name="catalog" type="root"/>
+    <csv:complexType name="root">
+        <csv:sequence>
+            <csv:element name="item" type="itemType" maxOccurs="unbounded"/>
+        </csv:sequence>
+    </csv:complexType>
+    <csv:complexType name="itemType">
+        <csv:sequence>
+            <csv:element name="name" type="nameType"/>
+            <csv:element name="vendor_code" type="vendorCodeType"/>
+            <csv:element name="price" type="priceType"/>
+            <csv:element name="description" type="descriptionType"/>
+        </csv:sequence>
+    </csv:complexType>
+    <csv:simpleType name="nameType">
+        <csv:restriction base="csv:string">
+            <csv:pattern value="[\d\sa-zA-Z]{1,100}"/>
+        </csv:restriction>
+    </csv:simpleType>
+    <csv:simpleType name="vendorCodeType">
+        <csv:restriction base="csv:string">
+            <csv:pattern value="\d{10}"/>
+        </csv:restriction>
+    </csv:simpleType>
+    <csv:simpleType name="priceType">
+        <csv:restriction base="csv:decimal">
+            <csv:minInclusive value="199.99"/>
+            <csv:maxInclusive value="99999.99"/>
+        </csv:restriction>
+    </csv:simpleType>
+    <csv:simpleType name="descriptionType">
+        <csv:restriction base="csv:string">
+            <csv:maxLength value="100"/>
+        </csv:restriction>
+    </csv:simpleType>
+</csv:schema>

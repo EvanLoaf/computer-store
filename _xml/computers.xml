@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<catalog xmlns="www.mypcstore.com"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="www.mypcstore.com ../web/src/main/resources/xml/computers_schema.xsd">
+    <item>
+        <name>Work Start</name>
+        <vendor_code>0000000001</vendor_code>
+        <price>239.99</price>
+        <description>Entry level office workstation</description>
+    </item>
+    <item>
+        <name>Work Comfort</name>
+        <vendor_code>0000000002</vendor_code>
+        <price>429.99</price>
+        <description>Medium level office workstation able to withstand lots of concurrent tasks</description>
+    </item>
+    <item>
+        <name>Work Professional</name>
+        <vendor_code>0000000003</vendor_code>
+        <price>769.99</price>
+        <description>Powerful tool to satisfy any office or developer's needs</description>
+    </item>
+    <item>
+        <name>Gaming Start</name>
+        <vendor_code>0000000004</vendor_code>
+        <price>729.99</price>
+        <description>Entry level gaming PC to satisfy modest gaming requirements</description>
+    </item>
+    <item>
+        <name>Gaming Comfort</name>
+        <vendor_code>0000000005</vendor_code>
+        <price>999.99</price>
+        <description>Affordable machine to conquer any modern games in 1080P</description>
+    </item>
+    <item>
+        <name>Gaming PRO</name>
+        <vendor_code>0000000006</vendor_code>
+        <price>1479.99</price>
+        <description>High-end gaming solution to get an edge over your opponents</description>
+    </item>
+    <item>
+        <name>Gaming Ultimate</name>
+        <vendor_code>0000000007</vendor_code>
+        <price>2499.99</price>
+        <description>Cutting-edge technological solutions for those who won't stop short of the best</description>
+    </item>
+    <item>
+        <name>Graphics Design Comfort</name>
+        <vendor_code>0000000008</vendor_code>
+        <price>1399.99</price>
+        <description>Reliable solution to let you focus on work</description>
+    </item>
+    <item>
+        <name>Graphics Design Professional</name>
+        <vendor_code>0000000009</vendor_code>
+        <price>1999.99</price>
+        <description>Quiet and power to tackle any demanding software</description>
+    </item>
+    <item>
+        <name>Server Start</name>
+        <vendor_code>0000000010</vendor_code>
+        <price>499.99</price>
+        <description>When Raspberry Pi ain't cutting it no more</description>
+    </item>
+    <item>
+        <name>Server Professional</name>
+        <vendor_code>0000000011</vendor_code>
+        <price>5299.99</price>
+        <description>Dual-processor rig to sustain high-load scenarios for your business</description>
+    </item>
+</catalog>

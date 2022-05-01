@@ -1,0 +1,15 @@
+/* Custom style settings */
+a.btn-danger {
+    color: yellow;
+}
+
+.error-img {
+    margin: 0 auto;
+    display: block;
+}
+
+@media (min-width: 1600px) {
+    div.wide {
+        max-width: 1600px;
+    }
+}
