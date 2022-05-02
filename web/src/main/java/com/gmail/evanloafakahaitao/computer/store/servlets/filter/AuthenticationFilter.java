@@ -148,6 +148,7 @@ public class AuthenticationFilter implements Filter {
                 CommandEnum commandEnum = CommandEnum.getCommand(command);
                 //TODO Error handling showcase, remove if ever in production LOL
                 if (commandEnum == null) {
+                    logger.error("Error bouuta happen, duck down! - AuthenticationFilter.doFilter");
                     throw new ServletException("Test Error - AuthenticationFilter.doFilter");
                 }
                 RoleEnum roleEnum = userPrincipal.getRole();
