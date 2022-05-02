@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <c:set var="app" value="${pageContext.request.contextPath}"/>
-    <jsp:include page="${app}/WEB-INF/pages/util/head.jsp"/>
+    <jsp:include page="/WEB-INF/pages/util/head.jsp"/>
     <title>Update user</title>
 </head>
 <body>
@@ -72,7 +72,7 @@
         </div>
         <div class="col-md-4">
             <c:out value="${sessionScope.user.name}"/>
-            <jsp:include page="${app}/WEB-INF/pages/util/ads.jsp"/>
+            <jsp:include page="/WEB-INF/pages/util/ads.jsp"/>
             <a href="${pageContext.request.contextPath}/dispatcher?command=users" class="btn btn-primary"
                aria-pressed="true" role="button">USERS PAGE</a>
             <a href="${pageContext.request.contextPath}/dispatcher?command=items" class="btn btn-light"
@@ -80,6 +80,6 @@
         </div>
     </div>
 </div>
-<jsp:include page="${app}/WEB-INF/pages/util/js.jsp"/>
+<jsp:include page="/WEB-INF/pages/util/js.jsp"/>
 </body>
 </html>

@@ -5,14 +5,14 @@
 <html lang="en">
 <head>
     <c:set var="app" value="${pageContext.request.contextPath}"/>
-    <jsp:include page="${app}/WEB-INF/pages/util/head.jsp"/>
+    <jsp:include page="/WEB-INF/pages/util/head.jsp"/>
     <title>Make order</title>
 </head>
 <body>
 <div class="container wide">
     <div class="row">
         <div class="col-md-2">
-            <jsp:include page="${app}/WEB-INF/pages/util/ads.jsp"/>
+            <jsp:include page="/WEB-INF/pages/util/ads.jsp"/>
         </div>
         <div class="col-md-8">
             <div class="row">
@@ -73,10 +73,10 @@
                     </div>
                 </c:otherwise>
             </c:choose>
-            <jsp:include page="${app}/WEB-INF/pages/util/ads.jsp"/>
+            <jsp:include page="/WEB-INF/pages/util/ads.jsp"/>
         </div>
     </div>
 </div>
-<jsp:include page="${app}/WEB-INF/pages/util/js.jsp"/>
+<jsp:include page="/WEB-INF/pages/util/js.jsp"/>
 </body>
 </html>
