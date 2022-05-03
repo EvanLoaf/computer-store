@@ -30,10 +30,10 @@ CREATE TABLE IF NOT EXISTS t_authorization (
 );
 
 CREATE TABLE IF NOT EXISTS t_discount (
-  f_id          SMALLINT UNSIGNED AUTO_INCREMENT         NOT NULL,
-  f_name        VARCHAR(20)                              NOT NULL,
-  f_percent     TINYINT UNSIGNED                         NOT NULL,
-  f_finish_date DATETIME DEFAULT now() + INTERVAL 14 DAY NOT NULL,
+  f_id          SMALLINT UNSIGNED AUTO_INCREMENT           NOT NULL,
+  f_name        VARCHAR(20)                                NOT NULL,
+  f_percent     TINYINT UNSIGNED                           NOT NULL,
+  f_finish_date DATETIME DEFAULT (now() + INTERVAL 14 DAY) NOT NULL,
   PRIMARY KEY (f_id)
 );
 
