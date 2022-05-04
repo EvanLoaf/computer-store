@@ -1,6 +1,8 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,13 +20,16 @@ public class News implements Serializable {
     @Column(updatable = false, nullable = false)
     private Long id;
     @NotNull
-    @Column
+    @Column(nullable = false)
+    @Size(max = 40)
     private String title;
     @NotNull
-    @Column
+    @Column(nullable = false)
+    @Size(max = 500)
     private String content;
     @NotNull
-    @Column
+    @Column(nullable = false)
+    @ColumnDefault(value = "NOW()")
     private LocalDateTime created;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", nullable = false, updatable = false)

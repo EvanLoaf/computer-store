@@ -1,7 +1,9 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,16 +23,19 @@ public class Item implements Serializable {
     @Column(updatable = false, nullable = false)
     private Long id;
     @NotNull
-    @Column
+    @Column(nullable = false)
+    @Size(max = 50)
     private String name;
     @NotNull
-    @Column
+    @Column(nullable = false, unique = true)
+    @Size(min = 10, max = 10)
     private String vendorCode;
-    @NotNull
     @Column
+    @Size(max = 100)
     private String description;
     @NotNull
-    @Column
+    @Column(nullable = false)
+    @Check(constraints = "f_price >= 199.99")
     private BigDecimal price;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

@@ -1,6 +1,7 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,7 +16,8 @@ public class Feedback implements Serializable {
     @Column(updatable = false, nullable = false)
     private Long id;
     @NotNull
-    @Column
+    @Column(nullable = false)
+    @Size(max = 200)
     private String message;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")

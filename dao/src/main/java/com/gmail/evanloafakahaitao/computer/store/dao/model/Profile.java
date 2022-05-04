@@ -1,6 +1,7 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -21,11 +22,11 @@ public class Profile implements Serializable {
     @GeneratedValue(generator = "generator")
     @Column(unique = true, updatable = false, nullable = false)
     private Long userId;
-    @NotNull
     @Column
+    @Size(max = 100)
     private String address;
-    @NotNull
     @Column
+    @Size(max = 15)
     private String phoneNumber;
     @OneToOne
     @PrimaryKeyJoinColumn

@@ -1,6 +1,7 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -11,13 +12,14 @@ public class OrderId implements Serializable {
 
     private static final long serialVersionUID = 5354790978873740236L;
     @NotNull
-    @Column
+    @Column(nullable = false, updatable = false)
     private Long userId;
     @NotNull
-    @Column
+    @Column(nullable = false, updatable = false)
     private Long itemId;
     @NotNull
-    @Column
+    @Column(nullable = false, updatable = false, unique = true)
+    @Size(min = 36, max = 36)
     private String orderCode;
 
     public OrderId() {}

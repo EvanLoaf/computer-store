@@ -2,6 +2,8 @@ package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,17 +18,22 @@ public class User implements Serializable {
     @Column(updatable = false, nullable = false)
     private Long id;
     @NotNull
-    @Column
+    @Column(nullable = false)
+    @Size(max = 25)
     private String firstName;
     @NotNull
-    @Column
+    @Column(nullable = false)
+    @Size(max = 25)
     private String lastName;
     @NotNull
     @Email(message = "Not an email")
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
+    @Check(constraints = "f_email LIKE '%@%.%'")
+    @Size(min = 5, max = 30)
     private String email;
     @NotNull
-    @Column
+    @Column(nullable = false)
+    @Size(min = 4, max = 30)
     private String password;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "roleId")

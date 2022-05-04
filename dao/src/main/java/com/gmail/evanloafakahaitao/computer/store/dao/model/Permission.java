@@ -2,6 +2,7 @@ package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,7 +17,9 @@ public class Permission implements Serializable {
     @Column(updatable = false, nullable = false)
     private Long id;
     @NotNull
-    @Column
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, unique = true)
+    @Size(max = 30)
     private PermissionEnum name;
 
     public Permission() {}

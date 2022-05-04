@@ -1,7 +1,10 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,17 +21,20 @@ public class Order implements Serializable {
     @EmbeddedId
     private OrderId id = new OrderId();
     @NotNull
-    @Column
+    @Column(nullable = false)
+    @ColumnDefault(value = "NOW()")
     private LocalDateTime created;
     @NotNull
-    @Column
+    @Column(nullable = false)
     private Integer quantity;
     @NotNull
-    @Column
+    @Column(nullable = false)
     private BigDecimal totalPrice;
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(nullable = false)
+    @Formula("SELECT os.f_name FROM t_order_status os WHERE os.f_id = f_status_id")
+    @Size(max = 20)
     private OrderStatusEnum status;
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userId")
