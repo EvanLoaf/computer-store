@@ -26,7 +26,7 @@ public class Comment implements Serializable {
     @ColumnDefault(value = "NOW()")
     private LocalDateTime created;
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "userId", nullable = false, updatable = false)
     private User user;
 
     public Comment() {}

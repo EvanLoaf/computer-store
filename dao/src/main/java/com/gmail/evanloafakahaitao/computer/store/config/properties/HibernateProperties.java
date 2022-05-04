@@ -9,7 +9,7 @@ public interface HibernateProperties {
     String HIBERNATE_FORMAT_SQL = "hibernate.format_sql";
     String HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = "hibernate.cache.use_second_level_cache";
     String HIBERNATE_CACHE_REGION_FACTORY_CLASS = "hibernate.cache.region.factory_class";
-    String HIBERNATE_JAVAX_CACHE_PROVIDER = "hibernate.javax.cache.provider";
-    String HIBERNATE_JAVAX_CACHE_URI = "hibernate.javax.cache.uri";
+    /*String HIBERNATE_JAVAX_CACHE_PROVIDER = "hibernate.javax.cache.provider";
+    String HIBERNATE_JAVAX_CACHE_URI = "hibernate.javax.cache.uri";*/
     String HIBERNATE_PHYSICAL_NAMING_STRATEGY = "hibernate.physical_naming_strategy";
 }

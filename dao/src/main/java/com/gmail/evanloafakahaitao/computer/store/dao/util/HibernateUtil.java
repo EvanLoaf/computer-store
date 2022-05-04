@@ -42,12 +42,12 @@ public class HibernateUtil {
                 settings.put(Environment.FORMAT_SQL, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_FORMAT_SQL));
                 settings.put(Environment.USE_SECOND_LEVEL_CACHE, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
                 settings.put(Environment.CACHE_REGION_FACTORY, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_CACHE_REGION_FACTORY_CLASS));
+                settings.put(Environment.PHYSICAL_NAMING_STRATEGY, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_PHYSICAL_NAMING_STRATEGY));
 
                 registryBuilder.applySettings(settings);
                 registry = registryBuilder.build();
                 logger.info("Hibernate Registry builder created");
 
-                //TODO add classes
                 MetadataSources metadataSources = new MetadataSources(registry)
                         .addAnnotatedClass(OrderId.class)
                         .addAnnotatedClass(Permission.class)

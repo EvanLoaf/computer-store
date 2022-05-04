@@ -20,7 +20,7 @@ public class Feedback implements Serializable {
     @Size(max = 200)
     private String message;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "userId", nullable = false, updatable = false)
     private User user;
 
     public Feedback() {}
