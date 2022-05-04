@@ -1,6 +1,5 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.util;
 
-import com.gmail.evanloafakahaitao.computer.store.dao.model.RoleEnum;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.User;
 
 import java.sql.ResultSet;

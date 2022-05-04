@@ -3,6 +3,7 @@ package com.gmail.evanloafakahaitao.computer.store.dao.util;
 import com.gmail.evanloafakahaitao.computer.store.config.ConfigurationManager;
 import com.gmail.evanloafakahaitao.computer.store.config.properties.DatabaseProperties;
 import com.gmail.evanloafakahaitao.computer.store.config.properties.HibernateProperties;
+import com.gmail.evanloafakahaitao.computer.store.dao.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.SessionFactory;
@@ -48,7 +49,17 @@ public class HibernateUtil {
 
                 //TODO add classes
                 MetadataSources metadataSources = new MetadataSources(registry)
-                        .addAnnotatedClass();
+                        .addAnnotatedClass(OrderId.class)
+                        .addAnnotatedClass(Permission.class)
+                        .addAnnotatedClass(Role.class)
+                        .addAnnotatedClass(Profile.class)
+                        .addAnnotatedClass(Comment.class)
+                        .addAnnotatedClass(Discount.class)
+                        .addAnnotatedClass(Feedback.class)
+                        .addAnnotatedClass(Item.class)
+                        .addAnnotatedClass(News.class)
+                        .addAnnotatedClass(Order.class)
+                        .addAnnotatedClass(User.class);
                 Metadata metadata = metadataSources.getMetadataBuilder().build();
                 sessionFactory = metadata.getSessionFactoryBuilder().build();
                 logger.info("Session Factory created");
