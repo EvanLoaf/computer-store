@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS t_discount (
   f_id          SMALLINT UNSIGNED AUTO_INCREMENT           NOT NULL,
   f_name        VARCHAR(20)                                NOT NULL,
   f_percent     TINYINT UNSIGNED                           NOT NULL,
-  f_finish_date DATETIME DEFAULT (now() + INTERVAL 14 DAY) NOT NULL,
+  f_finish_date DATETIME DEFAULT (NOW() + INTERVAL 14 DAY) NOT NULL,
   PRIMARY KEY (f_id)
 );
 
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS t_order (
 
 CREATE TABLE IF NOT EXISTS t_feedback (
   f_id      SERIAL,
-  f_message VARCHAR(200),
+  f_message VARCHAR(200)        NOT NULL,
   f_user_id BIGINT(19) UNSIGNED NOT NULL,
   PRIMARY KEY (f_id),
   FOREIGN KEY (f_user_id) REFERENCES t_user (f_id)
@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS t_news (
   f_id      SERIAL,
   f_title   VARCHAR(40)                  NOT NULL,
   f_content VARCHAR(500)                 NOT NULL,
-  f_created DATETIME DEFAULT now()       NOT NULL,
+  f_created DATETIME DEFAULT NOW()       NOT NULL,
   f_user_id BIGINT(19) UNSIGNED          NOT NULL,
   PRIMARY KEY (f_id),
   FOREIGN KEY (f_user_id) REFERENCES t_user (f_id)
@@ -142,7 +142,7 @@ CREATE TABLE IF NOT EXISTS t_news (
 CREATE TABLE IF NOT EXISTS t_comment (
   f_id      SERIAL,
   f_message VARCHAR(300)           NOT NULL,
-  f_created DATETIME DEFAULT now() NOT NULL,
+  f_created DATETIME DEFAULT NOW() NOT NULL,
   f_user_id BIGINT(19) UNSIGNED    NOT NULL,
   f_news_id BIGINT(19) UNSIGNED    NOT NULL,
   PRIMARY KEY (f_id),
