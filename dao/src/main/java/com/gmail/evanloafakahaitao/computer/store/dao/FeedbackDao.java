@@ -1,4 +1,6 @@
 package com.gmail.evanloafakahaitao.computer.store.dao;
 
-public interface FeedbackDao {
+import com.gmail.evanloafakahaitao.computer.store.dao.model.Feedback;
+
+public interface FeedbackDao extends GenericDao<Feedback> {
 }

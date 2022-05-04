@@ -6,11 +6,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface OrderDao {
+public interface OrderDao extends GenericDao<Order> {
 
-    int save(Connection connection, Order order) throws SQLException;
+    List<Order> findByUserId(Long id);
 
-    List<Order> findByUserId(Connection connection, Long id);
+    Order findByOrderCode(String orderCode);
 
-    int delete(Connection connection, String orderCode) throws SQLException;
+    void deleteByOrderCode(String orderCode);
 }

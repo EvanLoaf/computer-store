@@ -1,4 +1,6 @@
 package com.gmail.evanloafakahaitao.computer.store.dao;
 
-public interface CommentDao {
+import com.gmail.evanloafakahaitao.computer.store.dao.model.Comment;
+
+public interface CommentDao extends GenericDao<Comment> {
 }

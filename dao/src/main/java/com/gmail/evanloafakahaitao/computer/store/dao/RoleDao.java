@@ -1,4 +1,8 @@
 package com.gmail.evanloafakahaitao.computer.store.dao;
 
-public interface RoleDao {
+import com.gmail.evanloafakahaitao.computer.store.dao.model.Role;
+
+public interface RoleDao extends GenericDao<Role> {
+
+    Role findByName(String name);
 }

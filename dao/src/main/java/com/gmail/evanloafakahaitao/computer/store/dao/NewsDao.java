@@ -1,4 +1,6 @@
 package com.gmail.evanloafakahaitao.computer.store.dao;
 
-public interface NewsDao {
+import com.gmail.evanloafakahaitao.computer.store.dao.model.News;
+
+public interface NewsDao extends GenericDao<News> {
 }

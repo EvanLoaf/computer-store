@@ -1,4 +1,6 @@
 package com.gmail.evanloafakahaitao.computer.store.dao;
 
-public interface DiscountDao {
+import com.gmail.evanloafakahaitao.computer.store.dao.model.Discount;
+
+public interface DiscountDao extends GenericDao<Discount> {
 }

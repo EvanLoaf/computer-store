@@ -1,4 +1,6 @@
 package com.gmail.evanloafakahaitao.computer.store.dao;
 
-public interface ProfileDao {
+import com.gmail.evanloafakahaitao.computer.store.dao.model.Profile;
+
+public interface ProfileDao extends GenericDao<Profile> {
 }
