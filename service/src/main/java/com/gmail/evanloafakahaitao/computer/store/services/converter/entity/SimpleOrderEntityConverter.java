@@ -31,9 +31,11 @@ public class SimpleOrderEntityConverter implements EntityConverter<SimpleOrderDT
                     OrderStatusEnum.getStatus(dto.getStatus().toString())
             );
         }
-        order.setItem(
-                simpleItemEntityConverter.toEntity(dto.getItem())
-        );
+        if (dto.getItem() != null) {
+            order.setItem(
+                    simpleItemEntityConverter.toEntity(dto.getItem())
+            );
+        }
         return order;
     }
 }

@@ -25,12 +25,16 @@ public class NewsEntityConverter implements EntityConverter<NewsDTO, News> {
         if (dto.getTitle() != null) {
             news.setTitle(dto.getTitle());
         }
-        news.setUser(
-                simpleUserEntityConverter.toEntity(dto.getUser())
-        );
-        news.setComments(
-                commentEntityConverter.toEntitySet(dto.getComments())
-        );
+        if (dto.getUser() != null) {
+            news.setUser(
+                    simpleUserEntityConverter.toEntity(dto.getUser())
+            );
+        }
+        if (dto.getComments() != null) {
+            news.setComments(
+                    commentEntityConverter.toEntitySet(dto.getComments())
+            );
+        }
         return news;
     }
 }

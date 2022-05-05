@@ -19,12 +19,16 @@ public class OrderUserEntityConverter implements EntityConverter<OrderUserDTO, U
         if (dto.getEmail() != null) {
             user.setEmail(dto.getEmail());
         }
-        user.setProfile(
-                profileEntityConverter.toEntity(dto.getProfile())
-        );
-        user.setDiscount(
-                discountEntityConverter.toEntity(dto.getDiscount())
-        );
+        if (dto.getProfile() != null) {
+            user.setProfile(
+                    profileEntityConverter.toEntity(dto.getProfile())
+            );
+        }
+        if (dto.getDiscount() != null) {
+            user.setDiscount(
+                    discountEntityConverter.toEntity(dto.getDiscount())
+            );
+        }
         return user;
     }
 }

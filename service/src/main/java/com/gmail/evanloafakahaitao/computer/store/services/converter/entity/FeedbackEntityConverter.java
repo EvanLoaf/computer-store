@@ -19,9 +19,11 @@ public class FeedbackEntityConverter implements EntityConverter<FeedbackDTO, Fee
         if (dto.getMessage() != null) {
             feedback.setMessage(dto.getMessage());
         }
-        feedback.setUser(
-                simpleUserEntityConverter.toEntity(dto.getUser())
-        );
+        if (dto.getUser() != null) {
+            feedback.setUser(
+                    simpleUserEntityConverter.toEntity(dto.getUser())
+            );
+        }
         return feedback;
     }
 }

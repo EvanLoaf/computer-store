@@ -31,15 +31,21 @@ public class UserEntityConverter implements EntityConverter<UserDTO, User> {
         if (dto.getLastName() != null) {
             user.setLastName(dto.getLastName());
         }
-        user.setRole(
-                roleEntityConverter.toEntity(dto.getRole())
-        );
-        user.setProfile(
-                profileEntityConverter.toEntity(dto.getProfile())
-        );
-        user.setDiscount(
-                discountEntityConverter.toEntity(dto.getDiscount())
-        );
+        if (dto.getDiscount() != null) {
+            user.setDiscount(
+                    discountEntityConverter.toEntity(dto.getDiscount())
+            );
+        }
+        if (dto.getRole() != null) {
+            user.setRole(
+                    roleEntityConverter.toEntity(dto.getRole())
+            );
+        }
+        if (dto.getProfile() != null) {
+            user.setProfile(
+                    profileEntityConverter.toEntity(dto.getProfile())
+            );
+        }
         return user;
     }
 }

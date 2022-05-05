@@ -30,12 +30,16 @@ public class OrderEntityConverter implements EntityConverter<OrderDTO, Order> {
         if (dto.getTotalPrice() != null) {
             order.setTotalPrice(dto.getTotalPrice());
         }
-        order.setUser(
-                orderUserEntityConverter.toEntity(dto.getUser())
-        );
-        order.setItem(
-                itemEntityConverter.toEntity(dto.getItem())
-        );
-        return null;
+        if (dto.getUser() != null) {
+            order.setUser(
+                    orderUserEntityConverter.toEntity(dto.getUser())
+            );
+        }
+        if (dto.getItem() != null) {
+            order.setItem(
+                    itemEntityConverter.toEntity(dto.getItem())
+            );
+        }
+        return order;
     }
 }

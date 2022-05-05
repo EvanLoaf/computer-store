@@ -19,12 +19,16 @@ public class NewOrderEntityConverter implements EntityConverter<NewOrderDTO, Ord
         if (dto.getQuantity() != null) {
             order.setQuantity(dto.getQuantity());
         }
-        order.setUser(
-                simpleUserEntityConverter.toEntity(dto.getUser())
-        );
-        order.setItem(
-                simpleItemEntityConverter.toEntity(dto.getItem())
-        );
+        if (dto.getUser() != null) {
+            order.setUser(
+                    simpleUserEntityConverter.toEntity(dto.getUser())
+            );
+        }
+        if (dto.getItem() != null) {
+            order.setItem(
+                    simpleItemEntityConverter.toEntity(dto.getItem())
+            );
+        }
         return order;
     }
 }
