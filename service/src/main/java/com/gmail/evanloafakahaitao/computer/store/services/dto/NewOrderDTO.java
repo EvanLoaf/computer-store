@@ -6,7 +6,7 @@ public class NewOrderDTO {
     private SimpleUserDTO user;
     private SimpleItemDTO item;
 
-    private NewOrderDTO() {}
+    public NewOrderDTO() {}
 
     private NewOrderDTO(Builder builder) {
         setQuantity(builder.quantity);

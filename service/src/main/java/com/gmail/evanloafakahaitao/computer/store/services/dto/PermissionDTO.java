@@ -5,7 +5,7 @@ public class PermissionDTO {
     private Long id;
     private PermissionEnum name;
 
-    private PermissionDTO() {}
+    public PermissionDTO() {}
 
     private PermissionDTO(Builder builder) {
         setId(builder.id);

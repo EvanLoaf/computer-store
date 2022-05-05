@@ -6,7 +6,7 @@ public class SimpleItemDTO {
     private String name;
     private String vendorCode;
 
-    private SimpleItemDTO() {}
+    public SimpleItemDTO() {}
 
     private SimpleItemDTO(Builder builder) {
         setId(builder.id);

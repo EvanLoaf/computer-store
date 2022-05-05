@@ -6,7 +6,7 @@ public class SimpleUserDTO {
     private String name;
     private String email;
 
-    private SimpleUserDTO() {}
+    public SimpleUserDTO() {}
 
     private SimpleUserDTO(Builder builder) {
         setId(builder.id);

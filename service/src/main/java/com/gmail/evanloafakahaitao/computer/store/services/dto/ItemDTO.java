@@ -13,7 +13,7 @@ public class ItemDTO {
     private BigDecimal price;
     private Set<DiscountDTO> discounts = new HashSet<>();
 
-    private ItemDTO() {}
+    public ItemDTO() {}
 
     private ItemDTO(Builder builder) {
         setId(builder.id);

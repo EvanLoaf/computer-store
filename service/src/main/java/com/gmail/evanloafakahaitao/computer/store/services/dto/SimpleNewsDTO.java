@@ -1,12 +1,14 @@
 package com.gmail.evanloafakahaitao.computer.store.services.dto;
 
+import java.time.LocalDateTime;
+
 public class SimpleNewsDTO {
 
     private Long id;
     private String title;
-    private String created;
+    private LocalDateTime created;
 
-    private SimpleNewsDTO() {}
+    public SimpleNewsDTO() {}
 
     private SimpleNewsDTO(Builder builder) {
         setId(builder.id);
@@ -34,18 +36,18 @@ public class SimpleNewsDTO {
         this.title = title;
     }
 
-    public String getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(String created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
     public static final class Builder {
         private Long id;
         private String title;
-        private String created;
+        private LocalDateTime created;
 
         private Builder() {
         }
@@ -60,7 +62,7 @@ public class SimpleNewsDTO {
             return this;
         }
 
-        public Builder withCreated(String created) {
+        public Builder withCreated(LocalDateTime created) {
             this.created = created;
             return this;
         }

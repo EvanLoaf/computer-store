@@ -6,7 +6,7 @@ public class FeedbackDTO {
     private String message;
     private SimpleUserDTO user;
 
-    private FeedbackDTO() {}
+    public FeedbackDTO() {}
 
     private FeedbackDTO(Builder builder) {
         setId(builder.id);

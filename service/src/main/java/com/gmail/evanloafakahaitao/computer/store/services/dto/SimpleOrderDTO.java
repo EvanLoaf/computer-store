@@ -12,7 +12,7 @@ public class SimpleOrderDTO {
     private OrderStatusEnum status;
     private SimpleItemDTO item;
 
-    private SimpleOrderDTO() {}
+    public SimpleOrderDTO() {}
 
     private SimpleOrderDTO(Builder builder) {
         setOrderCode(builder.orderCode);

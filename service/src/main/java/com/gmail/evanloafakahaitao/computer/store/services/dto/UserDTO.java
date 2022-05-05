@@ -11,7 +11,7 @@ public class UserDTO {
     private ProfileDTO profile;
     private DiscountDTO discount;
 
-    private UserDTO() {}
+    public UserDTO() {}
 
     private UserDTO(Builder builder) {
         setId(builder.id);

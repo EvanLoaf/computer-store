@@ -9,7 +9,7 @@ public class DiscountDTO {
     private Integer percent;
     private LocalDateTime finishDate;
 
-    private DiscountDTO() {}
+    public DiscountDTO() {}
 
     private DiscountDTO(Builder builder) {
         setId(builder.id);

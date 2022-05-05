@@ -7,7 +7,7 @@ public class OrderUserDTO {
     private ProfileDTO profile;
     private DiscountDTO discount;
 
-    private OrderUserDTO() {}
+    public OrderUserDTO() {}
 
     private OrderUserDTO(Builder builder) {
         setName(builder.name);

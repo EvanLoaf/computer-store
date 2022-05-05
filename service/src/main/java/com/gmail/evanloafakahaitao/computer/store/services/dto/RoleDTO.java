@@ -9,7 +9,7 @@ public class RoleDTO {
     private String name;
     private Set<PermissionDTO> permissions = new HashSet<>();
 
-    private RoleDTO() {}
+    public RoleDTO() {}
 
     private RoleDTO(Builder builder) {
         setId(builder.id);

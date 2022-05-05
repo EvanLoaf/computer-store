@@ -9,7 +9,7 @@ public class CommentDTO {
     private LocalDateTime created;
     private SimpleUserDTO user;
 
-    private CommentDTO() {}
+    public CommentDTO() {}
 
     private CommentDTO(Builder builder) {
         setId(builder.id);

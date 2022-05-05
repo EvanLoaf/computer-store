@@ -13,7 +13,7 @@ public class OrderDTO {
     private OrderUserDTO user;
     private ItemDTO item;
 
-    private OrderDTO() {}
+    public OrderDTO() {}
 
     private OrderDTO(Builder builder) {
         setOrderCode(builder.orderCode);

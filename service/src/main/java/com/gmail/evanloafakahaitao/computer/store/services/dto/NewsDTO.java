@@ -13,7 +13,7 @@ public class NewsDTO {
     private SimpleUserDTO user;
     private Set<CommentDTO> comments = new HashSet<>();
 
-    private NewsDTO() {}
+    public NewsDTO() {}
 
     private NewsDTO(Builder builder) {
         setId(builder.id);

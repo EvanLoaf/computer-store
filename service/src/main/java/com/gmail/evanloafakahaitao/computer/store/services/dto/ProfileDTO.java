@@ -5,7 +5,7 @@ public class ProfileDTO {
     private String address;
     private String phoneNumber;
 
-    private ProfileDTO() {}
+    public ProfileDTO() {}
 
     private ProfileDTO(Builder builder) {
         setAddress(builder.address);
