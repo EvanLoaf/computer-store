@@ -1,14 +1,19 @@
 package com.gmail.evanloafakahaitao.computer.store.services;
 
-import com.gmail.evanloafakahaitao.computer.store.dao.model.Order;
+import com.gmail.evanloafakahaitao.computer.store.services.dto.NewOrderDTO;
+import com.gmail.evanloafakahaitao.computer.store.services.dto.OrderDTO;
+import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleOrderDTO;
+import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleUserDTO;
 
 import java.util.List;
 
 public interface OrderService {
 
-    int save(Order order);
+    SimpleOrderDTO save(NewOrderDTO orderDTO);
 
-    List<Order> findByUserId(Long id);
+    List<SimpleOrderDTO> findByUserId(SimpleUserDTO userDTO);
 
-    int delete(String orderCode);
+    void deleteByOrderCode(SimpleOrderDTO orderDTO);
+
+    List<OrderDTO> findAll();
 }
