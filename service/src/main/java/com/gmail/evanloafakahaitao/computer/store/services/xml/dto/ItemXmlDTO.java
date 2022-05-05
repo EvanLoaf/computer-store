@@ -1,11 +1,11 @@
-package com.gmail.evanloafakahaitao.computer.store.services.model;
+package com.gmail.evanloafakahaitao.computer.store.services.xml.dto;
 
 import javax.xml.bind.annotation.XmlElement;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class ItemXmlBinding implements Serializable {
+public class ItemXmlDTO implements Serializable {
 
     private String name;
     private String vendorCode;
@@ -52,7 +52,7 @@ public class ItemXmlBinding implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ItemXmlBinding that = (ItemXmlBinding) o;
+        ItemXmlDTO that = (ItemXmlDTO) o;
         return Objects.equals(name, that.name) &&
                 Objects.equals(vendorCode, that.vendorCode);
     }
@@ -64,7 +64,7 @@ public class ItemXmlBinding implements Serializable {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("ItemXmlBinding{");
+        final StringBuffer sb = new StringBuffer("ItemXmlDTO{");
         sb.append("name='").append(name).append('\'');
         sb.append(", vendorCode='").append(vendorCode).append('\'');
         sb.append(", description='").append(description).append('\'');

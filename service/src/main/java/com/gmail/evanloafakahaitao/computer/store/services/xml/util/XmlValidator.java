@@ -1,4 +1,4 @@
-package com.gmail.evanloafakahaitao.computer.store.services.util;
+package com.gmail.evanloafakahaitao.computer.store.services.xml.util;
 
 import org.xml.sax.SAXException;
 

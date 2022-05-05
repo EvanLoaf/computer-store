@@ -1,24 +1,25 @@
-package com.gmail.evanloafakahaitao.computer.store.services.util;
+package com.gmail.evanloafakahaitao.computer.store.services.xml.util;
 
 import com.gmail.evanloafakahaitao.computer.store.dao.model.Item;
-import com.gmail.evanloafakahaitao.computer.store.services.model.ItemXmlBinding;
+import com.gmail.evanloafakahaitao.computer.store.services.dto.ItemDTO;
+import com.gmail.evanloafakahaitao.computer.store.services.xml.dto.ItemXmlDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemConverter {
 
-    public List<Item> toItems(List<ItemXmlBinding> itemXmlBindings) {
-        List<Item> items = new ArrayList<>();
-        if (itemXmlBindings != null && !itemXmlBindings.isEmpty()) {
-            System.out.printf("Converting XML items, count : %d%n", itemXmlBindings.size());
-            for (ItemXmlBinding itemXmlBinding : itemXmlBindings) {
-                Item item = Item.newBuilder()
-                        .withName(itemXmlBinding.getName())
-                        .withVendorCode(itemXmlBinding.getVendorCode())
-                        .withPrice(itemXmlBinding.getPrice())
-                        .withDescription(itemXmlBinding.getDescription())
-                        .build();
+    public List<ItemDTO> toItems(List<ItemXmlDTO> itemXmlList) {
+        List<ItemDTO> items = new ArrayList<>();
+        if (itemXmlList != null && !itemXmlList.isEmpty()) {
+            System.out.printf("Converting XML items, count : %d%n", itemXmlList.size());
+            for (ItemXmlDTO itemXmlDTO : itemXmlList) {
+                //TODO should be ItemDTO
+                ItemDTO item = new ItemDTO();
+                item.setName(itemXmlDTO.getName());
+                item.setVendorCode(itemXmlDTO.getVendorCode());
+                item.setPrice(itemXmlDTO.getPrice());
+                item.setDescription(itemXmlDTO.getDescription());
                 items.add(item);
             }
         } else {
