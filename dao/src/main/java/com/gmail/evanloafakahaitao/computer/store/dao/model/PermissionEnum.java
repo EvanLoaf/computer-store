@@ -9,11 +9,11 @@ public enum PermissionEnum {
 
     private static final Logger logger = LogManager.getLogger(PermissionEnum.class);
 
-    public static PermissionEnum getStatus(String permission) {
+    public static PermissionEnum getPermission(String permission) {
         try {
             return PermissionEnum.valueOf(permission.toUpperCase());
         } catch (IllegalArgumentException e) {
-            logger.error("Permission {} not found", permission.toUpperCase(), e);
+            logger.error("Permission {} not found - Entity", permission.toUpperCase(), e);
         }
         return null;
     }

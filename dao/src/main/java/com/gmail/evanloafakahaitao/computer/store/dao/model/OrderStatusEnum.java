@@ -16,7 +16,7 @@ public enum OrderStatusEnum {
         try {
             return OrderStatusEnum.valueOf(status.toUpperCase());
         } catch (IllegalArgumentException e) {
-            logger.error("Order status {} not found", status.toUpperCase(), e);
+            logger.error("Order status {} not found - Entity", status.toUpperCase(), e);
         }
         return null;
     }

@@ -2,15 +2,7 @@ package com.gmail.evanloafakahaitao.computer.store.dao.impl;
 
 import com.gmail.evanloafakahaitao.computer.store.dao.UserDao;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.User;
-import com.gmail.evanloafakahaitao.computer.store.dao.util.UserConverter;
 import org.hibernate.query.Query;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 
