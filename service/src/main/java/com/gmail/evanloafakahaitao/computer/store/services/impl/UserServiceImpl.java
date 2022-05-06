@@ -121,9 +121,9 @@ public class UserServiceImpl implements UserService {
                 session.beginTransaction();
             }
             List<User> users = userDao.findAll();
-            List<UserDTO> foundUsers = userDTOConverter.toDTOList(users);
+            List<UserDTO> usersDTO = userDTOConverter.toDTOList(users);
             transaction.commit();
-            return foundUsers;
+            return usersDTO;
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();

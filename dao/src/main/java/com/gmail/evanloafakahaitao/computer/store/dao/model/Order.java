@@ -39,10 +39,10 @@ public class Order implements Serializable {
     @Column(nullable = false)
     @Size(max = 20)
     private OrderStatusEnum status;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @MapsId("userId")
     private User user;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @MapsId("itemId")
     private Item item;
 

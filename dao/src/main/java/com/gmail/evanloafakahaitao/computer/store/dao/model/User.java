@@ -37,10 +37,10 @@ public class User implements Serializable {
     @Column(nullable = false)
     @Size(min = 4, max = 30)
     private String password;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "roleId")
     private Role role;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
     private Profile profile;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "discountId")
