@@ -12,4 +12,5 @@ public interface HibernateProperties {
     /*String HIBERNATE_JAVAX_CACHE_PROVIDER = "hibernate.javax.cache.provider";
     String HIBERNATE_JAVAX_CACHE_URI = "hibernate.javax.cache.uri";*/
     String HIBERNATE_PHYSICAL_NAMING_STRATEGY = "hibernate.physical_naming_strategy";
+    String HIBERNATE_STORAGE_ENGINE = "hibernate.storage.engine";
 }

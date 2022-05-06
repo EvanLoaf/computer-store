@@ -23,10 +23,9 @@
         <mysql.version>8.0.29</mysql.version>
         <log4j.version>2.17.2</log4j.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
-        <hibernate-core.version>5.6.8.Final</hibernate-core.version>
-        <hibernate-validator.version>7.0.4.Final</hibernate-validator.version>
-        <hibernate-jcache.version>5.6.8.Final</hibernate-jcache.version>
-        <hibernate-ehcache.version>5.6.8.Final</hibernate-ehcache.version>
+        <hibernate-core.version>5.3.26.Final</hibernate-core.version>
+        <hibernate-validator.version>6.2.3.Final</hibernate-validator.version>
+        <hibernate-ehcache.version>5.3.26.Final</hibernate-ehcache.version>
     </properties>
 
     <dependencies>

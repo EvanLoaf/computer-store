@@ -1,15 +1,21 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+/*import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;*/
+
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table
+@Table(uniqueConstraints = @UniqueConstraint(
+        columnNames = "name"
+))
 public class Role implements Serializable {
 
     private static final long serialVersionUID = -2664612401417123082L;

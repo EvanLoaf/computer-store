@@ -23,7 +23,8 @@ public class HibernateUtil {
     private static StandardServiceRegistry registry;
     private static SessionFactory sessionFactory;
 
-    private HibernateUtil() {}
+    private HibernateUtil() {
+    }
 
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
@@ -35,34 +36,35 @@ public class HibernateUtil {
                 settings.put(Environment.URL, ConfigurationManager.getInstance().getProperty(DatabaseProperties.DATABASE_URL));
                 settings.put(Environment.USER, ConfigurationManager.getInstance().getProperty(DatabaseProperties.DATABASE_USERNAME));
                 settings.put(Environment.PASS, ConfigurationManager.getInstance().getProperty(DatabaseProperties.DATABASE_PASSWORD));
-                settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_CURRENT_SESSION_CONTEXT_CLASS));
                 settings.put(Environment.HBM2DDL_AUTO, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_HBM2DDL_AUTO));
-                settings.put(Environment.DIALECT, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_DIALECT));
-                settings.put(Environment.SHOW_SQL, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_SHOW_SQL));
-                settings.put(Environment.FORMAT_SQL, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_FORMAT_SQL));
+                settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_CURRENT_SESSION_CONTEXT_CLASS));
                 settings.put(Environment.USE_SECOND_LEVEL_CACHE, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
                 settings.put(Environment.CACHE_REGION_FACTORY, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_CACHE_REGION_FACTORY_CLASS));
+                settings.put(Environment.SHOW_SQL, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_SHOW_SQL));
                 settings.put(Environment.PHYSICAL_NAMING_STRATEGY, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_PHYSICAL_NAMING_STRATEGY));
+                settings.put(Environment.FORMAT_SQL, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_FORMAT_SQL));
+                settings.put(Environment.DIALECT, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_DIALECT));
+                settings.put(Environment.STORAGE_ENGINE, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_STORAGE_ENGINE));
 
                 registryBuilder.applySettings(settings);
                 registry = registryBuilder.build();
                 logger.info("Hibernate Registry builder created");
 
-                MetadataSources metadataSources = new MetadataSources(registry)
+                MetadataSources sources = new MetadataSources(registry)
                         .addAnnotatedClass(OrderId.class)
-                        .addAnnotatedClass(Permission.class)
+                        .addAnnotatedClass(User.class)
                         .addAnnotatedClass(Role.class)
-                        .addAnnotatedClass(Profile.class)
-                        .addAnnotatedClass(Comment.class)
-                        .addAnnotatedClass(Discount.class)
+                        .addAnnotatedClass(Permission.class)
                         .addAnnotatedClass(Feedback.class)
-                        .addAnnotatedClass(Item.class)
+                        .addAnnotatedClass(Profile.class)
                         .addAnnotatedClass(News.class)
+                        .addAnnotatedClass(Comment.class)
+                        .addAnnotatedClass(Item.class)
                         .addAnnotatedClass(Order.class)
-                        .addAnnotatedClass(User.class);
-                Metadata metadata = metadataSources.getMetadataBuilder().build();
+                        .addAnnotatedClass(Discount.class);
+                Metadata metadata = sources.getMetadataBuilder().build();
                 sessionFactory = metadata.getSessionFactoryBuilder().build();
-                logger.info("Session Factory created");
+                logger.info("SessionFactory created");
             } catch (Exception e) {
                 logger.error("Session Factory creation failed");
                 logger.error(e.getMessage(), e);

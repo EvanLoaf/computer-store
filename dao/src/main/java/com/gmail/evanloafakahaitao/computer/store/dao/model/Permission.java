@@ -1,14 +1,17 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
-@Table
+@Table(uniqueConstraints = @UniqueConstraint(
+        columnNames = "name"
+))
 public class Permission implements Serializable {
 
     private static final long serialVersionUID = 2854611344221044150L;

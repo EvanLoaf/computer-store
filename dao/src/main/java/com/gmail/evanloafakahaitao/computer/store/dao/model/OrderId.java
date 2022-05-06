@@ -1,10 +1,11 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Embeddable
@@ -18,7 +19,7 @@ public class OrderId implements Serializable {
     @Column(nullable = false, updatable = false)
     private Long itemId;
     @NotNull
-    @Column(nullable = false, updatable = false, unique = true)
+    @Column(nullable = false, updatable = false, unique = true, columnDefinition = "char")
     @Size(min = 36, max = 36)
     private String orderCode;
 

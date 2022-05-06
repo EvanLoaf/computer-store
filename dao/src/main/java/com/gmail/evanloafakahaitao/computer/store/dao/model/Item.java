@@ -1,18 +1,21 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Check;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table
+@Table(uniqueConstraints = @UniqueConstraint(
+        columnNames = "vendorCode"
+))
 @Cacheable
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Item implements Serializable {
@@ -27,7 +30,7 @@ public class Item implements Serializable {
     @Size(max = 50)
     private String name;
     @NotNull
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, columnDefinition = "char")
     @Size(min = 10, max = 10)
     private String vendorCode;
     @Column

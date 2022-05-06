@@ -1,10 +1,11 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -23,10 +24,10 @@ public class Discount implements Serializable {
     private String name;
     @NotNull
     @Column(nullable = false)
+    @Type(type = "byte")
     private Integer percent;
     @NotNull
     @Column(nullable = false)
-    @ColumnDefault(value = "NOW() + INTERVAL 14 DAY")
     private LocalDateTime finishDate;
 
     public Discount() {}

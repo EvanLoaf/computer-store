@@ -1,15 +1,17 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
-@Table
+@Table(uniqueConstraints = @UniqueConstraint(
+        columnNames = "email"
+))
 public class User implements Serializable {
 
     private static final long serialVersionUID = -5535456587453610531L;
@@ -35,7 +37,7 @@ public class User implements Serializable {
     @Column(nullable = false)
     @Size(min = 4, max = 30)
     private String password;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "roleId")
     private Role role;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
