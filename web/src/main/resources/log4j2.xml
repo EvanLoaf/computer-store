@@ -62,7 +62,7 @@
         </Logger>
         <Root level="info">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="RollingFile" level="info"/>
             <AppenderRef ref="RollingFileWarn" level="warn"/>
         </Root>
     </Loggers>
