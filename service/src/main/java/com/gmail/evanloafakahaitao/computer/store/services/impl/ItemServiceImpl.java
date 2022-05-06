@@ -45,8 +45,9 @@ public class ItemServiceImpl implements ItemService {
             }
             Item item = itemEntityConverter.toEntity(itemDTO);
             itemDao.create(item);
+            ItemDTO savedItem = itemDTOConverter.toDto(item);
             transaction.commit();
-            return itemDTOConverter.toDto(item);
+            return savedItem;
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
@@ -64,14 +65,15 @@ public class ItemServiceImpl implements ItemService {
             if (!transaction.isActive()) {
                 session.beginTransaction();
             }
-            List<Item> savedItems = new ArrayList<>();
+            List<Item> items = new ArrayList<>();
             for (ItemDTO itemDTO : itemDTOList) {
                 Item item = itemEntityConverter.toEntity(itemDTO);
                 itemDao.create(item);
-                savedItems.add(item);
+                items.add(item);
             }
+            List<ItemDTO> savedItems = itemDTOConverter.toDTOList(items);
             transaction.commit();
-            return itemDTOConverter.toDTOList(savedItems);
+            return savedItems;
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
@@ -90,8 +92,9 @@ public class ItemServiceImpl implements ItemService {
                 session.beginTransaction();
             }
             List<Item> items = itemDao.findAll();
+            List<ItemDTO> foundItems = itemDTOConverter.toDTOList(items);
             transaction.commit();
-            return itemDTOConverter.toDTOList(items);
+            return foundItems;
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
@@ -110,8 +113,9 @@ public class ItemServiceImpl implements ItemService {
                 session.beginTransaction();
             }
             Item item = itemDao.findByVendorCode(itemDTO.getVendorCode());
+            ItemDTO foundItem = itemDTOConverter.toDto(item);
             transaction.commit();
-            return itemDTOConverter.toDto(item);
+            return foundItem;
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
@@ -130,8 +134,9 @@ public class ItemServiceImpl implements ItemService {
                 session.beginTransaction();
             }
             Item item = itemDao.findOne(itemDTO.getId());
+            ItemDTO foundItem = itemDTOConverter.toDto(item);
             transaction.commit();
-            return itemDTOConverter.toDto(item);
+            return foundItem;
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();

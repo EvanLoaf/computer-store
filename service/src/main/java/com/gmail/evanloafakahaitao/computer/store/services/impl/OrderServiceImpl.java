@@ -69,7 +69,9 @@ public class OrderServiceImpl implements OrderService {
                     item.getPrice().multiply(quantity)
             );
             orderDao.create(order);
-            return simpleOrderDTOConverter.toDto(order);
+            SimpleOrderDTO savedOrder = simpleOrderDTOConverter.toDto(order);
+            transaction.commit();
+            return savedOrder;
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
@@ -88,8 +90,9 @@ public class OrderServiceImpl implements OrderService {
                 session.beginTransaction();
             }
             List<Order> orders = orderDao.findByUserId(userDTO.getId());
+            List<SimpleOrderDTO> foundOrders = simpleOrderDTOConverter.toDTOList(orders);
             transaction.commit();
-            return simpleOrderDTOConverter.toDTOList(orders);
+            return foundOrders;
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
@@ -126,8 +129,9 @@ public class OrderServiceImpl implements OrderService {
                 session.beginTransaction();
             }
             List<Order> orders = orderDao.findAll();
+            List<OrderDTO> foundOrders = orderDTOConverter.toDTOList(orders);
             transaction.commit();
-            return orderDTOConverter.toDTOList(orders);
+            return foundOrders;
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();

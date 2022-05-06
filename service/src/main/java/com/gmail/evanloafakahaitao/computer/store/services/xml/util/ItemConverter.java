@@ -1,6 +1,5 @@
 package com.gmail.evanloafakahaitao.computer.store.services.xml.util;
 
-import com.gmail.evanloafakahaitao.computer.store.dao.model.Item;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.ItemDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.xml.dto.ItemXmlDTO;
 
@@ -14,7 +13,6 @@ public class ItemConverter {
         if (itemXmlList != null && !itemXmlList.isEmpty()) {
             System.out.printf("Converting XML items, count : %d%n", itemXmlList.size());
             for (ItemXmlDTO itemXmlDTO : itemXmlList) {
-                //TODO should be ItemDTO
                 ItemDTO item = new ItemDTO();
                 item.setName(itemXmlDTO.getName());
                 item.setVendorCode(itemXmlDTO.getVendorCode());

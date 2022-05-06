@@ -7,6 +7,7 @@ import com.gmail.evanloafakahaitao.computer.store.dao.impl.DiscountDaoImpl;
 import com.gmail.evanloafakahaitao.computer.store.dao.impl.RoleDaoImpl;
 import com.gmail.evanloafakahaitao.computer.store.dao.impl.UserDaoImpl;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.Discount;
+import com.gmail.evanloafakahaitao.computer.store.dao.model.Profile;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.Role;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.User;
 import com.gmail.evanloafakahaitao.computer.store.services.UserService;
@@ -44,13 +45,16 @@ public class UserServiceImpl implements UserService {
                 session.beginTransaction();
             }
             User user = userEntityConverter.toEntity(userDTO);
+            Profile profile = new Profile();
+            user.setProfile(profile);
             user.getProfile().setUser(user);
             //TODO default role
             Role role = roleDao.findByName("user");
             user.setRole(role);
             userDao.create(user);
+            UserDTO savedUser = userDTOConverter.toDto(user);
             transaction.commit();
-            return userDTOConverter.toDto(user);
+            return savedUser;
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
@@ -95,8 +99,9 @@ public class UserServiceImpl implements UserService {
                 user.setDiscount(discount);
             }
             userDao.update(user);
+            UserDTO updatedUser = userDTOConverter.toDto(user);
             transaction.commit();
-            return userDTOConverter.toDto(user);
+            return updatedUser;
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
@@ -116,8 +121,9 @@ public class UserServiceImpl implements UserService {
                 session.beginTransaction();
             }
             List<User> users = userDao.findAll();
+            List<UserDTO> foundUsers = userDTOConverter.toDTOList(users);
             transaction.commit();
-            return userDTOConverter.toDTOList(users);
+            return foundUsers;
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
@@ -136,8 +142,9 @@ public class UserServiceImpl implements UserService {
                 session.beginTransaction();
             }
             User user = userDao.findByEmail(userDTO.getEmail());
+            SimpleUserDTO foundUser = simpleUserDTOConverter.toDto(user);
             transaction.commit();
-            return simpleUserDTOConverter.toDto(user);
+            return foundUser;
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
