@@ -1,8 +1,5 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.util;
 
-import com.gmail.evanloafakahaitao.computer.store.config.ConfigurationManager;
-import com.gmail.evanloafakahaitao.computer.store.config.properties.DatabaseProperties;
-import com.gmail.evanloafakahaitao.computer.store.config.properties.HibernateProperties;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,10 +9,13 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Environment;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class HibernateUtil {
 
     private static final Logger logger = LogManager.getLogger(HibernateUtil.class);
@@ -23,28 +23,32 @@ public class HibernateUtil {
     private static StandardServiceRegistry registry;
     private static SessionFactory sessionFactory;
 
-    private HibernateUtil() {
+    private final com.gmail.evanloafakahaitao.computer.store.dao.properties.DatabaseProperties databaseProperties;
+
+    @Autowired
+    private HibernateUtil(com.gmail.evanloafakahaitao.computer.store.dao.properties.DatabaseProperties databaseProperties) {
+        this.databaseProperties = databaseProperties;
     }
 
-    public static SessionFactory getSessionFactory() {
+    public SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
                 StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
 
                 Map<String, String> settings = new HashMap<>();
-                settings.put(Environment.DRIVER, ConfigurationManager.getInstance().getProperty(DatabaseProperties.DATABASE_DRIVER_NAME));
-                settings.put(Environment.URL, ConfigurationManager.getInstance().getProperty(DatabaseProperties.DATABASE_URL));
-                settings.put(Environment.USER, ConfigurationManager.getInstance().getProperty(DatabaseProperties.DATABASE_USERNAME));
-                settings.put(Environment.PASS, ConfigurationManager.getInstance().getProperty(DatabaseProperties.DATABASE_PASSWORD));
-                settings.put(Environment.HBM2DDL_AUTO, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_HBM2DDL_AUTO));
-                settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_CURRENT_SESSION_CONTEXT_CLASS));
-                settings.put(Environment.USE_SECOND_LEVEL_CACHE, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
-                settings.put(Environment.CACHE_REGION_FACTORY, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_CACHE_REGION_FACTORY_CLASS));
-                settings.put(Environment.SHOW_SQL, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_SHOW_SQL));
-                settings.put(Environment.PHYSICAL_NAMING_STRATEGY, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_PHYSICAL_NAMING_STRATEGY));
-                settings.put(Environment.FORMAT_SQL, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_FORMAT_SQL));
-                settings.put(Environment.DIALECT, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_DIALECT));
-                settings.put(Environment.STORAGE_ENGINE, ConfigurationManager.getInstance().getProperty(HibernateProperties.HIBERNATE_STORAGE_ENGINE));
+                settings.put(Environment.DRIVER, databaseProperties.getDatabaseDriverName());
+                settings.put(Environment.URL, databaseProperties.getDatabaseUrl());
+                settings.put(Environment.USER, databaseProperties.getDatabaseUsername());
+                settings.put(Environment.PASS, databaseProperties.getDatabasePassword());
+                settings.put(Environment.HBM2DDL_AUTO, databaseProperties.getHibernateHBM2DDLAuto());
+                settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, databaseProperties.getHibernateCurrentSessionContextClass());
+                settings.put(Environment.USE_SECOND_LEVEL_CACHE, databaseProperties.getHibernateUseSecondLevelCache());
+                settings.put(Environment.CACHE_REGION_FACTORY, databaseProperties.getHibernateCacheRegionFactoryClass());
+                settings.put(Environment.SHOW_SQL, databaseProperties.getHibernateShowSQL());
+                settings.put(Environment.PHYSICAL_NAMING_STRATEGY, databaseProperties.getHibernatePhysicalNamingStrategy());
+                settings.put(Environment.FORMAT_SQL, databaseProperties.getHibernateFormatSQL());
+                settings.put(Environment.DIALECT, databaseProperties.getHibernateDialect());
+                settings.put(Environment.STORAGE_ENGINE, databaseProperties.getHibernateStorageEngine());
 
                 registryBuilder.applySettings(settings);
                 registry = registryBuilder.build();

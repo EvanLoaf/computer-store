@@ -3,9 +3,11 @@ package com.gmail.evanloafakahaitao.computer.store.dao.impl;
 import com.gmail.evanloafakahaitao.computer.store.dao.OrderDao;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.Order;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class OrderDaoImpl extends GenericDaoImpl<Order> implements OrderDao {
 
     public OrderDaoImpl() {
