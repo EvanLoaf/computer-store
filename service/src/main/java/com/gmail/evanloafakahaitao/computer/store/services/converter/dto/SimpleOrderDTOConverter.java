@@ -6,12 +6,22 @@ import com.gmail.evanloafakahaitao.computer.store.services.converter.DTOConverte
 import com.gmail.evanloafakahaitao.computer.store.services.dto.OrderStatusEnum;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleItemDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleOrderDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.math.RoundingMode;
-
+@Component("simpleOrderDTOConverter")
 public class SimpleOrderDTOConverter implements DTOConverter<SimpleOrderDTO, Order> {
 
-    private final DTOConverter<SimpleItemDTO, Item> simpleItemDTOConverter = new SimpleItemDTOConverter();
+    private final DTOConverter<SimpleItemDTO, Item> simpleItemDTOConverter;
+
+    @Autowired
+    public SimpleOrderDTOConverter(
+            @Qualifier("simpleItemDTOConverter") DTOConverter<SimpleItemDTO, Item> simpleItemDTOConverter
+    ) {
+        this.simpleItemDTOConverter = simpleItemDTOConverter;
+    }
 
     @Override
     public SimpleOrderDTO toDto(Order entity) {

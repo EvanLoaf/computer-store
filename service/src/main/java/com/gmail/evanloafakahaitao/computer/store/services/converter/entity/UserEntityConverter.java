@@ -9,12 +9,27 @@ import com.gmail.evanloafakahaitao.computer.store.services.dto.DiscountDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.ProfileDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.RoleDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.UserDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
+@Component("userEntityConverter")
 public class UserEntityConverter implements EntityConverter<UserDTO, User> {
 
-    private final EntityConverter<RoleDTO, Role> roleEntityConverter = new RoleEntityConverter();
-    private final EntityConverter<ProfileDTO, Profile> profileEntityConverter = new ProfileEntityConverter();
-    private final EntityConverter<DiscountDTO, Discount> discountEntityConverter = new DiscountEntityConverter();
+    private final EntityConverter<RoleDTO, Role> roleEntityConverter;
+    private final EntityConverter<ProfileDTO, Profile> profileEntityConverter;
+    private final EntityConverter<DiscountDTO, Discount> discountEntityConverter;
+
+    @Autowired
+    public UserEntityConverter(
+            @Qualifier("roleEntityConverter") EntityConverter<RoleDTO, Role> roleEntityConverter,
+            @Qualifier("profileEntityConverter") EntityConverter<ProfileDTO, Profile> profileEntityConverter,
+            @Qualifier("discountEntityConverter") EntityConverter<DiscountDTO, Discount> discountEntityConverter
+    ) {
+        this.roleEntityConverter = roleEntityConverter;
+        this.profileEntityConverter = profileEntityConverter;
+        this.discountEntityConverter = discountEntityConverter;
+    }
 
     @Override
     public User toEntity(UserDTO dto) {

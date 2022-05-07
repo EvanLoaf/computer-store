@@ -4,7 +4,9 @@ import com.gmail.evanloafakahaitao.computer.store.dao.model.Permission;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.PermissionEnum;
 import com.gmail.evanloafakahaitao.computer.store.services.converter.EntityConverter;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.PermissionDTO;
+import org.springframework.stereotype.Component;
 
+@Component("permissionEntityConverter")
 public class PermissionEntityConverter implements EntityConverter<PermissionDTO, Permission> {
 
     @Override

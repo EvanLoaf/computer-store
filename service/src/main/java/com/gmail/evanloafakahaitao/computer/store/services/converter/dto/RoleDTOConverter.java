@@ -5,10 +5,21 @@ import com.gmail.evanloafakahaitao.computer.store.dao.model.Role;
 import com.gmail.evanloafakahaitao.computer.store.services.converter.DTOConverter;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.PermissionDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.RoleDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
+@Component("roleDTOConverter")
 public class RoleDTOConverter implements DTOConverter<RoleDTO, Role> {
 
-    private final DTOConverter<PermissionDTO, Permission> permissionDTOConverter = new PermissionDTOConverter();
+    private final DTOConverter<PermissionDTO, Permission> permissionDTOConverter;
+
+    @Autowired
+    public RoleDTOConverter(
+            @Qualifier("permissionDTOConverter") DTOConverter<PermissionDTO, Permission> permissionDTOConverter
+    ) {
+        this.permissionDTOConverter = permissionDTOConverter;
+    }
 
     @Override
     public RoleDTO toDto(Role entity) {

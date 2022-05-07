@@ -7,11 +7,24 @@ import com.gmail.evanloafakahaitao.computer.store.services.converter.EntityConve
 import com.gmail.evanloafakahaitao.computer.store.services.dto.CommentDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.NewsDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleUserDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
+@Component("newsEntityConverter")
 public class NewsEntityConverter implements EntityConverter<NewsDTO, News> {
 
-    private final EntityConverter<CommentDTO, Comment> commentEntityConverter = new CommentEntityConverter();
-    private final EntityConverter<SimpleUserDTO, User> simpleUserEntityConverter = new SimpleUserEntityConverter();
+    private final EntityConverter<CommentDTO, Comment> commentEntityConverter;
+    private final EntityConverter<SimpleUserDTO, User> simpleUserEntityConverter;
+
+    @Autowired
+    public NewsEntityConverter(
+            @Qualifier("commentEntityConverter") EntityConverter<CommentDTO, Comment> commentEntityConverter,
+            @Qualifier("simpleUserEntityConverter") EntityConverter<SimpleUserDTO, User> simpleUserEntityConverter
+    ) {
+        this.commentEntityConverter = commentEntityConverter;
+        this.simpleUserEntityConverter = simpleUserEntityConverter;
+    }
 
     @Override
     public News toEntity(NewsDTO dto) {

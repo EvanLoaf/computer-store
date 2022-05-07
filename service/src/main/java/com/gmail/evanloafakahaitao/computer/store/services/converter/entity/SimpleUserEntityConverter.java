@@ -3,7 +3,9 @@ package com.gmail.evanloafakahaitao.computer.store.services.converter.entity;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.User;
 import com.gmail.evanloafakahaitao.computer.store.services.converter.EntityConverter;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleUserDTO;
+import org.springframework.stereotype.Component;
 
+@Component("simpleUserEntityConverter")
 public class SimpleUserEntityConverter implements EntityConverter<SimpleUserDTO, User> {
 
     @Override

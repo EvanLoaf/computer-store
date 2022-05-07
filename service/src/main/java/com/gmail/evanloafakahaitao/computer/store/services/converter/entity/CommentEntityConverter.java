@@ -3,7 +3,9 @@ package com.gmail.evanloafakahaitao.computer.store.services.converter.entity;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.Comment;
 import com.gmail.evanloafakahaitao.computer.store.services.converter.EntityConverter;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.CommentDTO;
+import org.springframework.stereotype.Component;
 
+@Component("commentEntityConverter")
 public class CommentEntityConverter implements EntityConverter<CommentDTO, Comment> {
 
     @Override

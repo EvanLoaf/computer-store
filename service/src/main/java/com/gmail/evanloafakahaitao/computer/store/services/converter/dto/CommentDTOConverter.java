@@ -5,12 +5,21 @@ import com.gmail.evanloafakahaitao.computer.store.dao.model.User;
 import com.gmail.evanloafakahaitao.computer.store.services.converter.DTOConverter;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.CommentDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleUserDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
-import java.time.format.DateTimeFormatter;
-
+@Component("commentDTOConverter")
 public class CommentDTOConverter implements DTOConverter<CommentDTO, Comment> {
 
-    private final DTOConverter<SimpleUserDTO, User> simpleUserDTOConverter = new SimpleUserDTOConverter();
+    private final DTOConverter<SimpleUserDTO, User> simpleUserDTOConverter;
+
+    @Autowired
+    public CommentDTOConverter(
+            @Qualifier("simpleUserDTOConverter") DTOConverter<SimpleUserDTO, User> simpleUserDTOConverter
+    ) {
+        this.simpleUserDTOConverter = simpleUserDTOConverter;
+    }
 
     @Override
     public CommentDTO toDto(Comment entity) {

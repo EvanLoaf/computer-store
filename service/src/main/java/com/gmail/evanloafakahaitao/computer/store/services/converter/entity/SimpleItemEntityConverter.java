@@ -3,7 +3,9 @@ package com.gmail.evanloafakahaitao.computer.store.services.converter.entity;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.Item;
 import com.gmail.evanloafakahaitao.computer.store.services.converter.EntityConverter;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleItemDTO;
+import org.springframework.stereotype.Component;
 
+@Component("simpleItemEntityConverter")
 public class SimpleItemEntityConverter implements EntityConverter<SimpleItemDTO, Item> {
 
     @Override

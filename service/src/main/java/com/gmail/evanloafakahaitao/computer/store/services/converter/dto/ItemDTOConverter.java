@@ -5,12 +5,22 @@ import com.gmail.evanloafakahaitao.computer.store.dao.model.Item;
 import com.gmail.evanloafakahaitao.computer.store.services.converter.DTOConverter;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.DiscountDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.ItemDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.math.RoundingMode;
-
+@Component("itemDTOConverter")
 public class ItemDTOConverter implements DTOConverter<ItemDTO, Item> {
 
-    private final DTOConverter<DiscountDTO, Discount> discountDTOConverter = new DiscountDTOConverter();
+    private final DTOConverter<DiscountDTO, Discount> discountDTOConverter;
+
+    @Autowired
+    public ItemDTOConverter(
+            @Qualifier("discountDTOConverter") DTOConverter<DiscountDTO, Discount> discountDTOConverter
+    ) {
+        this.discountDTOConverter = discountDTOConverter;
+    }
 
     @Override
     public ItemDTO toDto(Item entity) {

@@ -5,10 +5,21 @@ import com.gmail.evanloafakahaitao.computer.store.dao.model.User;
 import com.gmail.evanloafakahaitao.computer.store.services.converter.EntityConverter;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.FeedbackDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleUserDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
+@Component("feedbackEntityConverter")
 public class FeedbackEntityConverter implements EntityConverter<FeedbackDTO, Feedback> {
 
-    private final EntityConverter<SimpleUserDTO, User> simpleUserEntityConverter = new SimpleUserEntityConverter();
+    private final EntityConverter<SimpleUserDTO, User> simpleUserEntityConverter ;
+
+    @Autowired
+    public FeedbackEntityConverter(
+            @Qualifier("simpleUserEntityConverter") EntityConverter<SimpleUserDTO, User> simpleUserEntityConverter
+    ) {
+        this.simpleUserEntityConverter = simpleUserEntityConverter;
+    }
 
     @Override
     public Feedback toEntity(FeedbackDTO dto) {

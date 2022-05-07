@@ -7,10 +7,21 @@ import com.gmail.evanloafakahaitao.computer.store.dao.model.OrderStatusEnum;
 import com.gmail.evanloafakahaitao.computer.store.services.converter.EntityConverter;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleItemDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleOrderDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
+@Component("simpleOrderEntityConverter")
 public class SimpleOrderEntityConverter implements EntityConverter<SimpleOrderDTO, Order> {
 
-    private final EntityConverter<SimpleItemDTO, Item> simpleItemEntityConverter = new SimpleItemEntityConverter();
+    private final EntityConverter<SimpleItemDTO, Item> simpleItemEntityConverter;
+
+    @Autowired
+    public SimpleOrderEntityConverter(
+            @Qualifier("simpleItemEntityConverter") EntityConverter<SimpleItemDTO, Item> simpleItemEntityConverter
+    ) {
+        this.simpleItemEntityConverter = simpleItemEntityConverter;
+    }
 
     @Override
     public Order toEntity(SimpleOrderDTO dto) {

@@ -7,11 +7,24 @@ import com.gmail.evanloafakahaitao.computer.store.services.converter.EntityConve
 import com.gmail.evanloafakahaitao.computer.store.services.dto.NewOrderDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleItemDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleUserDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
+@Component("newOrderEntityConverter")
 public class NewOrderEntityConverter implements EntityConverter<NewOrderDTO, Order> {
 
-    private final EntityConverter<SimpleUserDTO, User> simpleUserEntityConverter = new SimpleUserEntityConverter();
-    private final EntityConverter<SimpleItemDTO, Item> simpleItemEntityConverter = new SimpleItemEntityConverter();
+    private final EntityConverter<SimpleUserDTO, User> simpleUserEntityConverter;
+    private final EntityConverter<SimpleItemDTO, Item> simpleItemEntityConverter;
+
+    @Autowired
+    public NewOrderEntityConverter(
+            @Qualifier("simpleUserEntityConverter") EntityConverter<SimpleUserDTO, User> simpleUserEntityConverter,
+            @Qualifier("simpleItemEntityConverter") EntityConverter<SimpleItemDTO, Item> simpleItemEntityConverter
+    ) {
+        this.simpleUserEntityConverter = simpleUserEntityConverter;
+        this.simpleItemEntityConverter = simpleItemEntityConverter;
+    }
 
     @Override
     public Order toEntity(NewOrderDTO dto) {
