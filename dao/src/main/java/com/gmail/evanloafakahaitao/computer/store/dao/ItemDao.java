@@ -2,17 +2,14 @@ package com.gmail.evanloafakahaitao.computer.store.dao;
 
 import com.gmail.evanloafakahaitao.computer.store.dao.model.Item;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface ItemDao {
+public interface ItemDao extends GenericDao<Item> {
 
-    int save(Connection connection, List<Item> items) throws SQLException;
+    Item findByVendorCode(String vendorCode);
 
-    List<Item> findAll(Connection connection);
-
-    Item findByVendorCode(Connection connection, String vendorCode);
-
-    Item findById(Connection connection, Long id);
+    List<Item> findInPriceRange(BigDecimal minPrice, BigDecimal maxPrice);
 }

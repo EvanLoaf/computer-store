@@ -1,150 +1,135 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
+import org.hibernate.annotations.Check;
 
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
+
+@Entity
+@Table(uniqueConstraints = @UniqueConstraint(
+        columnNames = "email"
+))
 public class User implements Serializable {
 
+    private static final long serialVersionUID = -5535456587453610531L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(updatable = false, nullable = false)
     private Long id;
+    @NotNull
+    @Column(nullable = false)
+    @Size(max = 25)
     private String firstName;
+    @NotNull
+    @Column(nullable = false)
+    @Size(max = 25)
     private String lastName;
+    @NotNull
+    @Email(message = "Not an email")
+    @Column(unique = true, nullable = false)
+    @Check(constraints = "f_email LIKE '%@%.%'")
+    @Size(min = 5, max = 30)
     private String email;
+    @NotNull
+    @Column(nullable = false)
+    @Size(min = 4, max = 30)
     private String password;
-    private String additionalInfo;
-    private String phoneNumber;
-    private RoleEnum role;
-    private List<Order> orders;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "roleId")
+    private Role role;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
+    private Profile profile;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "discountId")
+    private Discount discount;
 
-    private User(Builder builder) {
-        id = builder.id;
-        firstName = builder.firstName;
-        lastName = builder.lastName;
-        email = builder.email;
-        password = builder.password;
-        additionalInfo = builder.additionalInfo;
-        phoneNumber = builder.phoneNumber;
-        role = builder.role;
-        orders = builder.orders;
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
+    public User() {}
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getLastName() {
         return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPassword() {
         return password;
     }
 
-    public String getAdditionalInfo() {
-        return additionalInfo;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public RoleEnum getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public List<Order> getOrders() {
-        return orders;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
-    public static final class Builder {
-        private Long id;
-        private String firstName;
-        private String lastName;
-        private String email;
-        private String password;
-        private String additionalInfo;
-        private String phoneNumber;
-        private RoleEnum role;
-        private List<Order> orders;
+    public Profile getProfile() {
+        return profile;
+    }
 
-        private Builder() {
-        }
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
 
-        public Builder withId(Long id) {
-            this.id = id;
-            return this;
-        }
+    public Discount getDiscount() {
+        return discount;
+    }
 
-        public Builder withFirstName(String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
-
-        public Builder withLastName(String lastName) {
-            this.lastName = lastName;
-            return this;
-        }
-
-        public Builder withEmail(String email) {
-            this.email = email;
-            return this;
-        }
-
-        public Builder withPassword(String password) {
-            this.password = password;
-            return this;
-        }
-
-        public Builder withAdditionalInfo(String additionalInfo) {
-            this.additionalInfo = additionalInfo;
-            return this;
-        }
-
-        public Builder withPhoneNumber(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
-            return this;
-        }
-
-        public Builder withRole(RoleEnum role) {
-            this.role = role;
-            return this;
-        }
-
-        public Builder withOrders(List<Order> orders) {
-            this.orders = orders;
-            return this;
-        }
-
-        public User build() {
-            return new User(this);
-        }
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(firstName, user.firstName) &&
-                Objects.equals(lastName, user.lastName);
+
+        if (!id.equals(user.id)) return false;
+        if (!firstName.equals(user.firstName)) return false;
+        return lastName.equals(user.lastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName);
+        int result = id.hashCode();
+        result = 31 * result + firstName.hashCode();
+        result = 31 * result + lastName.hashCode();
+        return result;
     }
 
     @Override
@@ -155,10 +140,9 @@ public class User implements Serializable {
         sb.append(", lastName='").append(lastName).append('\'');
         sb.append(", email='").append(email).append('\'');
         sb.append(", password='").append(password).append('\'');
-        sb.append(", additionalInfo='").append(additionalInfo).append('\'');
-        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
         sb.append(", role=").append(role);
-        sb.append(", orders=").append(orders);
+        sb.append(", profile=").append(profile);
+        sb.append(", discount=").append(discount);
         sb.append('}');
         return sb.toString();
     }

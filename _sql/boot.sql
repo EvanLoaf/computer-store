@@ -4,22 +4,22 @@ all the necessary tables and data
 are present in our DB on the app start-up
 */
 CREATE TABLE IF NOT EXISTS t_role (
-  f_id   SMALLINT UNSIGNED AUTO_INCREMENT NOT NULL,
-  f_name VARCHAR(20)                      NOT NULL,
+  f_id   SERIAL,
+  f_name VARCHAR(20) NOT NULL,
   PRIMARY KEY (f_id),
   UNIQUE (f_name)
 );
 
 CREATE TABLE IF NOT EXISTS t_permission (
-  f_id   SMALLINT UNSIGNED AUTO_INCREMENT NOT NULL,
-  f_name VARCHAR(30)                      NOT NULL,
+  f_id   SERIAL,
+  f_name VARCHAR(30) NOT NULL,
   PRIMARY KEY (f_id),
   UNIQUE (f_name)
 );
 
 CREATE TABLE IF NOT EXISTS t_authorization (
-  f_role_id       SMALLINT UNSIGNED NOT NULL,
-  f_permission_id SMALLINT UNSIGNED NOT NULL,
+  f_role_id       BIGINT UNSIGNED NOT NULL,
+  f_permission_id BIGINT UNSIGNED NOT NULL,
   PRIMARY KEY (f_role_id, f_permission_id),
   FOREIGN KEY (f_role_id) REFERENCES t_role (f_id)
     ON UPDATE CASCADE
@@ -30,21 +30,21 @@ CREATE TABLE IF NOT EXISTS t_authorization (
 );
 
 CREATE TABLE IF NOT EXISTS t_discount (
-  f_id          SMALLINT UNSIGNED AUTO_INCREMENT           NOT NULL,
+  f_id          SERIAL,
   f_name        VARCHAR(20)                                NOT NULL,
   f_percent     TINYINT UNSIGNED                           NOT NULL,
-  f_finish_date DATETIME DEFAULT (now() + INTERVAL 14 DAY) NOT NULL,
+  f_finish_date DATETIME DEFAULT (NOW() + INTERVAL 14 DAY) NOT NULL,
   PRIMARY KEY (f_id)
 );
 
 CREATE TABLE IF NOT EXISTS t_user (
   f_id          SERIAL,
-  f_first_name  VARCHAR(25)       NOT NULL,
-  f_last_name   VARCHAR(25)       NOT NULL,
-  f_email       VARCHAR(30)       NOT NULL,
-  f_password    VARCHAR(30)       NOT NULL,
-  f_role_id     SMALLINT UNSIGNED NOT NULL,
-  f_discount_id SMALLINT UNSIGNED,
+  f_first_name  VARCHAR(25)     NOT NULL,
+  f_last_name   VARCHAR(25)     NOT NULL,
+  f_email       VARCHAR(30)     NOT NULL,
+  f_password    VARCHAR(30)     NOT NULL,
+  f_role_id     BIGINT UNSIGNED NOT NULL,
+  f_discount_id BIGINT UNSIGNED,
   PRIMARY KEY (f_id),
   UNIQUE (f_email),
   FOREIGN KEY (f_role_id) REFERENCES t_role (f_id)
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS t_item (
 
 CREATE TABLE IF NOT EXISTS t_promotion (
   f_item_id     BIGINT(19) UNSIGNED NOT NULL,
-  f_discount_id SMALLINT UNSIGNED   NOT NULL,
+  f_discount_id BIGINT UNSIGNED     NOT NULL,
   PRIMARY KEY (f_item_id, f_discount_id),
   FOREIGN KEY (f_item_id) REFERENCES t_item (f_id)
     ON UPDATE CASCADE
@@ -89,21 +89,14 @@ CREATE TABLE IF NOT EXISTS t_promotion (
     ON DELETE RESTRICT
 );
 
-CREATE TABLE IF NOT EXISTS t_order_status (
-  f_id   TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
-  f_name VARCHAR(20)                     NOT NULL,
-  PRIMARY KEY (f_id),
-  UNIQUE (f_name)
-);
-
 CREATE TABLE IF NOT EXISTS t_order (
   f_user_id     BIGINT(19) UNSIGNED     NOT NULL,
   f_item_id     BIGINT(19) UNSIGNED     NOT NULL,
   f_order_code  CHAR(36)                NOT NULL,
   f_created     DATETIME DEFAULT NOW()  NOT NULL,
-  f_quantity    SMALLINT UNSIGNED       NOT NULL,
+  f_quantity    INT UNSIGNED            NOT NULL,
   f_total_price DECIMAL(12, 7) UNSIGNED NOT NULL,
-  f_status_id   TINYINT UNSIGNED        NOT NULL,
+  f_status      VARCHAR(20)             NOT NULL,
   PRIMARY KEY (f_user_id, f_item_id, f_order_code),
   UNIQUE (f_order_code),
   FOREIGN KEY (f_user_id) REFERENCES t_user (f_id)
@@ -111,15 +104,12 @@ CREATE TABLE IF NOT EXISTS t_order (
     ON DELETE RESTRICT,
   FOREIGN KEY (f_item_id) REFERENCES t_item (f_id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT,
-  FOREIGN KEY (f_status_id) REFERENCES t_order_status (f_id)
-    ON UPDATE CASCADE
     ON DELETE RESTRICT
 );
 
 CREATE TABLE IF NOT EXISTS t_feedback (
   f_id      SERIAL,
-  f_message VARCHAR(200),
+  f_message VARCHAR(200)        NOT NULL,
   f_user_id BIGINT(19) UNSIGNED NOT NULL,
   PRIMARY KEY (f_id),
   FOREIGN KEY (f_user_id) REFERENCES t_user (f_id)
@@ -131,7 +121,7 @@ CREATE TABLE IF NOT EXISTS t_news (
   f_id      SERIAL,
   f_title   VARCHAR(40)                  NOT NULL,
   f_content VARCHAR(500)                 NOT NULL,
-  f_created DATETIME DEFAULT now()       NOT NULL,
+  f_created DATETIME DEFAULT NOW()       NOT NULL,
   f_user_id BIGINT(19) UNSIGNED          NOT NULL,
   PRIMARY KEY (f_id),
   FOREIGN KEY (f_user_id) REFERENCES t_user (f_id)
@@ -141,8 +131,8 @@ CREATE TABLE IF NOT EXISTS t_news (
 
 CREATE TABLE IF NOT EXISTS t_comment (
   f_id      SERIAL,
-  f_message VARCHAR(300)           NOT NULL,
-  f_created DATETIME DEFAULT now() NOT NULL,
+  f_content VARCHAR(300)           NOT NULL,
+  f_created DATETIME DEFAULT NOW() NOT NULL,
   f_user_id BIGINT(19) UNSIGNED    NOT NULL,
   f_news_id BIGINT(19) UNSIGNED    NOT NULL,
   PRIMARY KEY (f_id),

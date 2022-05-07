@@ -1,115 +1,119 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Check;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
 
+@Entity
+@Table(uniqueConstraints = @UniqueConstraint(
+        columnNames = "vendorCode"
+))
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Item implements Serializable {
 
+    private static final long serialVersionUID = 2259446884247522586L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(updatable = false, nullable = false)
     private Long id;
+    @NotNull
+    @Column(nullable = false)
+    @Size(max = 50)
     private String name;
+    @NotNull
+    @Column(nullable = false, unique = true, columnDefinition = "char")
+    @Size(min = 10, max = 10)
     private String vendorCode;
+    @Column
+    @Size(max = 100)
     private String description;
+    @NotNull
+    @Column(nullable = false)
+    @Check(constraints = "f_price >= 199.99")
     private BigDecimal price;
-    private List<Order> ordersForItem;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "promotion",
+            joinColumns = @JoinColumn(name = "itemId", nullable = false, updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "discountId", nullable = false, updatable = false)
+    )
+    private Set<Discount> discounts = new HashSet<>();
 
-    private Item(Builder builder) {
-        id = builder.id;
-        name = builder.name;
-        vendorCode = builder.vendorCode;
-        description = builder.description;
-        price = builder.price;
-        ordersForItem = builder.ordersForItem;
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
+    public Item() {}
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getVendorCode() {
         return vendorCode;
+    }
+
+    public void setVendorCode(String vendorCode) {
+        this.vendorCode = vendorCode;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
 
-    public List<Order> getOrdersForItem() {
-        return ordersForItem;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
-    public static final class Builder {
-        private Long id;
-        private String name;
-        private String vendorCode;
-        private String description;
-        private BigDecimal price;
-        private List<Order> ordersForItem;
+    public Set<Discount> getDiscounts() {
+        return discounts;
+    }
 
-        private Builder() {
-        }
-
-        public Builder withId(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder withVendorCode(String vendorCode) {
-            this.vendorCode = vendorCode;
-            return this;
-        }
-
-        public Builder withDescription(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public Builder withPrice(BigDecimal price) {
-            this.price = price;
-            return this;
-        }
-
-        public Builder withOrdersForItem(List<Order> ordersForItem) {
-            this.ordersForItem = ordersForItem;
-            return this;
-        }
-
-        public Item build() {
-            return new Item(this);
-        }
+    public void setDiscounts(Set<Discount> discounts) {
+        this.discounts = discounts;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Item item = (Item) o;
-        return Objects.equals(id, item.id) &&
-                Objects.equals(name, item.name) &&
-                Objects.equals(vendorCode, item.vendorCode);
+
+        if (!id.equals(item.id)) return false;
+        return vendorCode.equals(item.vendorCode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, vendorCode);
+        int result = id.hashCode();
+        result = 31 * result + vendorCode.hashCode();
+        return result;
     }
 
     @Override
@@ -117,10 +121,10 @@ public class Item implements Serializable {
         final StringBuffer sb = new StringBuffer("Item{");
         sb.append("id=").append(id);
         sb.append(", name='").append(name).append('\'');
-        sb.append(", vendorCode=").append(vendorCode);
+        sb.append(", vendorCode='").append(vendorCode).append('\'');
         sb.append(", description='").append(description).append('\'');
         sb.append(", price=").append(price);
-        sb.append(", ordersForItem=").append(ordersForItem);
+        sb.append(", discounts=").append(discounts);
         sb.append('}');
         return sb.toString();
     }

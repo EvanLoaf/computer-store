@@ -1,15 +1,19 @@
 package com.gmail.evanloafakahaitao.computer.store.services;
 
-import com.gmail.evanloafakahaitao.computer.store.dao.model.Item;
-import com.gmail.evanloafakahaitao.computer.store.services.model.ItemXmlBinding;
+import com.gmail.evanloafakahaitao.computer.store.services.dto.ItemDTO;
+import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleItemDTO;
 
 import java.util.List;
 
 public interface ItemService {
 
-    int save(List<ItemXmlBinding> itemXmlBindings);
+    List<ItemDTO> save(List<ItemDTO> itemDTOList);
 
-    List<Item> findAll();
+    ItemDTO save(ItemDTO itemDTO);
 
-    Item findByVendorCode(String vendorCode);
+    List<ItemDTO> findAll();
+
+    ItemDTO findByVendorCode(SimpleItemDTO itemDTO);
+
+    ItemDTO findById(SimpleItemDTO itemDTO);
 }
