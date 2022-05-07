@@ -1,5 +1,12 @@
 :: Some QoL for archiving old logs
 
+set logs_folder=logs
+set archive_folder=old
+
+if not exist ..\%logs_folder% exit 0
+if not exist ..\%logs_folder%\*.log exit 1
+if not exist ..\%logs_folder%\%archive_folder% mkdir ..\%logs_folder%\%archive_folder%
+
 set year=%date:~-4%
 set month=%date:~4,2%
 set day=%date:~7,2%
@@ -19,11 +26,6 @@ if %month%==09 set monthname=Sep
 if %month%==10 set monthname=Oct
 if %month%==11 set monthname=Nov
 if %month%==12 set monthname=Dec
-
-set logs_folder=logs
-set archive_folder=old
-
-if not exist ..\%logs_folder%\%archive_folder% mkdir ..\%logs_folder%\%archive_folder%
 
 rar a ..\%logs_folder%\%archive_folder%\logs_cleanup_%monthname%_%day%_%year%_%hour%_%minute%_%second%.gz ..\%logs_folder%\*.log
 

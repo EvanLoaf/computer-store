@@ -1,7 +1,7 @@
 package com.gmail.evanloafakahaitao.computer.store.servlets;
 
 import com.gmail.evanloafakahaitao.computer.store.servlets.command.Command;
-import com.gmail.evanloafakahaitao.computer.store.servlets.command.impl.*;
+//import com.gmail.evanloafakahaitao.computer.store.servlets.command.impl.*;
 import com.gmail.evanloafakahaitao.computer.store.servlets.model.CommandEnum;
 
 import javax.servlet.ServletException;
@@ -56,7 +56,7 @@ public class DispatcherServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         System.out.println("Dispatcher Servlet initialized");
-        commands.putIfAbsent(CommandEnum.LOGIN, new LoginCommand());
+        /*commands.putIfAbsent(CommandEnum.LOGIN, new LoginCommand());
         commands.putIfAbsent(CommandEnum.USERS, new UsersCommand());
         commands.putIfAbsent(CommandEnum.ITEMS, new ItemsCommand());
         commands.putIfAbsent(CommandEnum.LOAD_ITEMS, new LoadXmlItemsCommand());
@@ -65,7 +65,7 @@ public class DispatcherServlet extends HttpServlet {
         commands.putIfAbsent(CommandEnum.MAKE_ORDER, new MakeOrderCommand());
         commands.putIfAbsent(CommandEnum.SUBMIT_ORDER, new SubmitOrderCommand());
         commands.putIfAbsent(CommandEnum.ORDERS, new OrdersCommand());
-        commands.putIfAbsent(CommandEnum.DELETE_ORDER, new DeleteOrderCommand());
+        commands.putIfAbsent(CommandEnum.DELETE_ORDER, new DeleteOrderCommand());*/
         super.init();
     }
 }

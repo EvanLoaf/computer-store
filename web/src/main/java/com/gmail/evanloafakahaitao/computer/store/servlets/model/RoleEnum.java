@@ -1,4 +1,4 @@
-package com.gmail.evanloafakahaitao.store.dao.model;
+package com.gmail.evanloafakahaitao.computer.store.servlets.model;
 
 public enum RoleEnum {
 

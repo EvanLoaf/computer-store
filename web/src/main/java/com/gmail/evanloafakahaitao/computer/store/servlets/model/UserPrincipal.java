@@ -1,7 +1,5 @@
 package com.gmail.evanloafakahaitao.computer.store.servlets.model;
 
-import com.gmail.evanloafakahaitao.computer.store.dao.model.RoleEnum;
-
 import java.io.Serializable;
 import java.util.Objects;
 

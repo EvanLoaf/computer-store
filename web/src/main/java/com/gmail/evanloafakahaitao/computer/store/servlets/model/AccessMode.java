@@ -1,12 +1,10 @@
 package com.gmail.evanloafakahaitao.computer.store.servlets.model;
 
-import com.gmail.evanloafakahaitao.computer.store.dao.model.RoleEnum;
-
 import java.util.Objects;
 
 public class AccessMode {
 
-    private RoleEnum role;
+    private String role;
     private CommandEnum command;
     private RequestMethodEnum request;
 
@@ -21,7 +19,7 @@ public class AccessMode {
     }
 
 
-    public RoleEnum getRole() {
+    public String getRole() {
         return role;
     }
 
@@ -34,14 +32,14 @@ public class AccessMode {
     }
 
     public static final class Builder {
-        private RoleEnum role;
+        private String role;
         private CommandEnum command;
         private RequestMethodEnum request;
 
         private Builder() {
         }
 
-        public Builder withRole(RoleEnum role) {
+        public Builder withRole(String role) {
             this.role = role;
             return this;
         }

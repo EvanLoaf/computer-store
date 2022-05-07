@@ -2,7 +2,6 @@ package com.gmail.evanloafakahaitao.computer.store.servlets.filter;
 
 import com.gmail.evanloafakahaitao.computer.store.config.ConfigurationManager;
 import com.gmail.evanloafakahaitao.computer.store.config.properties.PageProperties;
-import com.gmail.evanloafakahaitao.computer.store.dao.model.RoleEnum;
 import com.gmail.evanloafakahaitao.computer.store.servlets.model.AccessMode;
 import com.gmail.evanloafakahaitao.computer.store.servlets.model.CommandEnum;
 import com.gmail.evanloafakahaitao.computer.store.servlets.model.RequestMethodEnum;
@@ -39,42 +38,42 @@ public class AuthenticationFilter implements Filter {
         // *** USER AVAILABLE ACCESS MODES ***
         USER_AVAILABLE.add(
                 AccessMode.newBuilder()
-                        .withRole(RoleEnum.USER)
+                        .withRole("user")
                         .withCommand(CommandEnum.LOGIN)
                         .withRequest(RequestMethodEnum.POST)
                         .build()
         );
         USER_AVAILABLE.add(
                 AccessMode.newBuilder()
-                        .withRole(RoleEnum.USER)
+                        .withRole("user")
                         .withCommand(CommandEnum.ITEMS)
                         .withRequest(RequestMethodEnum.GET)
                         .build()
         );
         USER_AVAILABLE.add(
                 AccessMode.newBuilder()
-                        .withRole(RoleEnum.USER)
+                        .withRole("user")
                         .withCommand(CommandEnum.MAKE_ORDER)
                         .withRequest(RequestMethodEnum.GET)
                         .build()
         );
         USER_AVAILABLE.add(
                 AccessMode.newBuilder()
-                        .withRole(RoleEnum.USER)
+                        .withRole("user")
                         .withCommand(CommandEnum.SUBMIT_ORDER)
                         .withRequest(RequestMethodEnum.POST)
                         .build()
         );
         USER_AVAILABLE.add(
                 AccessMode.newBuilder()
-                        .withRole(RoleEnum.USER)
+                        .withRole("user")
                         .withCommand(CommandEnum.ORDERS)
                         .withRequest(RequestMethodEnum.GET)
                         .build()
         );
         USER_AVAILABLE.add(
                 AccessMode.newBuilder()
-                        .withRole(RoleEnum.USER)
+                        .withRole("user")
                         .withCommand(CommandEnum.DELETE_ORDER)
                         .withRequest(RequestMethodEnum.GET)
                         .build()
@@ -85,42 +84,42 @@ public class AuthenticationFilter implements Filter {
         // *** ADMIN AVAILABLE ACCESS MODES ***
         ADMIN_AVAILABLE.add(
                 AccessMode.newBuilder()
-                        .withRole(RoleEnum.ADMIN)
+                        .withRole("admin")
                         .withCommand(CommandEnum.LOGIN)
                         .withRequest(RequestMethodEnum.POST)
                         .build()
         );
         ADMIN_AVAILABLE.add(
                 AccessMode.newBuilder()
-                        .withRole(RoleEnum.ADMIN)
+                        .withRole("admin")
                         .withCommand(CommandEnum.USERS)
                         .withRequest(RequestMethodEnum.GET)
                         .build()
         );
         ADMIN_AVAILABLE.add(
                 AccessMode.newBuilder()
-                        .withRole(RoleEnum.ADMIN)
+                        .withRole("admin")
                         .withCommand(CommandEnum.ITEMS)
                         .withRequest(RequestMethodEnum.GET)
                         .build()
         );
         ADMIN_AVAILABLE.add(
                 AccessMode.newBuilder()
-                        .withRole(RoleEnum.ADMIN)
+                        .withRole("admin")
                         .withCommand(CommandEnum.LOAD_ITEMS)
                         .withRequest(RequestMethodEnum.GET)
                         .build()
         );
         ADMIN_AVAILABLE.add(
                 AccessMode.newBuilder()
-                        .withRole(RoleEnum.ADMIN)
+                        .withRole("admin")
                         .withCommand(CommandEnum.UPDATE_USER_MENU)
                         .withRequest(RequestMethodEnum.GET)
                         .build()
         );
         ADMIN_AVAILABLE.add(
                 AccessMode.newBuilder()
-                        .withRole(RoleEnum.ADMIN)
+                        .withRole("admin")
                         .withCommand(CommandEnum.UPDATE_USER)
                         .withRequest(RequestMethodEnum.POST)
                         .build()
@@ -151,11 +150,13 @@ public class AuthenticationFilter implements Filter {
                     logger.error("Error bouuta happen, duck down! - AuthenticationFilter.doFilter");
                     throw new ServletException("Test Error - AuthenticationFilter.doFilter");
                 }
-                RoleEnum roleEnum = userPrincipal.getRole();
+                //FIXME temp
+                //String role = userPrincipal.getRole().getName();
+                String role = "admin";
                 RequestMethodEnum requestMethodEnum = RequestMethodEnum.getRequest(requestMethod);
                 AccessMode accessMode = AccessMode.newBuilder()
                         .withCommand(commandEnum)
-                        .withRole(roleEnum)
+                        .withRole(role)
                         .withRequest(requestMethodEnum)
                         .build();
                 if (!USER_AVAILABLE.contains(accessMode) && !ADMIN_AVAILABLE.contains(accessMode)) {
