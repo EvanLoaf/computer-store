@@ -2,33 +2,48 @@ package com.gmail.evanloafakahaitao.computer.store.services.impl;
 
 import com.gmail.evanloafakahaitao.computer.store.dao.NewsDao;
 import com.gmail.evanloafakahaitao.computer.store.dao.UserDao;
-import com.gmail.evanloafakahaitao.computer.store.dao.impl.NewsDaoImpl;
-import com.gmail.evanloafakahaitao.computer.store.dao.impl.UserDaoImpl;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.*;
 import com.gmail.evanloafakahaitao.computer.store.services.NewsService;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.DTOConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.EntityConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.dto.NewsDTOConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.dto.SimpleNewsDTOConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.entity.NewsEntityConverter;
+import com.gmail.evanloafakahaitao.computer.store.services.converters.DTOConverter;
+import com.gmail.evanloafakahaitao.computer.store.services.converters.EntityConverter;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
+@Service
 public class NewsServiceImpl implements NewsService {
 
     private static final Logger logger = LogManager.getLogger(NewsServiceImpl.class);
-    private final NewsDao newsDao = new NewsDaoImpl();
-    private final UserDao userDao = new UserDaoImpl();
-    private final EntityConverter<NewsDTO, News> newsEntityConverter = new NewsEntityConverter();
-    private final DTOConverter<NewsDTO, News> newsDTOConverter = new NewsDTOConverter();
-    private final DTOConverter<SimpleNewsDTO, News> simpleNewsDTOConverter = new SimpleNewsDTOConverter();
+
+    private final NewsDao newsDao;
+    private final UserDao userDao;
+    private final EntityConverter<NewsDTO, News> newsEntityConverter;
+    private final DTOConverter<NewsDTO, News> newsDTOConverter;
+    private final DTOConverter<SimpleNewsDTO, News> simpleNewsDTOConverter;
+
+    @Autowired
+    public NewsServiceImpl(
+            NewsDao newsDao,
+            UserDao userDao,
+            @Qualifier("newsEntityConverter") EntityConverter<NewsDTO, News> newsEntityConverter,
+            @Qualifier("newsDTOConverter") DTOConverter<NewsDTO, News> newsDTOConverter,
+            @Qualifier("simpleNewsDTOConverter") DTOConverter<SimpleNewsDTO, News> simpleNewsDTOConverter
+    ) {
+        this.newsDao = newsDao;
+        this.userDao = userDao;
+        this.newsEntityConverter = newsEntityConverter;
+        this.newsDTOConverter = newsDTOConverter;
+        this.simpleNewsDTOConverter = simpleNewsDTOConverter;
+    }
 
     @Override
     public NewsDTO save(NewsDTO newsDTO) {

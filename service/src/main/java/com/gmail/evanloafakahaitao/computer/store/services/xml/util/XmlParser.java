@@ -1,12 +1,14 @@
 package com.gmail.evanloafakahaitao.computer.store.services.xml.util;
 
 import com.gmail.evanloafakahaitao.computer.store.services.xml.dto.CatalogXmlDTO;
+import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 
+@Component
 public class XmlParser {
 
     public CatalogXmlDTO unmarshal(File xml) {

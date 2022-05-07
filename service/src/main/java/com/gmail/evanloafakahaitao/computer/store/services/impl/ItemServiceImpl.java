@@ -2,38 +2,51 @@ package com.gmail.evanloafakahaitao.computer.store.services.impl;
 
 import com.gmail.evanloafakahaitao.computer.store.dao.DiscountDao;
 import com.gmail.evanloafakahaitao.computer.store.dao.ItemDao;
-import com.gmail.evanloafakahaitao.computer.store.dao.impl.DiscountDaoImpl;
-import com.gmail.evanloafakahaitao.computer.store.dao.impl.ItemDaoImpl;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.Discount;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.Item;
 import com.gmail.evanloafakahaitao.computer.store.services.ItemService;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.DTOConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.EntityConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.dto.ItemDTOConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.entity.DiscountEntityConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.entity.ItemEntityConverter;
+import com.gmail.evanloafakahaitao.computer.store.services.converters.DTOConverter;
+import com.gmail.evanloafakahaitao.computer.store.services.converters.EntityConverter;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.DiscountDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.ItemDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleItemDTO;
-import com.gmail.evanloafakahaitao.computer.store.services.xml.dto.ItemXmlDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Service
 public class ItemServiceImpl implements ItemService {
 
     private static final Logger logger = LogManager.getLogger(ItemServiceImpl.class);
 
-    private final ItemDao itemDao = new ItemDaoImpl();
-    private final DiscountDao discountDao = new DiscountDaoImpl();
-    private final EntityConverter<ItemDTO, Item> itemEntityConverter = new ItemEntityConverter();
-    private final EntityConverter<DiscountDTO, Discount> discountEntityConverter = new DiscountEntityConverter();
-    private final DTOConverter<ItemDTO, Item> itemDTOConverter = new ItemDTOConverter();
+    private final ItemDao itemDao;
+    private final DiscountDao discountDao;
+    private final EntityConverter<ItemDTO, Item> itemEntityConverter;
+    private final EntityConverter<DiscountDTO, Discount> discountEntityConverter;
+    private final DTOConverter<ItemDTO, Item> itemDTOConverter;
+
+    @Autowired
+    public ItemServiceImpl(
+            ItemDao itemDao,
+            DiscountDao discountDao,
+            @Qualifier("itemEntityConverter") EntityConverter<ItemDTO, Item> itemEntityConverter,
+            @Qualifier("discountEntityConverter") EntityConverter<DiscountDTO, Discount> discountEntityConverter,
+            @Qualifier("itemDTOConverter") DTOConverter<ItemDTO, Item> itemDTOConverter
+    ) {
+        this.itemDao = itemDao;
+        this.discountDao = discountDao;
+        this.itemEntityConverter = itemEntityConverter;
+        this.discountEntityConverter = discountEntityConverter;
+        this.itemDTOConverter = itemDTOConverter;
+    }
 
     @Override
     public ItemDTO save(ItemDTO itemDTO) {

@@ -1,5 +1,6 @@
 package com.gmail.evanloafakahaitao.computer.store.services.xml.util;
 
+import org.springframework.stereotype.Component;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -10,6 +11,7 @@ import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.IOException;
 
+@Component
 public class XmlValidator {
 
     public boolean validate(File xmlFile, File schemaFile) {

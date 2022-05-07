@@ -1,21 +1,34 @@
 package com.gmail.evanloafakahaitao.computer.store.services.impl;
 
 import com.gmail.evanloafakahaitao.computer.store.dao.XmlDao;
-import com.gmail.evanloafakahaitao.computer.store.dao.impl.XmlDaoImpl;
 import com.gmail.evanloafakahaitao.computer.store.services.XmlService;
 import com.gmail.evanloafakahaitao.computer.store.services.xml.dto.CatalogXmlDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.xml.dto.ItemXmlDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.xml.util.XmlParser;
 import com.gmail.evanloafakahaitao.computer.store.services.xml.util.XmlValidator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.List;
 
+@Service
 public class XmlServiceImpl implements XmlService {
 
-    private XmlDao xmlDao = new XmlDaoImpl();
-    private XmlValidator xmlValidator = new XmlValidator();
-    private XmlParser xmlParser = new XmlParser();
+    private final XmlDao xmlDao;
+    private final XmlValidator xmlValidator;
+    private final XmlParser xmlParser;
+
+    @Autowired
+    public XmlServiceImpl(
+            XmlDao xmlDao,
+            XmlValidator xmlValidator,
+            XmlParser xmlParser
+    ) {
+        this.xmlDao = xmlDao;
+        this.xmlValidator = xmlValidator;
+        this.xmlParser = xmlParser;
+    }
 
     @Override
     public List<ItemXmlDTO> getItems(String filePath, String schemaPath) {

@@ -2,32 +2,45 @@ package com.gmail.evanloafakahaitao.computer.store.services.impl;
 
 import com.gmail.evanloafakahaitao.computer.store.dao.FeedbackDao;
 import com.gmail.evanloafakahaitao.computer.store.dao.UserDao;
-import com.gmail.evanloafakahaitao.computer.store.dao.impl.FeedbackDaoImpl;
-import com.gmail.evanloafakahaitao.computer.store.dao.impl.UserDaoImpl;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.Feedback;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.User;
 import com.gmail.evanloafakahaitao.computer.store.services.FeedbackService;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.DTOConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.EntityConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.dto.FeedbackDTOConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.entity.FeedbackEntityConverter;
+import com.gmail.evanloafakahaitao.computer.store.services.converters.DTOConverter;
+import com.gmail.evanloafakahaitao.computer.store.services.converters.EntityConverter;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.FeedbackDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
 
+@Service
 public class FeedbackServiceImpl implements FeedbackService {
 
     private static final Logger logger = LogManager.getLogger(FeedbackServiceImpl.class);
 
-    private final FeedbackDao feedbackDao = new FeedbackDaoImpl();
-    private final UserDao userDao = new UserDaoImpl();
-    private final EntityConverter<FeedbackDTO, Feedback> feedbackEntityConverter = new FeedbackEntityConverter();
-    private final DTOConverter<FeedbackDTO, Feedback> feedbackDTOConverter = new FeedbackDTOConverter();
+    private final FeedbackDao feedbackDao;
+    private final UserDao userDao;
+    private final EntityConverter<FeedbackDTO, Feedback> feedbackEntityConverter;
+    private final DTOConverter<FeedbackDTO, Feedback> feedbackDTOConverter;
+
+    @Autowired
+    public FeedbackServiceImpl(
+            FeedbackDao feedbackDao,
+            UserDao userDao,
+            @Qualifier("feedbackEntityConverter") EntityConverter<FeedbackDTO, Feedback> feedbackEntityConverter,
+            @Qualifier("feedbackDTOConverter") DTOConverter<FeedbackDTO, Feedback> feedbackDTOConverter
+    ) {
+        this.feedbackDao = feedbackDao;
+        this.userDao = userDao;
+        this.feedbackEntityConverter = feedbackEntityConverter;
+        this.feedbackDTOConverter = feedbackDTOConverter;
+    }
 
     @Override
     public FeedbackDTO save(FeedbackDTO feedbackDTO) {

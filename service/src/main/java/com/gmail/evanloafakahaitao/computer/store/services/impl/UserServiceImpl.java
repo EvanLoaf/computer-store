@@ -3,38 +3,54 @@ package com.gmail.evanloafakahaitao.computer.store.services.impl;
 import com.gmail.evanloafakahaitao.computer.store.dao.DiscountDao;
 import com.gmail.evanloafakahaitao.computer.store.dao.RoleDao;
 import com.gmail.evanloafakahaitao.computer.store.dao.UserDao;
-import com.gmail.evanloafakahaitao.computer.store.dao.impl.DiscountDaoImpl;
-import com.gmail.evanloafakahaitao.computer.store.dao.impl.RoleDaoImpl;
-import com.gmail.evanloafakahaitao.computer.store.dao.impl.UserDaoImpl;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.Discount;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.Profile;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.Role;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.User;
 import com.gmail.evanloafakahaitao.computer.store.services.UserService;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.DTOConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.EntityConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.dto.SimpleUserDTOConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.dto.UserDTOConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.entity.UserEntityConverter;
+import com.gmail.evanloafakahaitao.computer.store.services.converters.DTOConverter;
+import com.gmail.evanloafakahaitao.computer.store.services.converters.EntityConverter;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleUserDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.UserDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
-    private final UserDao userDao = new UserDaoImpl();
-    private final RoleDao roleDao = new RoleDaoImpl();
-    private final DiscountDao discountDao = new DiscountDaoImpl();
-    private final DTOConverter<UserDTO, User> userDTOConverter = new UserDTOConverter();
-    private final DTOConverter<SimpleUserDTO, User> simpleUserDTOConverter = new SimpleUserDTOConverter();
-    private final EntityConverter<UserDTO, User> userEntityConverter = new UserEntityConverter();
+
+    private final UserDao userDao;
+    private final RoleDao roleDao;
+    private final DiscountDao discountDao;
+    private final DTOConverter<UserDTO, User> userDTOConverter;
+    private final DTOConverter<SimpleUserDTO, User> simpleUserDTOConverter;
+    private final EntityConverter<UserDTO, User> userEntityConverter;
+
+    @Autowired
+    public UserServiceImpl(
+            UserDao userDao,
+            RoleDao roleDao,
+            DiscountDao discountDao,
+            @Qualifier("userDTOConverter") DTOConverter<UserDTO, User> userDTOConverter,
+            @Qualifier("simpleUserDTOConverter") DTOConverter<SimpleUserDTO, User> simpleUserDTOConverter,
+            @Qualifier("userEntityConverter") EntityConverter<UserDTO, User> userEntityConverter
+    ) {
+        this.userDao = userDao;
+        this.roleDao = roleDao;
+        this.discountDao = discountDao;
+        this.userDTOConverter = userDTOConverter;
+        this.simpleUserDTOConverter = simpleUserDTOConverter;
+        this.userEntityConverter = userEntityConverter;
+    }
 
     @Override
     public UserDTO save(UserDTO userDTO) {

@@ -9,6 +9,7 @@ import com.gmail.evanloafakahaitao.computer.store.services.impl.ItemServiceImpl;
 import com.gmail.evanloafakahaitao.computer.store.services.impl.UserServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 
@@ -17,8 +18,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class AppTest 
 {
 
-    private final ItemService itemService = new  ItemServiceImpl();
-    private final UserService userService = new UserServiceImpl();
+    @Autowired
+    private ItemService itemService;
+    @Autowired
+    private UserService userService;
 
 
     @Test
