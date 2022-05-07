@@ -8,16 +8,6 @@ public class FeedbackDTO {
 
     public FeedbackDTO() {}
 
-    private FeedbackDTO(Builder builder) {
-        setId(builder.id);
-        setMessage(builder.message);
-        setUser(builder.user);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
     public Long getId() {
         return id;
     }
@@ -40,34 +30,6 @@ public class FeedbackDTO {
 
     public void setUser(SimpleUserDTO user) {
         this.user = user;
-    }
-
-    public static final class Builder {
-        private Long id;
-        private String message;
-        private SimpleUserDTO user;
-
-        private Builder() {
-        }
-
-        public Builder withId(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder withMessage(String message) {
-            this.message = message;
-            return this;
-        }
-
-        public Builder withUser(SimpleUserDTO user) {
-            this.user = user;
-            return this;
-        }
-
-        public FeedbackDTO build() {
-            return new FeedbackDTO(this);
-        }
     }
 
     @Override

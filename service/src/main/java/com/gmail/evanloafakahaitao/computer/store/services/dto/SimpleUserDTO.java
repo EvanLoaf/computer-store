@@ -8,16 +8,6 @@ public class SimpleUserDTO {
 
     public SimpleUserDTO() {}
 
-    private SimpleUserDTO(Builder builder) {
-        setId(builder.id);
-        setName(builder.name);
-        setEmail(builder.email);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
     public Long getId() {
         return id;
     }
@@ -40,34 +30,6 @@ public class SimpleUserDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public static final class Builder {
-        private Long id;
-        private String name;
-        private String email;
-
-        private Builder() {
-        }
-
-        public Builder withId(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder withEmail(String email) {
-            this.email = email;
-            return this;
-        }
-
-        public SimpleUserDTO build() {
-            return new SimpleUserDTO(this);
-        }
     }
 
     @Override

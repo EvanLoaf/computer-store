@@ -8,16 +8,6 @@ public class SimpleItemDTO {
 
     public SimpleItemDTO() {}
 
-    private SimpleItemDTO(Builder builder) {
-        setId(builder.id);
-        setName(builder.name);
-        setVendorCode(builder.vendorCode);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
     public Long getId() {
         return id;
     }
@@ -40,34 +30,6 @@ public class SimpleItemDTO {
 
     public void setVendorCode(String vendorCode) {
         this.vendorCode = vendorCode;
-    }
-
-    public static final class Builder {
-        private Long id;
-        private String name;
-        private String vendorCode;
-
-        private Builder() {
-        }
-
-        public Builder withId(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder withVendorCode(String vendorCode) {
-            this.vendorCode = vendorCode;
-            return this;
-        }
-
-        public SimpleItemDTO build() {
-            return new SimpleItemDTO(this);
-        }
     }
 
     @Override

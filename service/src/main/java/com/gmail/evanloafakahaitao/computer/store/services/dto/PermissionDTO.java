@@ -7,15 +7,6 @@ public class PermissionDTO {
 
     public PermissionDTO() {}
 
-    private PermissionDTO(Builder builder) {
-        setId(builder.id);
-        setName(builder.name);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
     public Long getId() {
         return id;
     }
@@ -30,28 +21,6 @@ public class PermissionDTO {
 
     public void setName(PermissionEnum name) {
         this.name = name;
-    }
-
-    public static final class Builder {
-        private Long id;
-        private PermissionEnum name;
-
-        private Builder() {
-        }
-
-        public Builder withId(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder withName(PermissionEnum name) {
-            this.name = name;
-            return this;
-        }
-
-        public PermissionDTO build() {
-            return new PermissionDTO(this);
-        }
     }
 
     @Override

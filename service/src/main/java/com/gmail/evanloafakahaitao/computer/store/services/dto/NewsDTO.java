@@ -15,19 +15,6 @@ public class NewsDTO {
 
     public NewsDTO() {}
 
-    private NewsDTO(Builder builder) {
-        setId(builder.id);
-        setTitle(builder.title);
-        setContent(builder.content);
-        setCreated(builder.created);
-        setUser(builder.user);
-        setComments(builder.comments);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
     public Long getId() {
         return id;
     }
@@ -74,52 +61,6 @@ public class NewsDTO {
 
     public void setComments(Set<CommentDTO> comments) {
         this.comments = comments;
-    }
-
-    public static final class Builder {
-        private Long id;
-        private String title;
-        private String content;
-        private LocalDateTime created;
-        private SimpleUserDTO user;
-        private Set<CommentDTO> comments;
-
-        private Builder() {
-        }
-
-        public Builder withId(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder withTitle(String title) {
-            this.title = title;
-            return this;
-        }
-
-        public Builder withContent(String content) {
-            this.content = content;
-            return this;
-        }
-
-        public Builder withCreated(LocalDateTime created) {
-            this.created = created;
-            return this;
-        }
-
-        public Builder withUser(SimpleUserDTO user) {
-            this.user = user;
-            return this;
-        }
-
-        public Builder withComments(Set<CommentDTO> comments) {
-            this.comments = comments;
-            return this;
-        }
-
-        public NewsDTO build() {
-            return new NewsDTO(this);
-        }
     }
 
     @Override

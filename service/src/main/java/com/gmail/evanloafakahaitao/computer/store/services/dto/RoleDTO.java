@@ -11,16 +11,6 @@ public class RoleDTO {
 
     public RoleDTO() {}
 
-    private RoleDTO(Builder builder) {
-        setId(builder.id);
-        setName(builder.name);
-        setPermissions(builder.permissions);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
     public Long getId() {
         return id;
     }
@@ -43,34 +33,6 @@ public class RoleDTO {
 
     public void setPermissions(Set<PermissionDTO> permissions) {
         this.permissions = permissions;
-    }
-
-    public static final class Builder {
-        private Long id;
-        private String name;
-        private Set<PermissionDTO> permissions;
-
-        private Builder() {
-        }
-
-        public Builder withId(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder withPermissions(Set<PermissionDTO> permissions) {
-            this.permissions = permissions;
-            return this;
-        }
-
-        public RoleDTO build() {
-            return new RoleDTO(this);
-        }
     }
 
     @Override

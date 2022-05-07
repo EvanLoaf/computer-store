@@ -15,20 +15,6 @@ public class OrderDTO {
 
     public OrderDTO() {}
 
-    private OrderDTO(Builder builder) {
-        setOrderCode(builder.orderCode);
-        setCreated(builder.created);
-        setQuantity(builder.quantity);
-        setTotalPrice(builder.totalPrice);
-        setStatus(builder.status);
-        setUser(builder.user);
-        setItem(builder.item);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
     public String getOrderCode() {
         return orderCode;
     }
@@ -83,58 +69,6 @@ public class OrderDTO {
 
     public void setItem(ItemDTO item) {
         this.item = item;
-    }
-
-    public static final class Builder {
-        private String orderCode;
-        private LocalDateTime created;
-        private Integer quantity;
-        private BigDecimal totalPrice;
-        private OrderStatusEnum status;
-        private OrderUserDTO user;
-        private ItemDTO item;
-
-        private Builder() {
-        }
-
-        public Builder withOrderCode(String orderCode) {
-            this.orderCode = orderCode;
-            return this;
-        }
-
-        public Builder withCreated(LocalDateTime created) {
-            this.created = created;
-            return this;
-        }
-
-        public Builder withQuantity(Integer quantity) {
-            this.quantity = quantity;
-            return this;
-        }
-
-        public Builder withTotalPrice(BigDecimal totalPrice) {
-            this.totalPrice = totalPrice;
-            return this;
-        }
-
-        public Builder withStatus(OrderStatusEnum status) {
-            this.status = status;
-            return this;
-        }
-
-        public Builder withUser(OrderUserDTO user) {
-            this.user = user;
-            return this;
-        }
-
-        public Builder withItem(ItemDTO item) {
-            this.item = item;
-            return this;
-        }
-
-        public OrderDTO build() {
-            return new OrderDTO(this);
-        }
     }
 
     @Override

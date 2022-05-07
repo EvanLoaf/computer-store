@@ -13,21 +13,6 @@ public class UserDTO {
 
     public UserDTO() {}
 
-    private UserDTO(Builder builder) {
-        setId(builder.id);
-        setFirstName(builder.firstName);
-        setLastName(builder.lastName);
-        setEmail(builder.email);
-        setPassword(builder.password);
-        setRole(builder.role);
-        setProfile(builder.profile);
-        setDiscount(builder.discount);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
     public Long getId() {
         return id;
     }
@@ -90,64 +75,6 @@ public class UserDTO {
 
     public void setDiscount(DiscountDTO discount) {
         this.discount = discount;
-    }
-
-    public static final class Builder {
-        private Long id;
-        private String firstName;
-        private String lastName;
-        private String email;
-        private String password;
-        private RoleDTO role;
-        private ProfileDTO profile;
-        private DiscountDTO discount;
-
-        private Builder() {
-        }
-
-        public Builder withId(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder withFirstName(String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
-
-        public Builder withLastName(String lastName) {
-            this.lastName = lastName;
-            return this;
-        }
-
-        public Builder withEmail(String email) {
-            this.email = email;
-            return this;
-        }
-
-        public Builder withPassword(String password) {
-            this.password = password;
-            return this;
-        }
-
-        public Builder withRole(RoleDTO role) {
-            this.role = role;
-            return this;
-        }
-
-        public Builder withProfile(ProfileDTO profile) {
-            this.profile = profile;
-            return this;
-        }
-
-        public Builder withDiscount(DiscountDTO discount) {
-            this.discount = discount;
-            return this;
-        }
-
-        public UserDTO build() {
-            return new UserDTO(this);
-        }
     }
 
     @Override

@@ -15,19 +15,6 @@ public class ItemDTO {
 
     public ItemDTO() {}
 
-    private ItemDTO(Builder builder) {
-        setId(builder.id);
-        setName(builder.name);
-        setVendorCode(builder.vendorCode);
-        setDescription(builder.description);
-        setPrice(builder.price);
-        setDiscounts(builder.discounts);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
     public Long getId() {
         return id;
     }
@@ -74,52 +61,6 @@ public class ItemDTO {
 
     public void setDiscounts(Set<DiscountDTO> discounts) {
         this.discounts = discounts;
-    }
-
-    public static final class Builder {
-        private Long id;
-        private String name;
-        private String vendorCode;
-        private String description;
-        private BigDecimal price;
-        private Set<DiscountDTO> discounts;
-
-        private Builder() {
-        }
-
-        public Builder withId(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder withVendorCode(String vendorCode) {
-            this.vendorCode = vendorCode;
-            return this;
-        }
-
-        public Builder withDescription(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public Builder withPrice(BigDecimal price) {
-            this.price = price;
-            return this;
-        }
-
-        public Builder withDiscounts(Set<DiscountDTO> discounts) {
-            this.discounts = discounts;
-            return this;
-        }
-
-        public ItemDTO build() {
-            return new ItemDTO(this);
-        }
     }
 
     @Override
