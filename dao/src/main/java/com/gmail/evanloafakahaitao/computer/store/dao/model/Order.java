@@ -22,7 +22,7 @@ public class Order implements Serializable {
 
     private static final long serialVersionUID = -4038551219941151950L;
     @EmbeddedId
-    @AttributeOverride(name = "orderCode", column = @Column(name = "orderCode", columnDefinition = "char"))
+    @AttributeOverride(name = "orderCode", column = @Column(name = "orderCode", columnDefinition = "char not null"))
     private OrderId id = new OrderId();
     @NotNull
     @Column(nullable = false)
