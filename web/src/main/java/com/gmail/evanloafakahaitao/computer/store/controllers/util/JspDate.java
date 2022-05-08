@@ -1,4 +1,4 @@
-package com.gmail.evanloafakahaitao.computer.store.servlets.util;
+package com.gmail.evanloafakahaitao.computer.store.controllers.util;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

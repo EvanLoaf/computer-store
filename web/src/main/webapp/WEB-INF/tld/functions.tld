@@ -10,7 +10,7 @@
 
     <function>
         <name>formatLocalDateTime</name>
-        <function-class>com.gmail.evanloafakahaitao.store.servlets.util.JspDate</function-class>
+        <function-class>com.gmail.evanloafakahaitao.computer.store.controllers.util.JspDate</function-class>
         <function-signature>java.lang.String formatLocalDateTime(java.time.LocalDateTime, java.lang.String)</function-signature>
     </function>
 </taglib>
