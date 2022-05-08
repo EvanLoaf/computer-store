@@ -1,6 +1,8 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,7 +14,9 @@ import java.util.Set;
 
 @Entity
 @Table
-public class News implements Serializable {
+@SQLDelete(sql = "update t_news set f_is_deleted = true where f_id = ?")
+@Where(clause = "f_is_deleted = false")
+public class News extends SoftDeleteEntity implements Serializable {
 
     private static final long serialVersionUID = -7482004820363828724L;
     @Id

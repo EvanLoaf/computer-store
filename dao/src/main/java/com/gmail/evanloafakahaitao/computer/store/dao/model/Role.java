@@ -27,6 +27,9 @@ public class Role implements Serializable {
     @Column(nullable = false, unique = true)
     @Size(max = 20)
     private String name;
+    @NotNull
+    @Column
+    private Boolean isDefault;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "authorization",
@@ -51,6 +54,14 @@ public class Role implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Boolean getDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(Boolean aDefault) {
+        isDefault = aDefault;
     }
 
     public Set<Permission> getPermissions() {
@@ -84,6 +95,7 @@ public class Role implements Serializable {
         final StringBuffer sb = new StringBuffer("Role{");
         sb.append("id=").append(id);
         sb.append(", name='").append(name).append('\'');
+        sb.append(", isDefault=").append(isDefault);
         sb.append(", permissions=").append(permissions);
         sb.append('}');
         return sb.toString();

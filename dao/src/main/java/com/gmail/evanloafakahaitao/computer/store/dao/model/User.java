@@ -1,18 +1,22 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
 import org.hibernate.annotations.Check;
+import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(
         columnNames = "email"
 ))
-public class User implements Serializable {
+@SQLDelete(sql = "update t_user set f_is_deleted = true where f_id = ?")
+public class User extends SoftDeleteAndDisableEntity implements Serializable {
 
     private static final long serialVersionUID = -5535456587453610531L;
     @Id
@@ -45,6 +49,9 @@ public class User implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "discountId")
     private Discount discount;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "userId", nullable = false)
+    private Set<BusinessCard> businessCards = new HashSet<>();
 
     public User() {}
 
@@ -112,6 +119,14 @@ public class User implements Serializable {
         this.discount = discount;
     }
 
+    public Set<BusinessCard> getBusinessCards() {
+        return businessCards;
+    }
+
+    public void setBusinessCards(Set<BusinessCard> businessCards) {
+        this.businessCards = businessCards;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -143,6 +158,7 @@ public class User implements Serializable {
         sb.append(", role=").append(role);
         sb.append(", profile=").append(profile);
         sb.append(", discount=").append(discount);
+        sb.append(", businessCards=").append(businessCards);
         sb.append('}');
         return sb.toString();
     }

@@ -5,6 +5,9 @@ import org.apache.logging.log4j.Logger;
 
 public enum PermissionEnum {
 
+    SECURITY_ADMIN_BASIC_PERMISSION,
+    API_ADMIN_BASIC_PERMISSION,
+    SALES_ADMIN_BASIC_PERMISSION,
     USER_BASIC_PERMISSION;
 
     private static final Logger logger = LogManager.getLogger(PermissionEnum.class);
