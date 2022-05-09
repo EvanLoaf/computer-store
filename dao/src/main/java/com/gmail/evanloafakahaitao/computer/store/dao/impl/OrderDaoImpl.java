@@ -16,19 +16,22 @@ public class OrderDaoImpl extends GenericDaoImpl<Order> implements OrderDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Order> findByUserId(Long id) {
+    public List<Order> findByUserId(Long id, Integer firstResult, Integer maxResults) {
         String hql = "FROM Order AS o WHERE o.user.id = :id";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("id", id);
-        return query.getResultList();
+        query.setFirstResult(firstResult);
+        query.setMaxResults(maxResults);
+        return query.list();
     }
 
     @Override
     public Order findByOrderCode(String orderCode) {
+        //TODO possibly o.id.orderCode
         String hql = "FROM Order AS o WHERE o.orderCode = :orderCode";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("orderCode", orderCode);
-        return (Order) query.getSingleResult();
+        return (Order) query.uniqueResult();
     }
 
     @Override
@@ -36,5 +39,13 @@ public class OrderDaoImpl extends GenericDaoImpl<Order> implements OrderDao {
         String hql = "DELETE FROM Order AS o WHERE o.orderCode = :orderCode";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("orderCode", orderCode);
+    }
+
+    @Override
+    public Long countAllByUserId(Long id) {
+        String hql = "SELECT COUNT(*) FROM Order AS o WHERE o.user.id = :id";
+        Query query = getCurrentSession().createQuery(hql);
+        query.setParameter("id", id);
+        return (Long) query.uniqueResult();
     }
 }

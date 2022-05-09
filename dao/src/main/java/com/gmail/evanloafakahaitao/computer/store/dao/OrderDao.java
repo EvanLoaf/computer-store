@@ -8,9 +8,11 @@ import java.util.List;
 
 public interface OrderDao extends GenericDao<Order> {
 
-    List<Order> findByUserId(Long id);
+    List<Order> findByUserId(Long id, Integer firstResult, Integer maxResults);
 
     Order findByOrderCode(String orderCode);
 
     void deleteByOrderCode(String orderCode);
+
+    Long countAllByUserId(Long id);
 }

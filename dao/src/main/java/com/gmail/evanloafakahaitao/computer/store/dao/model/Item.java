@@ -19,7 +19,8 @@ import java.util.Set;
 @Cacheable
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SQLDelete(sql = "update t_item set f_is_deleted = true where f_vendor_code = ?")
-@Where(clause = "f_is_deleted = false")
+//TODO test and maybe remove
+//@Where(clause = "f_is_deleted = false")
 public class Item extends SoftDeleteEntity implements Serializable {
 
     private static final long serialVersionUID = 2259446884247522586L;

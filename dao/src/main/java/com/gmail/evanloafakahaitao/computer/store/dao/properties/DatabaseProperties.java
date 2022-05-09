@@ -12,7 +12,7 @@ public class DatabaseProperties {
     private String databaseUsername;
     @Value("${database.password}")
     private String databasePassword;
-    @Value("${hibernate.hbm2ddl.auto}")
+    @Value("${hibernate.hbm2ddl.auto:validate}")
     private String hibernateHBM2DDLAuto;
     @Value("${hibernate.show_sql}")
     private String hibernateShowSQL;
@@ -28,7 +28,7 @@ public class DatabaseProperties {
     private String hibernateStorageEngine;
     @Value("${pool.data.source.class}")
     private String poolDataSourceClass;
-    @Value("${pool.max.size}")
+    @Value("${pool.max.size:5}")
     private Integer poolMaxSize;
     @Value("${pool.cache.prepared.statements}")
     private String poolCachePreparedStatements;

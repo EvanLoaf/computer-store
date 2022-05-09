@@ -12,4 +12,6 @@ public interface ItemDao extends GenericDao<Item> {
     Item findByVendorCode(String vendorCode);
 
     List<Item> findInPriceRange(BigDecimal minPrice, BigDecimal maxPrice);
+
+    List<Item> findAllNotDeleted(Integer startPosition, Integer maxResults);
 }

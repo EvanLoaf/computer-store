@@ -20,7 +20,7 @@ public class ItemDaoImpl extends GenericDaoImpl<Item> implements ItemDao {
         String hql = "FROM Item AS i WHERE i.vendorCode = :vendorCode";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("vendorCode", vendorCode);
-        return (Item) query.getSingleResult();
+        return (Item) query.uniqueResult();
     }
 
     @SuppressWarnings("unchecked")
@@ -30,6 +30,16 @@ public class ItemDaoImpl extends GenericDaoImpl<Item> implements ItemDao {
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("minPrice", minPrice);
         query.setParameter("maxPrice", maxPrice);
-        return query.getResultList();
+        return query.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Item> findAllNotDeleted(Integer startPosition, Integer maxResults) {
+        String hql = "FROM Item AS i WHERE i.isDeleted = false";
+        Query query = getCurrentSession().createQuery(hql);
+        query.setFirstResult(startPosition);
+        query.setMaxResults(maxResults);
+        return query.list();
     }
 }
