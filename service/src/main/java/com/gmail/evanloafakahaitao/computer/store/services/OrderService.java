@@ -11,9 +11,15 @@ public interface OrderService {
 
     SimpleOrderDTO save(NewOrderDTO orderDTO);
 
-    List<SimpleOrderDTO> findByUserId(SimpleUserDTO userDTO);
+    List<SimpleOrderDTO> findByCurrentUser(Integer firstResult, Integer maxResults);
+
+    SimpleOrderDTO update(SimpleOrderDTO simpleOrderDTO);
 
     void deleteByOrderCode(SimpleOrderDTO orderDTO);
 
-    List<OrderDTO> findAll();
+    List<OrderDTO> findAll(Integer firstResult, Integer maxResults);
+
+    Long countAll();
+
+    Long countAllByCurrentUser();
 }

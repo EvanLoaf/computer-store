@@ -9,11 +9,13 @@ public interface NewsService {
 
     NewsDTO save(NewsDTO newsDTO);
 
-    List<SimpleNewsDTO> findAll();
+    List<SimpleNewsDTO> findAll(Integer firstResult, Integer maxResults);
 
     NewsDTO findById(SimpleNewsDTO simpleNewsDTO);
 
     NewsDTO update(NewsDTO newsDTO);
 
     void deleteById(SimpleNewsDTO simpleNewsDTO);
+
+    Long countAll();
 }

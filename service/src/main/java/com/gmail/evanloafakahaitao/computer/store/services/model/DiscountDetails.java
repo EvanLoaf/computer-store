@@ -2,19 +2,19 @@ package com.gmail.evanloafakahaitao.computer.store.services.model;
 
 import java.math.BigDecimal;
 
-public class ItemDiscount {
+public class DiscountDetails {
 
     private Long discountId;
     private BigDecimal minPrice;
     private BigDecimal maxPrice;
 
-    private ItemDiscount(Builder builder) {
+    private DiscountDetails(Builder builder) {
         discountId = builder.discountId;
         minPrice = builder.minPrice;
         maxPrice = builder.maxPrice;
     }
 
-    private ItemDiscount() {}
+    private DiscountDetails() {}
 
     public static Builder newBuilder() {
         return new Builder();
@@ -43,8 +43,8 @@ public class ItemDiscount {
             return this;
         }
 
-        public ItemDiscount build() {
-            return new ItemDiscount(this);
+        public DiscountDetails build() {
+            return new DiscountDetails(this);
         }
     }
 
@@ -65,7 +65,7 @@ public class ItemDiscount {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ItemDiscount that = (ItemDiscount) o;
+        DiscountDetails that = (DiscountDetails) o;
 
         if (!discountId.equals(that.discountId)) return false;
         if (!minPrice.equals(that.minPrice)) return false;
@@ -82,7 +82,7 @@ public class ItemDiscount {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("ItemDiscount{");
+        final StringBuffer sb = new StringBuffer("DiscountDetails{");
         sb.append("discountId=").append(discountId);
         sb.append(", minPrice=").append(minPrice);
         sb.append(", maxPrice=").append(maxPrice);

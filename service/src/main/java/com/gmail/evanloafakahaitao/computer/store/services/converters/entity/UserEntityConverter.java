@@ -61,6 +61,9 @@ public class UserEntityConverter implements EntityConverter<UserDTO, User> {
                     profileEntityConverter.toEntity(dto.getProfile())
             );
         }
+        if (dto.getDisabled() != null) {
+            user.setDisabled(dto.getDisabled());
+        }
         return user;
     }
 }

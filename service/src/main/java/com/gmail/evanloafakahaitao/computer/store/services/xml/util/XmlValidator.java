@@ -14,10 +14,10 @@ import java.io.IOException;
 @Component
 public class XmlValidator {
 
-    public boolean validate(File xmlFile, File schemaFile) {
+    public boolean validate(File xmlFile, String schemaFile) {
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         try {
-            Schema schema = schemaFactory.newSchema(schemaFile);
+            Schema schema = schemaFactory.newSchema(new StreamSource(schemaFile));
             Validator validator = schema.newValidator();
             validator.validate(new StreamSource(xmlFile));
         } catch (SAXException e) {

@@ -1,5 +1,8 @@
 package com.gmail.evanloafakahaitao.computer.store.services.dto;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class UserDTO {
 
     private Long id;
@@ -7,9 +10,11 @@ public class UserDTO {
     private String lastName;
     private String email;
     private String password;
+    private Boolean isDisabled;
     private RoleDTO role;
     private ProfileDTO profile;
     private DiscountDTO discount;
+    private Set<BusinessCardDTO> businessCards = new HashSet<>();
 
     public UserDTO() {}
 
@@ -77,6 +82,22 @@ public class UserDTO {
         this.discount = discount;
     }
 
+    public Set<BusinessCardDTO> getBusinessCards() {
+        return businessCards;
+    }
+
+    public void setBusinessCards(Set<BusinessCardDTO> businessCards) {
+        this.businessCards = businessCards;
+    }
+
+    public Boolean getDisabled() {
+        return isDisabled;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        isDisabled = disabled;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -107,9 +128,11 @@ public class UserDTO {
         sb.append(", lastName='").append(lastName).append('\'');
         sb.append(", email='").append(email).append('\'');
         sb.append(", password='").append(password).append('\'');
+        sb.append(", isDisabled=").append(isDisabled);
         sb.append(", role=").append(role);
         sb.append(", profile=").append(profile);
         sb.append(", discount=").append(discount);
+        sb.append(", businessCards=").append(businessCards);
         sb.append('}');
         return sb.toString();
     }
