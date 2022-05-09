@@ -12,8 +12,6 @@ public class DatabaseProperties {
     private String databaseUsername;
     @Value("${database.password}")
     private String databasePassword;
-    @Value("${database.driver.name}")
-    private String databaseDriverName;
     @Value("${hibernate.hbm2ddl.auto}")
     private String hibernateHBM2DDLAuto;
     @Value("${hibernate.show_sql}")
@@ -26,12 +24,20 @@ public class DatabaseProperties {
     private String hibernateUseSecondLevelCache;
     @Value("${hibernate.cache.region.factory_class}")
     private String hibernateCacheRegionFactoryClass;
-    @Value("${hibernate.current_session_context_class}")
-    private String hibernateCurrentSessionContextClass;
-    @Value("${hibernate.physical_naming_strategy}")
-    private String hibernatePhysicalNamingStrategy;
-    @Value("hibernate.storage.engine")
+    @Value("${hibernate.storage.engine}")
     private String hibernateStorageEngine;
+    @Value("${pool.data.source.class}")
+    private String poolDataSourceClass;
+    @Value("${pool.max.size}")
+    private Integer poolMaxSize;
+    @Value("${pool.cache.prepared.statements}")
+    private String poolCachePreparedStatements;
+    @Value("${pool.cache.prepared.statements.size}")
+    private Integer poolCachePreparedStatementsSize;
+    @Value("${pool.cache.prepared.statements.sql.limit}")
+    private Integer poolCachePreparedStatementsSQLLimit;
+    @Value("${pool.use.server.prepared.statements}")
+    private String poolUseServerPreparedStatements;
 
     public String getDatabaseUrl() {
         return databaseUrl;
@@ -43,10 +49,6 @@ public class DatabaseProperties {
 
     public String getDatabasePassword() {
         return databasePassword;
-    }
-
-    public String getDatabaseDriverName() {
-        return databaseDriverName;
     }
 
     public String getHibernateHBM2DDLAuto() {
@@ -73,15 +75,31 @@ public class DatabaseProperties {
         return hibernateCacheRegionFactoryClass;
     }
 
-    public String getHibernateCurrentSessionContextClass() {
-        return hibernateCurrentSessionContextClass;
-    }
-
-    public String getHibernatePhysicalNamingStrategy() {
-        return hibernatePhysicalNamingStrategy;
-    }
-
     public String getHibernateStorageEngine() {
         return hibernateStorageEngine;
+    }
+
+    public String getPoolDataSourceClass() {
+        return poolDataSourceClass;
+    }
+
+    public Integer getPoolMaxSize() {
+        return poolMaxSize;
+    }
+
+    public String getPoolCachePreparedStatements() {
+        return poolCachePreparedStatements;
+    }
+
+    public Integer getPoolCachePreparedStatementsSize() {
+        return poolCachePreparedStatementsSize;
+    }
+
+    public Integer getPoolCachePreparedStatementsSQLLimit() {
+        return poolCachePreparedStatementsSQLLimit;
+    }
+
+    public String getPoolUseServerPreparedStatements() {
+        return poolUseServerPreparedStatements;
     }
 }

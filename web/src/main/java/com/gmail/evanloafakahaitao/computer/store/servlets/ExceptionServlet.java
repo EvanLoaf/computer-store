@@ -1,6 +1,5 @@
 package com.gmail.evanloafakahaitao.computer.store.servlets;
 
-import com.gmail.evanloafakahaitao.computer.store.config.ConfigurationManager;
 import com.gmail.evanloafakahaitao.computer.store.config.properties.PageProperties;
 
 import javax.servlet.RequestDispatcher;

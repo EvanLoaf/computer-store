@@ -1,7 +1,5 @@
 package com.gmail.evanloafakahaitao.computer.store.servlets.listener;
 
-import com.gmail.evanloafakahaitao.computer.store.config.ConfigurationManager;
-
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 

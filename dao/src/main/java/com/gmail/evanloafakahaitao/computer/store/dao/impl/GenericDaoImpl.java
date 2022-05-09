@@ -9,11 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.Serializable;
 import java.util.List;
 
-public class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
+public abstract class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
 
     private Class<T> clazz;
+
     @Autowired
-    private HibernateUtil hibernateUtil;
+    private SessionFactory sessionFactory;
 
     public GenericDaoImpl(Class<T> clazz) {
         this.clazz = clazz;
@@ -51,8 +52,7 @@ public class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
         delete(entity);
     }
 
-    @Override
-    public Session getCurrentSession() {
-        return HibernateUtil.getSessionFactory().getCurrentSession();
+    protected Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
     }
 }

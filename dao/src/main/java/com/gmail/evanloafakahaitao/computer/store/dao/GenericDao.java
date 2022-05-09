@@ -18,6 +18,4 @@ public interface GenericDao<T extends Serializable> {
     void delete(final T entity);
 
     void deleteById(final long entityId);
-
-    Session getCurrentSession();
 }

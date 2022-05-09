@@ -1,6 +1,5 @@
 package com.gmail.evanloafakahaitao.computer.store.servlets.filter;
 
-import com.gmail.evanloafakahaitao.computer.store.config.ConfigurationManager;
 import com.gmail.evanloafakahaitao.computer.store.config.properties.PageProperties;
 import com.gmail.evanloafakahaitao.computer.store.servlets.model.AccessMode;
 import com.gmail.evanloafakahaitao.computer.store.servlets.model.CommandEnum;
