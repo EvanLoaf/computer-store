@@ -12,11 +12,13 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
 
 @Service
+@Transactional
 public class DiscountServiceImpl implements DiscountService {
 
     private static final Logger logger = LogManager.getLogger(DiscountServiceImpl.class);
@@ -34,23 +36,13 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<DiscountDTO> findAll() {
-        Session session = discountDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            List<Discount> discounts = discountDao.findAll();
-            List<DiscountDTO> discountsDTO = discountDTOConverter.toDTOList(discounts);
-            transaction.commit();
-            return discountsDTO;
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error("Failed to retrieve Discounts", e);
-        }
-        return Collections.emptyList();
+        logger.info("Retrieving all Discounts");
+        List<Discount> discounts = discountDao.findAll();
+        logger.debug("Retrieved all discounts : {}", discounts);
+        if (!discounts.isEmpty()) {
+            return discountDTOConverter.toDTOList(discounts);
+        } else return Collections.emptyList();
     }
 }

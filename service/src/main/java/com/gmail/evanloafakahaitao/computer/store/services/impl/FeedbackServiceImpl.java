@@ -8,6 +8,7 @@ import com.gmail.evanloafakahaitao.computer.store.services.FeedbackService;
 import com.gmail.evanloafakahaitao.computer.store.services.converters.DTOConverter;
 import com.gmail.evanloafakahaitao.computer.store.services.converters.EntityConverter;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.FeedbackDTO;
+import com.gmail.evanloafakahaitao.computer.store.services.util.CurrentUserUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -15,11 +16,13 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
 
 @Service
+@Transactional
 public class FeedbackServiceImpl implements FeedbackService {
 
     private static final Logger logger = LogManager.getLogger(FeedbackServiceImpl.class);
@@ -44,64 +47,38 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public FeedbackDTO save(FeedbackDTO feedbackDTO) {
-        Session session = feedbackDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            Feedback feedback = feedbackEntityConverter.toEntity(feedbackDTO);
-            User user = userDao.findByEmail(feedbackDTO.getUser().getEmail());
-            feedback.setUser(user);
-            feedbackDao.create(feedback);
-            FeedbackDTO savedFeedback = feedbackDTOConverter.toDto(feedback);
-            transaction.commit();
-            return savedFeedback;
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error("Failed to save Feedback", e);
-        }
-        return null;
+        logger.info("Saving Feedback");
+        logger.debug("Saving Feedback : {}", feedbackDTO);
+        Feedback feedback = feedbackEntityConverter.toEntity(feedbackDTO);
+        User user = userDao.findOne(
+                CurrentUserUtil.getCurrentId()
+        );
+        feedback.setUser(user);
+        feedbackDao.create(feedback);
+        return feedbackDTOConverter.toDto(feedback);
     }
 
     @Override
-    public List<FeedbackDTO> findAll() {
-        Session session = feedbackDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            List<Feedback> feedbacks = feedbackDao.findAll();
-            List<FeedbackDTO> feedbacksDTO = feedbackDTOConverter.toDTOList(feedbacks);
-            transaction.commit();
-            return feedbacksDTO;
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error("Failed to retrieve all Feedback", e);
-        }
-        return Collections.emptyList();
+    @Transactional(readOnly = true)
+    public List<FeedbackDTO> findAll(Integer firstResult, Integer maxResults) {
+        logger.info("Retrieving Feedback");
+        List<Feedback> feedbackList = feedbackDao.findAll(firstResult, maxResults);
+        logger.debug("Retrieved Feedback : {}", feedbackList);
+        if (!feedbackList.isEmpty()) {
+            return feedbackDTOConverter.toDTOList(feedbackList);
+        } else return Collections.emptyList();
     }
 
     @Override
     public void deleteById(FeedbackDTO feedbackDTO) {
-        Session session = feedbackDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            feedbackDao.deleteById(feedbackDTO.getId());
-            transaction.commit();
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error("Failed to delete Feedback by id", e);
-        }
+        logger.info("Deleting Feedback by Id");
+        logger.debug("Deleting Feedback with Id : {}", feedbackDTO.getId());
+        feedbackDao.deleteById(feedbackDTO.getId());
+    }
+
+    @Override
+    public Long countAll() {
+        logger.info("Counting all Feedback");
+        return feedbackDao.countAll();
     }
 }
