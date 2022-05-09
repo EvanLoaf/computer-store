@@ -1,7 +1,5 @@
 package com.gmail.evanloafakahaitao.computer.store.dao;
 
-import org.hibernate.Session;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -10,6 +8,12 @@ public interface GenericDao<T extends Serializable> {
     T findOne(final long entityId);
 
     List<T> findAll();
+
+    List<T> findAll(Integer firstResult, Integer maxResults);
+
+    Long countAll();
+
+    Long countAllNotDeleted();
 
     void create(final T entity);
 
