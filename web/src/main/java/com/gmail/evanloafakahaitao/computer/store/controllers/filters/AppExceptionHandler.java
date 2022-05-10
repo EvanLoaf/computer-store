@@ -1,6 +1,7 @@
 package com.gmail.evanloafakahaitao.computer.store.controllers.filters;
 
 import com.gmail.evanloafakahaitao.computer.store.controllers.properties.PageProperties;
+import com.gmail.evanloafakahaitao.computer.store.services.exceptions.ItemNotFoundException;
 import com.gmail.evanloafakahaitao.computer.store.services.exceptions.NewsNotFoundException;
 import com.gmail.evanloafakahaitao.computer.store.services.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,14 @@ public class AppExceptionHandler {
     @ExceptionHandler(NewsNotFoundException.class)
     public String newsNotFoundErrorHandler(HttpServletRequest request, NewsNotFoundException e) {
         request.setAttribute("tip", "Expected piece of News was not found : check data integrity");
+        request.setAttribute("exception", e);
+        request.setAttribute("url", request.getRequestURL());
+        return pageProperties.getErrorsPagePath();
+    }
+
+    @ExceptionHandler(ItemNotFoundException.class)
+    public String itemNotFoundErrorHandler(HttpServletRequest request, ItemNotFoundException e) {
+        request.setAttribute("tip", "Item was not found : check data integrity");
         request.setAttribute("exception", e);
         request.setAttribute("url", request.getRequestURL());
         return pageProperties.getErrorsPagePath();

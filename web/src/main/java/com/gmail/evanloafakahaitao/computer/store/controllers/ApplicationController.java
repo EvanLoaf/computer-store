@@ -41,7 +41,7 @@ public class ApplicationController {
         this.userService = userService;
     }
 
-    @GetMapping("/register")
+    @GetMapping(value = "/register")
     public String registerUserPage(
             ModelMap modelMap
     ) {
@@ -51,7 +51,7 @@ public class ApplicationController {
         return pageProperties.getRegisterPagePath();
     }
 
-    @PostMapping("/register")
+    @PostMapping(value = "/register")
     public String registerUser(
             @ModelAttribute("user") UserDTO user,
             BindingResult result,
@@ -70,7 +70,7 @@ public class ApplicationController {
         }
     }
 
-    @GetMapping("/login")
+    @GetMapping(value = "/login")
     public String loginPage(
             ModelMap modelMap
     ) {
