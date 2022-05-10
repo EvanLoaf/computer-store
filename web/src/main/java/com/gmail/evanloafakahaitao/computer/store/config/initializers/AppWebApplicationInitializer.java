@@ -1,4 +1,4 @@
-package com.gmail.evanloafakahaitao.computer.store.config.initializer;
+package com.gmail.evanloafakahaitao.computer.store.config.initializers;
 
 import com.gmail.evanloafakahaitao.computer.store.config.AppConfig;
 import com.gmail.evanloafakahaitao.computer.store.config.WebConfig;
@@ -12,7 +12,7 @@ public class AppWebApplicationInitializer extends AbstractAnnotationConfigDispat
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[] {WebConfig.class};
+        return new Class[] {};
     }
 
     @Override

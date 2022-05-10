@@ -9,7 +9,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @Configuration
 @PropertySource({
         "classpath:database.properties",
-        "classpath:application.properties",
+        "classpath:web.properties",
         "classpath:xml.properties"
 })
 @ComponentScan(basePackages = {
