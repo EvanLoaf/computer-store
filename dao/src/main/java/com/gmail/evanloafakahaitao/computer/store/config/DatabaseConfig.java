@@ -4,10 +4,12 @@ import com.gmail.evanloafakahaitao.computer.store.dao.model.*;
 import com.gmail.evanloafakahaitao.computer.store.dao.properties.DatabaseProperties;
 import com.gmail.evanloafakahaitao.computer.store.dao.naming.CustomPhysicalNamingStrategy;
 import com.zaxxer.hikari.HikariDataSource;
+import liquibase.integration.spring.SpringLiquibase;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -45,13 +47,24 @@ public class DatabaseConfig {
     }
 
     @Bean
+    public SpringLiquibase springLiquibase(DataSource dataSource) {
+        SpringLiquibase springLiquibase = new SpringLiquibase();
+        springLiquibase.setDataSource(dataSource);
+        springLiquibase.setDropFirst(Boolean.TRUE);
+        springLiquibase.setChangeLog("classpath:migration/db-changelog.yaml");
+        return springLiquibase;
+    }
+
+    @Bean
+    @DependsOn("springLiquibase")
     public LocalSessionFactoryBean getSessionFactory(DataSource dataSource) {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
         factoryBean.setPhysicalNamingStrategy(new CustomPhysicalNamingStrategy());
         Properties properties = new Properties();
-        properties.put(DIALECT, databaseProperties.getHibernateDialect());
-        properties.put(STORAGE_ENGINE, databaseProperties.getHibernateStorageEngine());
+        //TODO probably clean-up dialect, engine when testing full app
+        //properties.put(DIALECT, databaseProperties.getHibernateDialect());
+        //properties.put(STORAGE_ENGINE, databaseProperties.getHibernateStorageEngine());
         properties.put(SHOW_SQL, databaseProperties.getHibernateShowSQL());
         properties.put(FORMAT_SQL, databaseProperties.getHibernateFormatSQL());
         properties.put(HBM2DDL_AUTO, databaseProperties.getHibernateHBM2DDLAuto());

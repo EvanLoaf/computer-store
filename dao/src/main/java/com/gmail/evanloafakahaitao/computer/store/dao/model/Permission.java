@@ -22,7 +22,7 @@ public class Permission implements Serializable {
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
-    @Size(max = 30)
+    @Size(max = 40)
     private PermissionEnum name;
 
     public Permission() {}

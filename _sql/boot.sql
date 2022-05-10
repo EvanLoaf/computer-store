@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS t_role (
 
 CREATE TABLE IF NOT EXISTS t_permission (
   f_id   SERIAL,
-  f_name VARCHAR(30) NOT NULL,
+  f_name VARCHAR(40) NOT NULL,
   PRIMARY KEY (f_id),
   UNIQUE (f_name)
 );
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS t_order (
   f_item_id     BIGINT(19) UNSIGNED     NOT NULL,
   f_order_code  CHAR(36)                NOT NULL,
   f_created     DATETIME DEFAULT NOW()  NOT NULL,
-  f_quantity    INT UNSIGNED            NOT NULL,
+  f_quantity    SMALLINT UNSIGNED       NOT NULL,
   f_total_price DECIMAL(12, 7) UNSIGNED NOT NULL,
   f_status      VARCHAR(20)             NOT NULL,
   f_is_deleted  BOOLEAN DEFAULT FALSE   NOT NULL,
@@ -166,8 +166,8 @@ CREATE TABLE IF NOT EXISTS t_business_card (
 INSERT INTO t_role (f_id, f_name, f_is_default)
 VALUES (1, 'security_admin', FALSE),
        (2, 'api_admin', FALSE),
-       (2, 'sales_admin', FALSE),
-       (2, 'user', TRUE)
+       (3, 'sales_admin', FALSE),
+       (4, 'user', TRUE)
 ON DUPLICATE KEY UPDATE f_id         = VALUES(f_id),
                         f_name       = VALUES(f_name),
                         f_is_default = VALUES(f_is_default);
@@ -181,7 +181,7 @@ ON DUPLICATE KEY UPDATE f_id   = VALUES(f_id),
                         f_name = VALUES(f_name);
 
 INSERT INTO t_authorization (f_role_id, f_permission_id)
-VALUES (1, 2),
+VALUES (1, 1),
        (2, 2),
        (3, 3),
        (4, 4)
