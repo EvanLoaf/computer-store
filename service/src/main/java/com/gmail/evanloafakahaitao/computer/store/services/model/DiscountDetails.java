@@ -8,44 +8,18 @@ public class DiscountDetails {
     private BigDecimal minPrice;
     private BigDecimal maxPrice;
 
-    private DiscountDetails(Builder builder) {
-        discountId = builder.discountId;
-        minPrice = builder.minPrice;
-        maxPrice = builder.maxPrice;
+    public DiscountDetails() {}
+
+    public void setDiscountId(Long discountId) {
+        this.discountId = discountId;
     }
 
-    private DiscountDetails() {}
-
-    public static Builder newBuilder() {
-        return new Builder();
+    public void setMinPrice(BigDecimal minPrice) {
+        this.minPrice = minPrice;
     }
 
-    public static final class Builder {
-        private Long discountId;
-        private BigDecimal minPrice;
-        private BigDecimal maxPrice;
-
-        private Builder() {
-        }
-
-        public Builder withDiscountId(Long discountId) {
-            this.discountId = discountId;
-            return this;
-        }
-
-        public Builder withMinPrice(BigDecimal minPrice) {
-            this.minPrice = minPrice;
-            return this;
-        }
-
-        public Builder withMaxPrice(BigDecimal maxPrice) {
-            this.maxPrice = maxPrice;
-            return this;
-        }
-
-        public DiscountDetails build() {
-            return new DiscountDetails(this);
-        }
+    public void setMaxPrice(BigDecimal maxPrice) {
+        this.maxPrice = maxPrice;
     }
 
     public Long getDiscountId() {

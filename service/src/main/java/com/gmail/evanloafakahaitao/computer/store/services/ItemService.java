@@ -26,4 +26,6 @@ public interface ItemService {
 
     List<String> updateDiscountInPriceRange(DiscountDetails discountDetails);
 
+    void deleteById(SimpleItemDTO simpleItemDTO);
+
 }

@@ -193,4 +193,11 @@ public class ItemServiceImpl implements ItemService {
         }
         return updatedItemVendorCodes;
     }
+
+    @Override
+    public void deleteById(SimpleItemDTO simpleItemDTO) {
+        logger.info("Deleting Item by Id");
+        logger.debug("Deleting Item by Id : {}", simpleItemDTO.getId());
+        itemDao.deleteById(simpleItemDTO.getId());
+    }
 }
