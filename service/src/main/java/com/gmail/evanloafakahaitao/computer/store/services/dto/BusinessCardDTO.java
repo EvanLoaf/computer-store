@@ -2,7 +2,6 @@ package com.gmail.evanloafakahaitao.computer.store.services.dto;
 
 import org.springframework.stereotype.Component;
 
-@Component
 public class BusinessCardDTO {
 
     private Long id;

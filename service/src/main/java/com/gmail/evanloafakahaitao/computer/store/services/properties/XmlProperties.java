@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class XmlProperties {
 
-    @Value("schema.file.path")
+    @Value("${schema.file.path}")
     private String schemaFilePath;
 
     public String getSchemaFilePath() {

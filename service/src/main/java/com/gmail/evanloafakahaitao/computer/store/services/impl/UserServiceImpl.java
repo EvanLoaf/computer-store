@@ -28,10 +28,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @Transactional
@@ -186,14 +183,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public SimpleUserDTO findByEmail(SimpleUserDTO userDTO) {
+    public Optional<SimpleUserDTO> findByEmail(SimpleUserDTO userDTO) {
         logger.info("Retrieving User by Email");
         logger.debug("Retrieving User by Email : {}", userDTO.getEmail());
         User user = userDao.findByEmail(userDTO.getEmail());
-        if (user != null) {
+        /*if (user != null) {
             return simpleUserDTOConverter.toDto(user);
         } else {
             throw new UserNotFoundException("User was not found with Email : " + userDTO.getEmail());
-        }
+        }*/
+        return Optional.ofNullable(user != null ? simpleUserDTOConverter.toDto(user) : null);
     }
 }

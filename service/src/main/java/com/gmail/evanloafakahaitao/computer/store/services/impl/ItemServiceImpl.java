@@ -110,7 +110,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ItemDTO> findAll(Integer firstResult, Integer maxResults) {
+    public List<ItemDTO> findAllNotDeleted(Integer firstResult, Integer maxResults) {
         logger.info("Retrieving Items");
         List<Item> items = itemDao.findAllNotDeleted(firstResult, maxResults);
         logger.debug("Retrieved items : {}", items);
@@ -125,7 +125,7 @@ public class ItemServiceImpl implements ItemService {
         logger.info("Retrieving Item by vendor code");
         logger.debug("Retrieving Item by vendor code : {}", itemDTO.getVendorCode());
         Item item = itemDao.findByVendorCode(itemDTO.getVendorCode());
-        return Optional.of(item != null ? itemDTOConverter.toDto(item) : new ItemDTO());
+        return Optional.ofNullable(item != null ? itemDTOConverter.toDto(item) : null);
     }
 
     @Override
@@ -134,12 +134,12 @@ public class ItemServiceImpl implements ItemService {
         logger.info("Retrieving Item by Id");
         logger.info("Retrieving Item by Id : {}", itemDTO.getId());
         Item item = itemDao.findOne(itemDTO.getId());
-        return Optional.of(item != null ? itemDTOConverter.toDto(item) : new ItemDTO());
+        return Optional.ofNullable(item != null ? itemDTOConverter.toDto(item) : null);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Long countAll() {
+    public Long countAllNotDeleted() {
         logger.info("Counting all Items");
         return itemDao.countAllNotDeleted();
     }

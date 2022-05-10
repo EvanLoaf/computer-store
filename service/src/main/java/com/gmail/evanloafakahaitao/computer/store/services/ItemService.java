@@ -14,13 +14,13 @@ public interface ItemService {
 
     ItemDTO save(ItemDTO itemDTO);
     //TODO or findallnotdeleted if i remove @Where
-    List<ItemDTO> findAll(Integer firstResult, Integer maxResults);
+    List<ItemDTO> findAllNotDeleted(Integer firstResult, Integer maxResults);
 
     Optional<ItemDTO> findByVendorCode(SimpleItemDTO itemDTO);
 
     Optional<ItemDTO> findById(SimpleItemDTO itemDTO);
     //TODO or countallnotdeleted if i remove @Where
-    Long countAll();
+    Long countAllNotDeleted();
 
     ItemDTO update(ItemDTO itemDTO);
 
