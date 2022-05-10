@@ -40,7 +40,7 @@ public class User extends SoftDeleteAndDisableEntity implements Serializable {
     private String email;
     @NotNull
     @Column(nullable = false)
-    @Size(min = 4, max = 30)
+    @Size(max = 60)
     private String password;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "roleId")

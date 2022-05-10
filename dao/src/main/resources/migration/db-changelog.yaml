@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: 1652153622384-1
+    id: 1652175364481-1
     author: evanloafakahaitao@gmail.com
     changes:
     - createTable:
@@ -17,7 +17,7 @@ databaseChangeLog:
             type: BIGINT UNSIGNED
         tableName: t_authorization
 - changeSet:
-    id: 1652153622384-2
+    id: 1652175364481-2
     author: evanloafakahaitao@gmail.com
     changes:
     - createTable:
@@ -51,7 +51,7 @@ databaseChangeLog:
             type: BIGINT UNSIGNED
         tableName: t_business_card
 - changeSet:
-    id: 1652153622384-3
+    id: 1652175364481-3
     author: evanloafakahaitao@gmail.com
     changes:
     - createTable:
@@ -92,7 +92,7 @@ databaseChangeLog:
             type: BIGINT UNSIGNED
         tableName: t_comment
 - changeSet:
-    id: 1652153622384-4
+    id: 1652175364481-4
     author: evanloafakahaitao@gmail.com
     changes:
     - createTable:
@@ -122,7 +122,7 @@ databaseChangeLog:
             type: datetime
         tableName: t_discount
 - changeSet:
-    id: 1652153622384-5
+    id: 1652175364481-5
     author: evanloafakahaitao@gmail.com
     changes:
     - createTable:
@@ -146,7 +146,7 @@ databaseChangeLog:
             type: BIGINT UNSIGNED
         tableName: t_feedback
 - changeSet:
-    id: 1652153622384-6
+    id: 1652175364481-6
     author: evanloafakahaitao@gmail.com
     changes:
     - createTable:
@@ -185,7 +185,7 @@ databaseChangeLog:
             type: BIT(1)
         tableName: t_item
 - changeSet:
-    id: 1652153622384-7
+    id: 1652175364481-7
     author: evanloafakahaitao@gmail.com
     changes:
     - createTable:
@@ -226,7 +226,7 @@ databaseChangeLog:
             type: BIGINT UNSIGNED
         tableName: t_news
 - changeSet:
-    id: 1652153622384-8
+    id: 1652175364481-8
     author: evanloafakahaitao@gmail.com
     changes:
     - createTable:
@@ -276,7 +276,7 @@ databaseChangeLog:
             type: BIT(1)
         tableName: t_order
 - changeSet:
-    id: 1652153622384-9
+    id: 1652175364481-9
     author: evanloafakahaitao@gmail.com
     changes:
     - createTable:
@@ -296,7 +296,7 @@ databaseChangeLog:
             type: VARCHAR(40)
         tableName: t_permission
 - changeSet:
-    id: 1652153622384-10
+    id: 1652175364481-10
     author: evanloafakahaitao@gmail.com
     changes:
     - createTable:
@@ -314,7 +314,7 @@ databaseChangeLog:
             type: VARCHAR(15)
         tableName: t_profile
 - changeSet:
-    id: 1652153622384-11
+    id: 1652175364481-11
     author: evanloafakahaitao@gmail.com
     changes:
     - createTable:
@@ -331,7 +331,7 @@ databaseChangeLog:
             type: BIGINT UNSIGNED
         tableName: t_promotion
 - changeSet:
-    id: 1652153622384-12
+    id: 1652175364481-12
     author: evanloafakahaitao@gmail.com
     changes:
     - createTable:
@@ -357,7 +357,7 @@ databaseChangeLog:
             type: BIT(1)
         tableName: t_role
 - changeSet:
-    id: 1652153622384-13
+    id: 1652175364481-13
     author: evanloafakahaitao@gmail.com
     changes:
     - createTable:
@@ -389,7 +389,7 @@ databaseChangeLog:
             constraints:
               nullable: false
             name: f_password
-            type: VARCHAR(30)
+            type: VARCHAR(60)
         - column:
             constraints:
               nullable: false
@@ -412,7 +412,7 @@ databaseChangeLog:
             type: BIGINT UNSIGNED
         tableName: t_user
 - changeSet:
-    id: 1652153622384-14
+    id: 1652175364481-14
     author: evanloafakahaitao@gmail.com
     changes:
     - insert:
@@ -451,8 +451,323 @@ databaseChangeLog:
             name: f_permission_id
             valueNumeric: 4
         tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 3
+        - column:
+            name: f_permission_id
+            valueNumeric: 11
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 4
+        - column:
+            name: f_permission_id
+            valueNumeric: 11
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 3
+        - column:
+            name: f_permission_id
+            valueNumeric: 12
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 3
+        - column:
+            name: f_permission_id
+            valueNumeric: 13
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 3
+        - column:
+            name: f_permission_id
+            valueNumeric: 14
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 4
+        - column:
+            name: f_permission_id
+            valueNumeric: 15
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 4
+        - column:
+            name: f_permission_id
+            valueNumeric: 16
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 4
+        - column:
+            name: f_permission_id
+            valueNumeric: 17
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 3
+        - column:
+            name: f_permission_id
+            valueNumeric: 18
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 3
+        - column:
+            name: f_permission_id
+            valueNumeric: 19
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 4
+        - column:
+            name: f_permission_id
+            valueNumeric: 20
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 4
+        - column:
+            name: f_permission_id
+            valueNumeric: 21
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 1
+        - column:
+            name: f_permission_id
+            valueNumeric: 22
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 1
+        - column:
+            name: f_permission_id
+            valueNumeric: 23
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 1
+        - column:
+            name: f_permission_id
+            valueNumeric: 24
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 1
+        - column:
+            name: f_permission_id
+            valueNumeric: 25
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 1
+        - column:
+            name: f_permission_id
+            valueNumeric: 26
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 3
+        - column:
+            name: f_permission_id
+            valueNumeric: 27
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 4
+        - column:
+            name: f_permission_id
+            valueNumeric: 27
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 3
+        - column:
+            name: f_permission_id
+            valueNumeric: 28
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 3
+        - column:
+            name: f_permission_id
+            valueNumeric: 29
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 3
+        - column:
+            name: f_permission_id
+            valueNumeric: 30
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 4
+        - column:
+            name: f_permission_id
+            valueNumeric: 31
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 3
+        - column:
+            name: f_permission_id
+            valueNumeric: 32
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 3
+        - column:
+            name: f_permission_id
+            valueNumeric: 33
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 3
+        - column:
+            name: f_permission_id
+            valueNumeric: 34
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 4
+        - column:
+            name: f_permission_id
+            valueNumeric: 35
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 3
+        - column:
+            name: f_permission_id
+            valueNumeric: 36
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 3
+        - column:
+            name: f_permission_id
+            valueNumeric: 37
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 2
+        - column:
+            name: f_permission_id
+            valueNumeric: 38
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 2
+        - column:
+            name: f_permission_id
+            valueNumeric: 39
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 2
+        - column:
+            name: f_permission_id
+            valueNumeric: 40
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 2
+        - column:
+            name: f_permission_id
+            valueNumeric: 41
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 4
+        - column:
+            name: f_permission_id
+            valueNumeric: 42
+        tableName: t_authorization
+    - insert:
+        columns:
+        - column:
+            name: f_role_id
+            valueNumeric: 2
+        - column:
+            name: f_permission_id
+            valueNumeric: 43
+        tableName: t_authorization
 - changeSet:
-    id: 1652153622384-15
+    id: 1652175364481-15
     author: evanloafakahaitao@gmail.com
     changes:
     - insert:
@@ -465,7 +780,7 @@ databaseChangeLog:
             value: Cheeky test comment
         - column:
             name: f_created
-            valueDate: 2022-05-10T06:29:03
+            valueDate: 2022-05-10T12:35:27
         - column:
             name: f_is_deleted
             valueBoolean: false
@@ -477,7 +792,7 @@ databaseChangeLog:
             valueNumeric: 1
         tableName: t_comment
 - changeSet:
-    id: 1652153622384-16
+    id: 1652175364481-16
     author: evanloafakahaitao@gmail.com
     changes:
     - insert:
@@ -493,7 +808,7 @@ databaseChangeLog:
             valueNumeric: 10
         - column:
             name: f_finish_date
-            valueDate: 2022-05-24T06:29:03
+            valueDate: 2022-05-24T12:35:26
         tableName: t_discount
     - insert:
         columns:
@@ -508,7 +823,7 @@ databaseChangeLog:
             valueNumeric: 20
         - column:
             name: f_finish_date
-            valueDate: 2022-05-24T06:29:03
+            valueDate: 2022-05-24T12:35:26
         tableName: t_discount
     - insert:
         columns:
@@ -523,7 +838,7 @@ databaseChangeLog:
             valueNumeric: 30
         - column:
             name: f_finish_date
-            valueDate: 2022-05-24T06:29:03
+            valueDate: 2022-05-24T12:35:26
         tableName: t_discount
     - insert:
         columns:
@@ -538,10 +853,10 @@ databaseChangeLog:
             valueNumeric: 40
         - column:
             name: f_finish_date
-            valueDate: 2022-05-24T06:29:03
+            valueDate: 2022-05-24T12:35:26
         tableName: t_discount
 - changeSet:
-    id: 1652153622384-17
+    id: 1652175364481-17
     author: evanloafakahaitao@gmail.com
     changes:
     - insert:
@@ -557,7 +872,7 @@ databaseChangeLog:
             valueNumeric: 4
         tableName: t_feedback
 - changeSet:
-    id: 1652153622384-18
+    id: 1652175364481-18
     author: evanloafakahaitao@gmail.com
     changes:
     - insert:
@@ -666,7 +981,7 @@ databaseChangeLog:
             valueBoolean: false
         tableName: t_item
 - changeSet:
-    id: 1652153622384-19
+    id: 1652175364481-19
     author: evanloafakahaitao@gmail.com
     changes:
     - insert:
@@ -682,7 +997,7 @@ databaseChangeLog:
             value: Test article profound content
         - column:
             name: f_created
-            valueDate: 2022-05-10T06:29:03
+            valueDate: 2022-05-10T12:35:26
         - column:
             name: f_is_deleted
             valueBoolean: false
@@ -691,7 +1006,7 @@ databaseChangeLog:
             valueNumeric: 3
         tableName: t_news
 - changeSet:
-    id: 1652153622384-20
+    id: 1652175364481-20
     author: evanloafakahaitao@gmail.com
     changes:
     - insert:
@@ -702,6 +1017,159 @@ databaseChangeLog:
         - column:
             name: f_name
             value: API_ADMIN_BASIC_PERMISSION
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 31
+        - column:
+            name: f_name
+            value: CREATE_COMMENT
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 35
+        - column:
+            name: f_name
+            value: CREATE_FEEDBACK
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 12
+        - column:
+            name: f_name
+            value: CREATE_ITEM
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 39
+        - column:
+            name: f_name
+            value: CREATE_ITEM_API
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 28
+        - column:
+            name: f_name
+            value: CREATE_NEWS
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 16
+        - column:
+            name: f_name
+            value: CREATE_ORDER
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 26
+        - column:
+            name: f_name
+            value: CREATE_USER
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 32
+        - column:
+            name: f_name
+            value: DELETE_COMMENTS
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 36
+        - column:
+            name: f_name
+            value: DELETE_FEEDBACK
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 13
+        - column:
+            name: f_name
+            value: DELETE_ITEM
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 41
+        - column:
+            name: f_name
+            value: DELETE_ITEM_API
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 30
+        - column:
+            name: f_name
+            value: DELETE_NEWS
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 17
+        - column:
+            name: f_name
+            value: DELETE_ORDER_SELF
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 25
+        - column:
+            name: f_name
+            value: DELETE_USER
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 24
+        - column:
+            name: f_name
+            value: DISABLE_USER
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 42
+        - column:
+            name: f_name
+            value: MANAGE_BUSINESS_CARD
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 43
+        - column:
+            name: f_name
+            value: MANAGE_BUSINESS_CARD_API
         tableName: t_permission
     - insert:
         columns:
@@ -725,13 +1193,157 @@ databaseChangeLog:
         columns:
         - column:
             name: f_id
+            valueNumeric: 33
+        - column:
+            name: f_name
+            value: UPDATE_DISCOUNT_ITEM
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 34
+        - column:
+            name: f_name
+            value: UPDATE_DISCOUNT_USERS
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 40
+        - column:
+            name: f_name
+            value: UPDATE_ITEM_API
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 29
+        - column:
+            name: f_name
+            value: UPDATE_NEWS
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 19
+        - column:
+            name: f_name
+            value: UPDATE_ORDER_STATUS
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 21
+        - column:
+            name: f_name
+            value: UPDATE_USER_SELF
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 23
+        - column:
+            name: f_name
+            value: UPDATE_USERS_ALL
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 14
+        - column:
+            name: f_name
+            value: UPLOAD_ITEMS
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
             valueNumeric: 4
         - column:
             name: f_name
             value: USER_BASIC_PERMISSION
         tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 37
+        - column:
+            name: f_name
+            value: VIEW_FEEDBACK
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 11
+        - column:
+            name: f_name
+            value: VIEW_ITEMS
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 38
+        - column:
+            name: f_name
+            value: VIEW_ITEMS_API
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 27
+        - column:
+            name: f_name
+            value: VIEW_NEWS
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 18
+        - column:
+            name: f_name
+            value: VIEW_ORDERS_ALL
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 15
+        - column:
+            name: f_name
+            value: VIEW_ORDERS_SELF
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 20
+        - column:
+            name: f_name
+            value: VIEW_USER_SELF
+        tableName: t_permission
+    - insert:
+        columns:
+        - column:
+            name: f_id
+            valueNumeric: 22
+        - column:
+            name: f_name
+            value: VIEW_USERS_ALL
+        tableName: t_permission
 - changeSet:
-    id: 1652153622384-21
+    id: 1652175364481-21
     author: evanloafakahaitao@gmail.com
     changes:
     - insert:
@@ -783,7 +1395,7 @@ databaseChangeLog:
             value: user_phone
         tableName: t_profile
 - changeSet:
-    id: 1652153622384-22
+    id: 1652175364481-22
     author: evanloafakahaitao@gmail.com
     changes:
     - insert:
@@ -835,7 +1447,7 @@ databaseChangeLog:
             valueBoolean: true
         tableName: t_role
 - changeSet:
-    id: 1652153622384-23
+    id: 1652175364481-23
     author: evanloafakahaitao@gmail.com
     changes:
     - insert:
@@ -955,7 +1567,7 @@ databaseChangeLog:
             name: f_discount_id
         tableName: t_user
 - changeSet:
-    id: 1652153622384-24
+    id: 1652175364481-24
     author: evanloafakahaitao@gmail.com
     changes:
     - createIndex:
@@ -965,7 +1577,7 @@ databaseChangeLog:
         indexName: f_discount_id
         tableName: t_promotion
 - changeSet:
-    id: 1652153622384-25
+    id: 1652175364481-25
     author: evanloafakahaitao@gmail.com
     changes:
     - createIndex:
@@ -975,7 +1587,7 @@ databaseChangeLog:
         indexName: f_discount_id
         tableName: t_user
 - changeSet:
-    id: 1652153622384-26
+    id: 1652175364481-26
     author: evanloafakahaitao@gmail.com
     changes:
     - createIndex:
@@ -985,7 +1597,7 @@ databaseChangeLog:
         indexName: f_item_id
         tableName: t_order
 - changeSet:
-    id: 1652153622384-27
+    id: 1652175364481-27
     author: evanloafakahaitao@gmail.com
     changes:
     - createIndex:
@@ -995,7 +1607,7 @@ databaseChangeLog:
         indexName: f_news_id
         tableName: t_comment
 - changeSet:
-    id: 1652153622384-28
+    id: 1652175364481-28
     author: evanloafakahaitao@gmail.com
     changes:
     - createIndex:
@@ -1005,7 +1617,7 @@ databaseChangeLog:
         indexName: f_permission_id
         tableName: t_authorization
 - changeSet:
-    id: 1652153622384-29
+    id: 1652175364481-29
     author: evanloafakahaitao@gmail.com
     changes:
     - createIndex:
@@ -1015,7 +1627,7 @@ databaseChangeLog:
         indexName: f_role_id
         tableName: t_user
 - changeSet:
-    id: 1652153622384-30
+    id: 1652175364481-30
     author: evanloafakahaitao@gmail.com
     changes:
     - createIndex:
@@ -1025,7 +1637,7 @@ databaseChangeLog:
         indexName: f_user_id
         tableName: t_business_card
 - changeSet:
-    id: 1652153622384-31
+    id: 1652175364481-31
     author: evanloafakahaitao@gmail.com
     changes:
     - createIndex:
@@ -1035,7 +1647,7 @@ databaseChangeLog:
         indexName: f_user_id
         tableName: t_comment
 - changeSet:
-    id: 1652153622384-32
+    id: 1652175364481-32
     author: evanloafakahaitao@gmail.com
     changes:
     - createIndex:
@@ -1045,7 +1657,7 @@ databaseChangeLog:
         indexName: f_user_id
         tableName: t_feedback
 - changeSet:
-    id: 1652153622384-33
+    id: 1652175364481-33
     author: evanloafakahaitao@gmail.com
     changes:
     - createIndex:
@@ -1055,7 +1667,7 @@ databaseChangeLog:
         indexName: f_user_id
         tableName: t_news
 - changeSet:
-    id: 1652153622384-34
+    id: 1652175364481-34
     author: evanloafakahaitao@gmail.com
     changes:
     - addForeignKeyConstraint:
@@ -1070,7 +1682,7 @@ databaseChangeLog:
         referencedTableName: t_role
         validate: true
 - changeSet:
-    id: 1652153622384-35
+    id: 1652175364481-35
     author: evanloafakahaitao@gmail.com
     changes:
     - addForeignKeyConstraint:
@@ -1085,7 +1697,7 @@ databaseChangeLog:
         referencedTableName: t_permission
         validate: true
 - changeSet:
-    id: 1652153622384-36
+    id: 1652175364481-36
     author: evanloafakahaitao@gmail.com
     changes:
     - addForeignKeyConstraint:
@@ -1100,7 +1712,7 @@ databaseChangeLog:
         referencedTableName: t_user
         validate: true
 - changeSet:
-    id: 1652153622384-37
+    id: 1652175364481-37
     author: evanloafakahaitao@gmail.com
     changes:
     - addForeignKeyConstraint:
@@ -1115,7 +1727,7 @@ databaseChangeLog:
         referencedTableName: t_user
         validate: true
 - changeSet:
-    id: 1652153622384-38
+    id: 1652175364481-38
     author: evanloafakahaitao@gmail.com
     changes:
     - addForeignKeyConstraint:
@@ -1130,7 +1742,7 @@ databaseChangeLog:
         referencedTableName: t_news
         validate: true
 - changeSet:
-    id: 1652153622384-39
+    id: 1652175364481-39
     author: evanloafakahaitao@gmail.com
     changes:
     - addForeignKeyConstraint:
@@ -1145,7 +1757,7 @@ databaseChangeLog:
         referencedTableName: t_user
         validate: true
 - changeSet:
-    id: 1652153622384-40
+    id: 1652175364481-40
     author: evanloafakahaitao@gmail.com
     changes:
     - addForeignKeyConstraint:
@@ -1160,7 +1772,7 @@ databaseChangeLog:
         referencedTableName: t_user
         validate: true
 - changeSet:
-    id: 1652153622384-41
+    id: 1652175364481-41
     author: evanloafakahaitao@gmail.com
     changes:
     - addForeignKeyConstraint:
@@ -1175,7 +1787,7 @@ databaseChangeLog:
         referencedTableName: t_user
         validate: true
 - changeSet:
-    id: 1652153622384-42
+    id: 1652175364481-42
     author: evanloafakahaitao@gmail.com
     changes:
     - addForeignKeyConstraint:
@@ -1190,7 +1802,7 @@ databaseChangeLog:
         referencedTableName: t_item
         validate: true
 - changeSet:
-    id: 1652153622384-43
+    id: 1652175364481-43
     author: evanloafakahaitao@gmail.com
     changes:
     - addForeignKeyConstraint:
@@ -1205,7 +1817,7 @@ databaseChangeLog:
         referencedTableName: t_user
         validate: true
 - changeSet:
-    id: 1652153622384-44
+    id: 1652175364481-44
     author: evanloafakahaitao@gmail.com
     changes:
     - addForeignKeyConstraint:
@@ -1220,7 +1832,7 @@ databaseChangeLog:
         referencedTableName: t_item
         validate: true
 - changeSet:
-    id: 1652153622384-45
+    id: 1652175364481-45
     author: evanloafakahaitao@gmail.com
     changes:
     - addForeignKeyConstraint:
@@ -1235,7 +1847,7 @@ databaseChangeLog:
         referencedTableName: t_discount
         validate: true
 - changeSet:
-    id: 1652153622384-46
+    id: 1652175364481-46
     author: evanloafakahaitao@gmail.com
     changes:
     - addForeignKeyConstraint:
@@ -1250,7 +1862,7 @@ databaseChangeLog:
         referencedTableName: t_role
         validate: true
 - changeSet:
-    id: 1652153622384-47
+    id: 1652175364481-47
     author: evanloafakahaitao@gmail.com
     changes:
     - addForeignKeyConstraint:
