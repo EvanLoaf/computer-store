@@ -1,10 +1,13 @@
 package com.gmail.evanloafakahaitao.computer.store.services.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ItemDTO {
+public class ItemDTO implements Serializable {
+
+    private static final long serialVersionUID = -9102153168997386398L;
 
     private Long id;
     private String name;

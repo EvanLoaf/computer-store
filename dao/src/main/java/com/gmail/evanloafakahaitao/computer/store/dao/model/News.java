@@ -36,7 +36,7 @@ public class News extends SoftDeleteEntity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "userId", nullable = false, updatable = false)
     private User user;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "newsId", nullable = false, updatable = false)
     private Set<Comment> comments = new HashSet<>();
 
