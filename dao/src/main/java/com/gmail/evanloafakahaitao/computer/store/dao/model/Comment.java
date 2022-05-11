@@ -1,16 +1,20 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
-import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table
-public class Comment implements Serializable {
+@SQLDelete(sql = "update t_comment set f_is_deleted = true where f_id = ?")
+@Where(clause = "f_is_deleted = false")
+public class Comment extends SoftDeleteEntity implements Serializable {
 
     private static final long serialVersionUID = 5083307714018220177L;
     @Id
@@ -24,7 +28,7 @@ public class Comment implements Serializable {
     @NotNull
     @Column(nullable = false)
     private LocalDateTime created;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "userId", nullable = false, updatable = false)
     private User user;
 
@@ -66,18 +70,14 @@ public class Comment implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Comment comment = (Comment) o;
-
-        if (!id.equals(comment.id)) return false;
-        return created.equals(comment.created);
+        return Objects.equals(id, comment.id) &&
+                Objects.equals(content, comment.content);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + created.hashCode();
-        return result;
+        return Objects.hash(id, content);
     }
 
     @Override

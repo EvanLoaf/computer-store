@@ -11,17 +11,6 @@ public class DiscountDTO {
 
     public DiscountDTO() {}
 
-    private DiscountDTO(Builder builder) {
-        setId(builder.id);
-        setName(builder.name);
-        setPercent(builder.percent);
-        setFinishDate(builder.finishDate);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
     public Long getId() {
         return id;
     }
@@ -52,40 +41,6 @@ public class DiscountDTO {
 
     public void setFinishDate(LocalDateTime finishDate) {
         this.finishDate = finishDate;
-    }
-
-    public static final class Builder {
-        private Long id;
-        private String name;
-        private Integer percent;
-        private LocalDateTime finishDate;
-
-        private Builder() {
-        }
-
-        public Builder withId(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder withPercent(Integer percent) {
-            this.percent = percent;
-            return this;
-        }
-
-        public Builder withFinishDate(LocalDateTime finishDate) {
-            this.finishDate = finishDate;
-            return this;
-        }
-
-        public DiscountDTO build() {
-            return new DiscountDTO(this);
-        }
     }
 
     @Override

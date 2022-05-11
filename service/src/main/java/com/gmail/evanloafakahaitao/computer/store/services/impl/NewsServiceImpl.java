@@ -2,144 +2,117 @@ package com.gmail.evanloafakahaitao.computer.store.services.impl;
 
 import com.gmail.evanloafakahaitao.computer.store.dao.NewsDao;
 import com.gmail.evanloafakahaitao.computer.store.dao.UserDao;
-import com.gmail.evanloafakahaitao.computer.store.dao.impl.NewsDaoImpl;
-import com.gmail.evanloafakahaitao.computer.store.dao.impl.UserDaoImpl;
-import com.gmail.evanloafakahaitao.computer.store.dao.model.*;
+import com.gmail.evanloafakahaitao.computer.store.dao.model.News;
+import com.gmail.evanloafakahaitao.computer.store.dao.model.User;
 import com.gmail.evanloafakahaitao.computer.store.services.NewsService;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.DTOConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.EntityConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.dto.NewsDTOConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.dto.SimpleNewsDTOConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.entity.NewsEntityConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.dto.*;
+import com.gmail.evanloafakahaitao.computer.store.services.converters.DTOConverter;
+import com.gmail.evanloafakahaitao.computer.store.services.converters.EntityConverter;
+import com.gmail.evanloafakahaitao.computer.store.services.dto.NewsDTO;
+import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleNewsDTO;
+import com.gmail.evanloafakahaitao.computer.store.services.exceptions.NewsNotFoundException;
+import com.gmail.evanloafakahaitao.computer.store.services.util.CurrentUserUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
+@Service
+@Transactional
 public class NewsServiceImpl implements NewsService {
 
     private static final Logger logger = LogManager.getLogger(NewsServiceImpl.class);
-    private final NewsDao newsDao = new NewsDaoImpl();
-    private final UserDao userDao = new UserDaoImpl();
-    private final EntityConverter<NewsDTO, News> newsEntityConverter = new NewsEntityConverter();
-    private final DTOConverter<NewsDTO, News> newsDTOConverter = new NewsDTOConverter();
-    private final DTOConverter<SimpleNewsDTO, News> simpleNewsDTOConverter = new SimpleNewsDTOConverter();
 
-    @Override
-    public NewsDTO save(NewsDTO newsDTO) {
-        Session session = newsDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            News news = newsEntityConverter.toEntity(newsDTO);
-            User user = userDao.findOne(news.getUser().getId());
-            news.setUser(user);
-            news.setCreated(LocalDateTime.now());
-            newsDao.create(news);
-            NewsDTO savedNews = newsDTOConverter.toDto(news);
-            transaction.commit();
-            return savedNews;
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error("Failed to save News", e);
-        }
-        return null;
+    private final NewsDao newsDao;
+    private final UserDao userDao;
+    private final EntityConverter<NewsDTO, News> newsEntityConverter;
+    private final DTOConverter<NewsDTO, News> newsDTOConverter;
+    private final DTOConverter<SimpleNewsDTO, News> simpleNewsDTOConverter;
+
+    @Autowired
+    public NewsServiceImpl(
+            NewsDao newsDao,
+            UserDao userDao,
+            @Qualifier("newsEntityConverter") EntityConverter<NewsDTO, News> newsEntityConverter,
+            @Qualifier("newsDTOConverter") DTOConverter<NewsDTO, News> newsDTOConverter,
+            @Qualifier("simpleNewsDTOConverter") DTOConverter<SimpleNewsDTO, News> simpleNewsDTOConverter
+    ) {
+        this.newsDao = newsDao;
+        this.userDao = userDao;
+        this.newsEntityConverter = newsEntityConverter;
+        this.newsDTOConverter = newsDTOConverter;
+        this.simpleNewsDTOConverter = simpleNewsDTOConverter;
     }
 
     @Override
-    public List<SimpleNewsDTO> findAll() {
-        Session session = newsDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            List<News> newsList = newsDao.findAll();
-            List<SimpleNewsDTO> newsDTOList = simpleNewsDTOConverter.toDTOList(newsList);
-            transaction.commit();
-            return newsDTOList;
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error("Failed to retrieve all News", e);
+    public NewsDTO save(NewsDTO newsDTO) {
+        logger.info("Saving News");
+        logger.debug("Saving News : {}", newsDTO.getTitle());
+        User user = userDao.findOne(CurrentUserUtil.getCurrentId());
+        News news = newsEntityConverter.toEntity(newsDTO);
+        if (news.getCreated() == null) {
+            news.setCreated(LocalDateTime.now());
         }
-        return Collections.emptyList();
+        news.setDeleted(false);
+        news.setUser(user);
+        newsDao.create(news);
+        return newsDTOConverter.toDto(news);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<SimpleNewsDTO> findAll(Integer firstResult, Integer maxResults) {
+        logger.info("Retrieving News");
+        List<News> newsList = newsDao.findAll(firstResult, maxResults);
+        logger.debug("Retrieved News : {}", newsList);
+        if (!newsList.isEmpty()) {
+            return simpleNewsDTOConverter.toDTOList(newsList);
+        } else return Collections.emptyList();
     }
 
     @Override
     public NewsDTO findById(SimpleNewsDTO simpleNewsDTO) {
-        Session session = newsDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            News news = newsDao.findOne(simpleNewsDTO.getId());
-            NewsDTO foundNews = newsDTOConverter.toDto(news);
-            transaction.commit();
-            return foundNews;
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error("Failed to retrieve News by id", e);
+        logger.info("Retrieving News by Id");
+        logger.debug("Retrieving News by Id : {}", simpleNewsDTO.getId());
+        News news = newsDao.findOne(simpleNewsDTO.getId());
+        if (news != null) {
+            return newsDTOConverter.toDto(news);
+        } else {
+            throw new NewsNotFoundException("Piece of news was not found with Id : " + simpleNewsDTO.getId());
         }
-        return null;
     }
 
     @Override
     public NewsDTO update(NewsDTO newsDTO) {
-        Session session = newsDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            News news = newsDao.findOne(newsDTO.getId());
-            if (newsDTO.getContent() != null) {
-                news.setContent(newsDTO.getContent());
-            }
-            if (newsDTO.getTitle() != null) {
-                news.setTitle(newsDTO.getTitle());
-            }
-            newsDao.update(news);
-            NewsDTO updatedNews = newsDTOConverter.toDto(news);
-            transaction.commit();
-            return updatedNews;
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error("Failed to update news", e);
+        logger.info("Updating News");
+        logger.debug("Updating News : {}", newsDTO);
+        News news = newsDao.findOne(newsDTO.getId());
+        if (newsDTO.getContent() != null && !newsDTO.getContent().equals(news.getContent())) {
+            news.setContent(newsDTO.getContent());
         }
-        return null;
+        if (newsDTO.getTitle() != null && !newsDTO.getTitle().equals(news.getTitle())) {
+            news.setTitle(newsDTO.getTitle());
+        }
+        newsDao.update(news);
+        return newsDTOConverter.toDto(news);
     }
 
     @Override
     public void deleteById(SimpleNewsDTO simpleNewsDTO) {
-        Session session = newsDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            newsDao.deleteById(simpleNewsDTO.getId());
-            transaction.commit();
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error("Failed to delete news by id", e);
-        }
+        logger.info("Deleting News by Id");
+        logger.debug("Deleting News by Id : {}", simpleNewsDTO.getId());
+        newsDao.deleteById(simpleNewsDTO.getId());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long countAll() {
+        logger.info("Counting all News");
+        return newsDao.countAll();
     }
 }

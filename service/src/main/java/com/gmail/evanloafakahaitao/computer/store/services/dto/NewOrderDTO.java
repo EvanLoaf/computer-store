@@ -8,16 +8,6 @@ public class NewOrderDTO {
 
     public NewOrderDTO() {}
 
-    private NewOrderDTO(Builder builder) {
-        setQuantity(builder.quantity);
-        setUser(builder.user);
-        setItem(builder.item);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
     public Integer getQuantity() {
         return quantity;
     }
@@ -40,34 +30,6 @@ public class NewOrderDTO {
 
     public void setItem(SimpleItemDTO item) {
         this.item = item;
-    }
-
-    public static final class Builder {
-        private Integer quantity;
-        private SimpleUserDTO user;
-        private SimpleItemDTO item;
-
-        private Builder() {
-        }
-
-        public Builder withQuantity(Integer quantity) {
-            this.quantity = quantity;
-            return this;
-        }
-
-        public Builder withUser(SimpleUserDTO user) {
-            this.user = user;
-            return this;
-        }
-
-        public Builder withItem(SimpleItemDTO item) {
-            this.item = item;
-            return this;
-        }
-
-        public NewOrderDTO build() {
-            return new NewOrderDTO(this);
-        }
     }
 
     @Override

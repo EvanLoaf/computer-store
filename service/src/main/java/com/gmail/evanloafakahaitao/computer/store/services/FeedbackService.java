@@ -8,7 +8,9 @@ public interface FeedbackService {
 
     FeedbackDTO save(FeedbackDTO feedbackDTO);
 
-    List<FeedbackDTO> findAll();
+    List<FeedbackDTO> findAll(Integer firstResult, Integer maxResults);
 
     void deleteById(FeedbackDTO feedbackDTO);
+
+    Long countAll();
 }

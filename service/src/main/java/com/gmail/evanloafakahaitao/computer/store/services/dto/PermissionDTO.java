@@ -7,15 +7,6 @@ public class PermissionDTO {
 
     public PermissionDTO() {}
 
-    private PermissionDTO(Builder builder) {
-        setId(builder.id);
-        setName(builder.name);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
     public Long getId() {
         return id;
     }
@@ -32,28 +23,6 @@ public class PermissionDTO {
         this.name = name;
     }
 
-    public static final class Builder {
-        private Long id;
-        private PermissionEnum name;
-
-        private Builder() {
-        }
-
-        public Builder withId(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder withName(PermissionEnum name) {
-            this.name = name;
-            return this;
-        }
-
-        public PermissionDTO build() {
-            return new PermissionDTO(this);
-        }
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -61,13 +30,13 @@ public class PermissionDTO {
 
         PermissionDTO that = (PermissionDTO) o;
 
-        if (!id.equals(that.id)) return false;
-        return name.equals(that.name);
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        return name == that.name;
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + name.hashCode();
         return result;
     }

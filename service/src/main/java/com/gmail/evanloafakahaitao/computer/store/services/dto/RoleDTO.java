@@ -11,16 +11,6 @@ public class RoleDTO {
 
     public RoleDTO() {}
 
-    private RoleDTO(Builder builder) {
-        setId(builder.id);
-        setName(builder.name);
-        setPermissions(builder.permissions);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
     public Long getId() {
         return id;
     }
@@ -45,34 +35,6 @@ public class RoleDTO {
         this.permissions = permissions;
     }
 
-    public static final class Builder {
-        private Long id;
-        private String name;
-        private Set<PermissionDTO> permissions;
-
-        private Builder() {
-        }
-
-        public Builder withId(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder withPermissions(Set<PermissionDTO> permissions) {
-            this.permissions = permissions;
-            return this;
-        }
-
-        public RoleDTO build() {
-            return new RoleDTO(this);
-        }
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,13 +42,13 @@ public class RoleDTO {
 
         RoleDTO roleDTO = (RoleDTO) o;
 
-        if (!id.equals(roleDTO.id)) return false;
+        if (id != null ? !id.equals(roleDTO.id) : roleDTO.id != null) return false;
         return name.equals(roleDTO.name);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + name.hashCode();
         return result;
     }

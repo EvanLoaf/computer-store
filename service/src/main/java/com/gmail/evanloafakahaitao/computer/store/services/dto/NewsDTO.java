@@ -15,19 +15,6 @@ public class NewsDTO {
 
     public NewsDTO() {}
 
-    private NewsDTO(Builder builder) {
-        setId(builder.id);
-        setTitle(builder.title);
-        setContent(builder.content);
-        setCreated(builder.created);
-        setUser(builder.user);
-        setComments(builder.comments);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
     public Long getId() {
         return id;
     }
@@ -76,52 +63,6 @@ public class NewsDTO {
         this.comments = comments;
     }
 
-    public static final class Builder {
-        private Long id;
-        private String title;
-        private String content;
-        private LocalDateTime created;
-        private SimpleUserDTO user;
-        private Set<CommentDTO> comments;
-
-        private Builder() {
-        }
-
-        public Builder withId(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder withTitle(String title) {
-            this.title = title;
-            return this;
-        }
-
-        public Builder withContent(String content) {
-            this.content = content;
-            return this;
-        }
-
-        public Builder withCreated(LocalDateTime created) {
-            this.created = created;
-            return this;
-        }
-
-        public Builder withUser(SimpleUserDTO user) {
-            this.user = user;
-            return this;
-        }
-
-        public Builder withComments(Set<CommentDTO> comments) {
-            this.comments = comments;
-            return this;
-        }
-
-        public NewsDTO build() {
-            return new NewsDTO(this);
-        }
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -129,16 +70,16 @@ public class NewsDTO {
 
         NewsDTO newsDTO = (NewsDTO) o;
 
-        if (!id.equals(newsDTO.id)) return false;
+        if (id != null ? !id.equals(newsDTO.id) : newsDTO.id != null) return false;
         if (!title.equals(newsDTO.title)) return false;
-        return created.equals(newsDTO.created);
+        return created != null ? created.equals(newsDTO.created) : newsDTO.created == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + title.hashCode();
-        result = 31 * result + created.hashCode();
+        result = 31 * result + (created != null ? created.hashCode() : 0);
         return result;
     }
 

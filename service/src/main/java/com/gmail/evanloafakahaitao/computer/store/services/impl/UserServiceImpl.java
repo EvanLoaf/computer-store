@@ -3,84 +3,115 @@ package com.gmail.evanloafakahaitao.computer.store.services.impl;
 import com.gmail.evanloafakahaitao.computer.store.dao.DiscountDao;
 import com.gmail.evanloafakahaitao.computer.store.dao.RoleDao;
 import com.gmail.evanloafakahaitao.computer.store.dao.UserDao;
-import com.gmail.evanloafakahaitao.computer.store.dao.impl.DiscountDaoImpl;
-import com.gmail.evanloafakahaitao.computer.store.dao.impl.RoleDaoImpl;
-import com.gmail.evanloafakahaitao.computer.store.dao.impl.UserDaoImpl;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.Discount;
-import com.gmail.evanloafakahaitao.computer.store.dao.model.Profile;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.Role;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.User;
 import com.gmail.evanloafakahaitao.computer.store.services.UserService;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.DTOConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.EntityConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.dto.SimpleUserDTOConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.dto.UserDTOConverter;
-import com.gmail.evanloafakahaitao.computer.store.services.converter.entity.UserEntityConverter;
+import com.gmail.evanloafakahaitao.computer.store.services.converters.DTOConverter;
+import com.gmail.evanloafakahaitao.computer.store.services.converters.EntityConverter;
+import com.gmail.evanloafakahaitao.computer.store.services.dto.DiscountDTO;
+import com.gmail.evanloafakahaitao.computer.store.services.dto.PermissionEnum;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleUserDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.UserDTO;
+import com.gmail.evanloafakahaitao.computer.store.services.exceptions.UserNotFoundException;
+import com.gmail.evanloafakahaitao.computer.store.services.model.DiscountDetails;
+import com.gmail.evanloafakahaitao.computer.store.services.util.CurrentUserUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
+@Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
-    private final UserDao userDao = new UserDaoImpl();
-    private final RoleDao roleDao = new RoleDaoImpl();
-    private final DiscountDao discountDao = new DiscountDaoImpl();
-    private final DTOConverter<UserDTO, User> userDTOConverter = new UserDTOConverter();
-    private final DTOConverter<SimpleUserDTO, User> simpleUserDTOConverter = new SimpleUserDTOConverter();
-    private final EntityConverter<UserDTO, User> userEntityConverter = new UserEntityConverter();
+
+    private final UserDao userDao;
+    private final RoleDao roleDao;
+    private final DiscountDao discountDao;
+    private final DTOConverter<UserDTO, User> userDTOConverter;
+    private final DTOConverter<SimpleUserDTO, User> simpleUserDTOConverter;
+    private final DTOConverter<DiscountDTO, Discount> discountDTOConverter;
+    private final EntityConverter<UserDTO, User> userEntityConverter;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    public UserServiceImpl(
+            UserDao userDao,
+            RoleDao roleDao,
+            DiscountDao discountDao,
+            @Qualifier("userDTOConverter") DTOConverter<UserDTO, User> userDTOConverter,
+            @Qualifier("simpleUserDTOConverter") DTOConverter<SimpleUserDTO, User> simpleUserDTOConverter,
+            @Qualifier("discountDTOConverter") DTOConverter<DiscountDTO, Discount> discountDTOConverter,
+            @Qualifier("userEntityConverter") EntityConverter<UserDTO, User> userEntityConverter,
+            BCryptPasswordEncoder bCryptPasswordEncoder
+    ) {
+        this.userDao = userDao;
+        this.roleDao = roleDao;
+        this.discountDao = discountDao;
+        this.userDTOConverter = userDTOConverter;
+        this.simpleUserDTOConverter = simpleUserDTOConverter;
+        this.discountDTOConverter = discountDTOConverter;
+        this.userEntityConverter = userEntityConverter;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     @Override
     public UserDTO save(UserDTO userDTO) {
-        Session session = userDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            User user = userEntityConverter.toEntity(userDTO);
-            Profile profile = new Profile();
-            user.setProfile(profile);
-            user.getProfile().setUser(user);
-            //TODO default role
-            Role role = roleDao.findByName("user");
-            user.setRole(role);
-            userDao.create(user);
-            UserDTO savedUser = userDTOConverter.toDto(user);
-            transaction.commit();
-            return savedUser;
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error("Failed to save user", e);
-        }
-        return null;
+        logger.info("Saving User");
+        logger.debug("Saving User : {}", userDTO);
+        Role role = roleDao.findDefault();
+        User user = userEntityConverter.toEntity(userDTO);
+        user.getProfile().setUser(user);
+        user.setDisabled(false);
+        user.setDeleted(false);
+        user.setRole(role);
+        user.setPassword(
+                bCryptPasswordEncoder.encode(userDTO.getPassword())
+        );
+        userDao.create(user);
+        return userDTOConverter.toDto(user);
     }
 
     @Override
     public UserDTO update(UserDTO userDTO) {
-        Session session = userDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
+        logger.info("Updating User");
+        logger.debug("Updating User with Id : {}", userDTO.getId());
+        for (GrantedAuthority currentAuthority : CurrentUserUtil.getCurrentAuthorities()) {
+            if (Objects.requireNonNull(
+                    PermissionEnum.getPermission(currentAuthority.getAuthority()))
+                    .equals(PermissionEnum.USER_BASIC_PERMISSION)
+                    &&
+                    !userDTO.getId().equals(CurrentUserUtil.getCurrentId())
+            ) {
+                throw new IllegalStateException("User is only allowed to update himself");
             }
-            User user = userDao.findByEmail(userDTO.getEmail());
+        }
+        User user = userDao.findOne(userDTO.getId());
+        if (userDTO.getIsDisabled() != null) {
+            user.setDisabled(userDTO.getIsDisabled());
+            userDao.update(user);
+        } else {
             if (userDTO.getFirstName() != null) {
                 user.setFirstName(userDTO.getFirstName());
             }
             if (userDTO.getLastName() != null) {
                 user.setLastName(userDTO.getLastName());
             }
-            if (userDTO.getPassword() != null) {
-                user.setPassword(userDTO.getPassword());
+            if (userDTO.getPassword() != null && !userDTO.getPassword().equals("")) {
+                user.setPassword(
+                        bCryptPasswordEncoder.encode(userDTO.getPassword())
+                );
             }
             if (userDTO.getProfile() != null) {
                 if (userDTO.getProfile().getAddress() != null) {
@@ -91,66 +122,69 @@ public class UserServiceImpl implements UserService {
                 }
             }
             if (userDTO.getRole() != null) {
-                Role role = roleDao.findByName(userDTO.getRole().getName());
+                Role role = roleDao.findOne(userDTO.getRole().getId());
                 user.setRole(role);
             }
-            if (userDTO.getDiscount() != null && userDTO.getDiscount().getPercent() != null) {
-                Discount discount = discountDao.findOne(userDTO.getDiscount().getId());
-                user.setDiscount(discount);
-            }
             userDao.update(user);
-            UserDTO updatedUser = userDTOConverter.toDto(user);
-            transaction.commit();
-            return updatedUser;
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error("Failed to update user", e);
         }
-        return null;
+        return userDTOConverter.toDto(user);
     }
 
     @Override
-    public List<UserDTO> findAll() {
-        Session session = userDao.getCurrentSession();
-        List<UserDTO> userDTOList = new ArrayList<>();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            List<User> users = userDao.findAll();
-            List<UserDTO> usersDTO = userDTOConverter.toDTOList(users);
-            transaction.commit();
-            return usersDTO;
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error("Failed to retrieve users", e);
+    @Transactional(readOnly = true)
+    public UserDTO findById(SimpleUserDTO userDTO) {
+        logger.info("Retrieving User by Id");
+        logger.debug("Retrieving User by Id : {}", userDTO.getId());
+        User user = userDao.findOne(userDTO.getId());
+        if (user != null) {
+            return userDTOConverter.toDto(user);
+        } else {
+            throw new UserNotFoundException("User was not found with Id : " + userDTO.getId());
         }
-        return userDTOList;
     }
 
     @Override
-    public SimpleUserDTO findByEmail(SimpleUserDTO userDTO) {
-        Session session = userDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            User user = userDao.findByEmail(userDTO.getEmail());
-            SimpleUserDTO foundUser = simpleUserDTOConverter.toDto(user);
-            transaction.commit();
-            return foundUser;
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error("Failed to retrieve user by email", e);
+    public void deleteById(SimpleUserDTO userDTO) {
+        logger.info("Deleting User by Id");
+        logger.debug("Deleting User by Id : {}", userDTO.getId());
+        userDao.deleteById(userDTO.getId());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long countAllNotDeleted() {
+        logger.info("Counting Users");
+        return userDao.countAllNotDeleted();
+    }
+
+    @Override
+    public DiscountDTO updateDiscountAll(DiscountDetails discountDetails) {
+        Discount discount = discountDao.findOne(discountDetails.getDiscountId());
+        List<User> users = userDao.findAll();
+        for (User user : users) {
+            user.setDiscount(discount);
+            userDao.update(user);
         }
-        return null;
+        return discountDTOConverter.toDto(discount);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<UserDTO> findAllNotDeleted(Integer firstResult, Integer maxResults) {
+        logger.info("Retrieving Users");
+        List<User> users = userDao.findAllNotDeleted(firstResult, maxResults);
+        logger.debug("Retrieved Users : {}", users);
+        if (!users.isEmpty()) {
+            return userDTOConverter.toDTOList(users);
+        } else return Collections.emptyList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<SimpleUserDTO> findByEmail(SimpleUserDTO userDTO) {
+        logger.info("Retrieving User by Email");
+        logger.debug("Retrieving User by Email : {}", userDTO.getEmail());
+        User user = userDao.findByEmail(userDTO.getEmail());
+        return Optional.ofNullable(user != null ? simpleUserDTOConverter.toDto(user) : null);
     }
 }

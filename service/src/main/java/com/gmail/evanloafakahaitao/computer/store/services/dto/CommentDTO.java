@@ -11,17 +11,6 @@ public class CommentDTO {
 
     public CommentDTO() {}
 
-    private CommentDTO(Builder builder) {
-        setId(builder.id);
-        setContent(builder.content);
-        setCreated(builder.created);
-        setUser(builder.user);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
     public Long getId() {
         return id;
     }
@@ -54,40 +43,6 @@ public class CommentDTO {
         this.user = user;
     }
 
-    public static final class Builder {
-        private Long id;
-        private String content;
-        private LocalDateTime created;
-        private SimpleUserDTO user;
-
-        private Builder() {
-        }
-
-        public Builder withId(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder withContent(String content) {
-            this.content = content;
-            return this;
-        }
-
-        public Builder withCreated(LocalDateTime created) {
-            this.created = created;
-            return this;
-        }
-
-        public Builder withUser(SimpleUserDTO user) {
-            this.user = user;
-            return this;
-        }
-
-        public CommentDTO build() {
-            return new CommentDTO(this);
-        }
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,14 +50,14 @@ public class CommentDTO {
 
         CommentDTO that = (CommentDTO) o;
 
-        if (!id.equals(that.id)) return false;
-        return created.equals(that.created);
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        return created != null ? created.equals(that.created) : that.created == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + created.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (created != null ? created.hashCode() : 0);
         return result;
     }
 

@@ -1,18 +1,20 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.impl;
 
 import com.gmail.evanloafakahaitao.computer.store.dao.GenericDao;
-import com.gmail.evanloafakahaitao.computer.store.dao.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
+public abstract class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
 
     private Class<T> clazz;
 
-    private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    @Autowired
+    private SessionFactory sessionFactory;
 
     public GenericDaoImpl(Class<T> clazz) {
         this.clazz = clazz;
@@ -27,6 +29,25 @@ public class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
     @Override
     public List<T> findAll() {
         return getCurrentSession().createQuery("FROM " + clazz.getSimpleName()).list();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<T> findAll(Integer firstResult, Integer maxResults) {
+        Query query = getCurrentSession().createQuery("FROM " + clazz.getSimpleName());
+        query.setFirstResult(firstResult);
+        query.setMaxResults(maxResults);
+        return query.list();
+    }
+
+    @Override
+    public Long countAll() {
+        return (Long) getCurrentSession().createQuery("SELECT COUNT(*) FROM " + clazz.getSimpleName()).uniqueResult();
+    }
+
+    @Override
+    public Long countAllNotDeleted() {
+        return (Long) getCurrentSession().createQuery("SELECT COUNT(*) FROM " + clazz.getSimpleName() + " AS c WHERE c.isDeleted = false").uniqueResult();
     }
 
     @Override
@@ -50,8 +71,7 @@ public class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
         delete(entity);
     }
 
-    @Override
-    public Session getCurrentSession() {
+    protected Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
     }
 }

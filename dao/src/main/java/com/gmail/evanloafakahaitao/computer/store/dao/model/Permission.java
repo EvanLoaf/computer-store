@@ -1,8 +1,6 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -22,7 +20,7 @@ public class Permission implements Serializable {
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
-    @Size(max = 30)
+    @Size(max = 40)
     private PermissionEnum name;
 
     public Permission() {}
@@ -50,13 +48,13 @@ public class Permission implements Serializable {
 
         Permission that = (Permission) o;
 
-        if (!id.equals(that.id)) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         return name == that.name;
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + name.hashCode();
         return result;
     }

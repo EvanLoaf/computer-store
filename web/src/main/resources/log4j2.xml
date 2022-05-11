@@ -49,8 +49,20 @@
             </Policies>
             <DefaultRolloverStrategy max="10"/>
         </RollingFile>
+
+        <RollingFile name="RollingFileTransactions" fileName="logs/application_trans.log"
+                     filePattern="logs/old/app_trans-%d{yyyy-MM-dd-HH}-%i.log.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p %c{3}:%L - %msg%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="5 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
     </Appenders>
     <Loggers>
+        <Logger name="org.springframework.transaction" level="trace">
+            <AppenderRef ref="RollingFileTransactions"/>
+        </Logger>
         <Logger name="org.hibernate.sql" level="debug">
             <AppenderRef ref="RollingFileSQL"/>
         </Logger>

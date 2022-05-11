@@ -7,15 +7,6 @@ public class ProfileDTO {
 
     public ProfileDTO() {}
 
-    private ProfileDTO(Builder builder) {
-        setAddress(builder.address);
-        setPhoneNumber(builder.phoneNumber);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
     public String getAddress() {
         return address;
     }
@@ -30,28 +21,6 @@ public class ProfileDTO {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public static final class Builder {
-        private String address;
-        private String phoneNumber;
-
-        private Builder() {
-        }
-
-        public Builder withAddress(String address) {
-            this.address = address;
-            return this;
-        }
-
-        public Builder withPhoneNumber(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
-            return this;
-        }
-
-        public ProfileDTO build() {
-            return new ProfileDTO(this);
-        }
     }
 
     @Override

@@ -1,13 +1,11 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.Formula;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -18,18 +16,19 @@ import java.time.LocalDateTime;
 ))
 @Cacheable
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Order implements Serializable {
+@SQLDelete(sql = "update t_order set f_is_deleted = true where f_order_code = ?")
+@Where(clause = "f_is_deleted = false")
+public class Order extends SoftDeleteEntity implements Serializable {
 
     private static final long serialVersionUID = -4038551219941151950L;
     @EmbeddedId
-    @AttributeOverride(name = "orderCode", column = @Column(name = "orderCode", columnDefinition = "char"))
+    @AttributeOverride(name = "orderCode", column = @Column(name = "orderCode", columnDefinition = "char not null"))
     private OrderId id = new OrderId();
     @NotNull
     @Column(nullable = false)
     private LocalDateTime created;
     @NotNull
     @Column(nullable = false)
-    @Type(type = "short")
     private Integer quantity;
     @NotNull
     @Column(nullable = false)
@@ -37,7 +36,6 @@ public class Order implements Serializable {
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @Size(max = 20)
     private OrderStatusEnum status;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @MapsId("userId")

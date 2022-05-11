@@ -2,7 +2,7 @@ package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Check;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,7 +18,8 @@ import java.util.Set;
 ))
 @Cacheable
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Item implements Serializable {
+@SQLDelete(sql = "update t_item set f_is_deleted = true where f_id = ?")
+public class Item extends SoftDeleteEntity implements Serializable {
 
     private static final long serialVersionUID = 2259446884247522586L;
     @Id
@@ -30,7 +31,7 @@ public class Item implements Serializable {
     @Size(max = 50)
     private String name;
     @NotNull
-    @Column(nullable = false, unique = true, columnDefinition = "char")
+    @Column(nullable = false, unique = true, columnDefinition = "char(10) not null")
     @Size(min = 10, max = 10)
     private String vendorCode;
     @Column

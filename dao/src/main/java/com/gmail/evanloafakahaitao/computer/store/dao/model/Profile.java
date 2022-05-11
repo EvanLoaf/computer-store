@@ -86,7 +86,6 @@ public class Profile implements Serializable {
         sb.append("userId=").append(userId);
         sb.append(", address='").append(address).append('\'');
         sb.append(", phoneNumber='").append(phoneNumber).append('\'');
-        sb.append(", user=").append(user);
         sb.append('}');
         return sb.toString();
     }

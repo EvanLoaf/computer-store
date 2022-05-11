@@ -1,5 +1,8 @@
 package com.gmail.evanloafakahaitao.computer.store.services.dto;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class UserDTO {
 
     private Long id;
@@ -7,26 +10,13 @@ public class UserDTO {
     private String lastName;
     private String email;
     private String password;
+    private Boolean isDisabled;
     private RoleDTO role;
     private ProfileDTO profile;
     private DiscountDTO discount;
+    private Set<BusinessCardDTO> businessCards = new HashSet<>();
 
     public UserDTO() {}
-
-    private UserDTO(Builder builder) {
-        setId(builder.id);
-        setFirstName(builder.firstName);
-        setLastName(builder.lastName);
-        setEmail(builder.email);
-        setPassword(builder.password);
-        setRole(builder.role);
-        setProfile(builder.profile);
-        setDiscount(builder.discount);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
 
     public Long getId() {
         return id;
@@ -92,62 +82,20 @@ public class UserDTO {
         this.discount = discount;
     }
 
-    public static final class Builder {
-        private Long id;
-        private String firstName;
-        private String lastName;
-        private String email;
-        private String password;
-        private RoleDTO role;
-        private ProfileDTO profile;
-        private DiscountDTO discount;
+    public Set<BusinessCardDTO> getBusinessCards() {
+        return businessCards;
+    }
 
-        private Builder() {
-        }
+    public void setBusinessCards(Set<BusinessCardDTO> businessCards) {
+        this.businessCards = businessCards;
+    }
 
-        public Builder withId(Long id) {
-            this.id = id;
-            return this;
-        }
+    public Boolean getIsDisabled() {
+        return isDisabled;
+    }
 
-        public Builder withFirstName(String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
-
-        public Builder withLastName(String lastName) {
-            this.lastName = lastName;
-            return this;
-        }
-
-        public Builder withEmail(String email) {
-            this.email = email;
-            return this;
-        }
-
-        public Builder withPassword(String password) {
-            this.password = password;
-            return this;
-        }
-
-        public Builder withRole(RoleDTO role) {
-            this.role = role;
-            return this;
-        }
-
-        public Builder withProfile(ProfileDTO profile) {
-            this.profile = profile;
-            return this;
-        }
-
-        public Builder withDiscount(DiscountDTO discount) {
-            this.discount = discount;
-            return this;
-        }
-
-        public UserDTO build() {
-            return new UserDTO(this);
-        }
+    public void setIsDisabled(Boolean disabled) {
+        isDisabled = disabled;
     }
 
     @Override
@@ -180,9 +128,11 @@ public class UserDTO {
         sb.append(", lastName='").append(lastName).append('\'');
         sb.append(", email='").append(email).append('\'');
         sb.append(", password='").append(password).append('\'');
+        sb.append(", isDisabled=").append(isDisabled);
         sb.append(", role=").append(role);
         sb.append(", profile=").append(profile);
         sb.append(", discount=").append(discount);
+        sb.append(", businessCards=").append(businessCards);
         sb.append('}');
         return sb.toString();
     }
