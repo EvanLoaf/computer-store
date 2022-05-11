@@ -68,4 +68,10 @@
         <price>5299.99</price>
         <description>Dual-processor rig to sustain high-load scenarios for your business</description>
     </item>
+    <item>
+        <name>Extreme</name>
+        <vendor_code>0000000012</vendor_code>
+        <price>9999.99</price>
+        <description>Enthusiast-grade machine</description>
+    </item>
 </catalog>
