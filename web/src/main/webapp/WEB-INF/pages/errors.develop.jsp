@@ -12,7 +12,7 @@
     <c:set var="app_entry_path" value="${app}${entry_point_prefix}"/>
     <jsp:include page="/WEB-INF/pages/util/head.jsp"/>
     <meta http-equiv="Content-Type">
-    <title>Error Page</title>
+    <title>Error Develop Page</title>
 </head>
 <body>
 <div class="container">

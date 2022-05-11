@@ -25,10 +25,10 @@ public class FieldTrimmer {
         if (user.getPassword() != null) {
             user.setPassword(user.getPassword().trim());
         }
-        if (user.getProfile().getAddress() != null) {
+        if (user.getProfile() != null && user.getProfile().getAddress() != null) {
             user.getProfile().setAddress(user.getProfile().getAddress().trim());
         }
-        if (user.getProfile().getPhoneNumber() != null) {
+        if (user.getProfile() != null && user.getProfile().getPhoneNumber() != null) {
             user.getProfile().setPhoneNumber(user.getProfile().getPhoneNumber().trim());
         }
         return user;

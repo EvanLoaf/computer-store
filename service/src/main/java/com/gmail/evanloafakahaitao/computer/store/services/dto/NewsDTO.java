@@ -70,16 +70,16 @@ public class NewsDTO {
 
         NewsDTO newsDTO = (NewsDTO) o;
 
-        if (!id.equals(newsDTO.id)) return false;
+        if (id != null ? !id.equals(newsDTO.id) : newsDTO.id != null) return false;
         if (!title.equals(newsDTO.title)) return false;
-        return created.equals(newsDTO.created);
+        return created != null ? created.equals(newsDTO.created) : newsDTO.created == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + title.hashCode();
-        result = 31 * result + created.hashCode();
+        result = 31 * result + (created != null ? created.hashCode() : 0);
         return result;
     }
 

@@ -100,7 +100,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <pagination.max.results>5</pagination.max.results>
+                <pagination.max.results>3</pagination.max.results>
                 <errors.page>errors.develop</errors.page>
                 <pool.size>5</pool.size>
                 <schema.file.path>D:\\projects\\computer-store\\service\\src\\main\\resources\\xml\\computers_schema.xsd</schema.file.path>

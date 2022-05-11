@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.math.RoundingMode;
+
 @Component("simpleOrderDTOConverter")
 public class SimpleOrderDTOConverter implements DTOConverter<SimpleOrderDTO, Order> {
 

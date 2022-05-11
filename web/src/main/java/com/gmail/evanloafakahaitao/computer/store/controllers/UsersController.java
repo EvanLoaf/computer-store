@@ -134,6 +134,8 @@ public class UsersController {
         user.setId(id);
         userValidator.validate(user, result);
         if (result.hasErrors()) {
+            List<RoleDTO> roles = roleService.findAll();
+            modelMap.addAttribute("roles", roles);
             modelMap.addAttribute("user", user);
             return pageProperties.getUserUpdatePagePath();
         } else {
@@ -178,15 +180,16 @@ public class UsersController {
     @PreAuthorize("hasAuthority('disable_user')")
     public String disableUser(
             @PathVariable("id") Long id,
-            @RequestParam(value = "disable", defaultValue = "true") boolean disable
+            @RequestParam(value = "disable", defaultValue = "true") boolean disable,
+            @RequestParam(value = "page", defaultValue = "1") Integer page
     ) {
         logger.debug("Executing Users Controller method GET : disableUser with id : {}", id);
         logger.info("Disabling User");
         UserDTO user = new UserDTO();
         user.setId(id);
-        user.setDisabled(disable);
+        user.setIsDisabled(disable);
         userService.update(user);
-        return "redirect:" + WebProperties.PUBLIC_ENTRY_POINT_PREFIX + "/users";
+        return "redirect:" + WebProperties.PUBLIC_ENTRY_POINT_PREFIX + "/users?disable_toggle=" + disable + "&page=" + page;
     }
 
     @PostMapping(value = "/discounts/update")

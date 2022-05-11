@@ -1,6 +1,5 @@
 package com.gmail.evanloafakahaitao.computer.store.services.impl;
 
-import com.gmail.evanloafakahaitao.computer.store.dao.CommentDao;
 import com.gmail.evanloafakahaitao.computer.store.dao.NewsDao;
 import com.gmail.evanloafakahaitao.computer.store.dao.UserDao;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.Comment;
@@ -14,8 +13,6 @@ import com.gmail.evanloafakahaitao.computer.store.services.dto.NewsDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.util.CurrentUserUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -59,8 +56,9 @@ public class CommentServiceImpl implements CommentService {
             User user = userDao.findOne(CurrentUserUtil.getCurrentId());
             comment.setCreated(LocalDateTime.now());
             comment.setUser(user);
+            comment.setDeleted(false);
             news.getComments().add(comment);
-            logger.debug("Saving comment {} for article : {}", comment, newsDTO.getId());
+            logger.debug("Saving comment {} for article : {}", comment.getContent(), newsDTO.getId());
             newsDao.update(news);
             return commentDTOConverter.toDto(comment);
         }

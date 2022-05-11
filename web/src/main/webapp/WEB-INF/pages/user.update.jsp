@@ -1,82 +1,97 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!doctype html>
 <html lang="en">
 <head>
+    <%-- APPLICATION CONTEXT PATH --%>
     <c:set var="app" value="${pageContext.request.contextPath}"/>
+    <%-- PUBLIC ENTRY POINT PREFIX --%>
+    <c:set var="entry_point_prefix" value="/web"/>
+    <%-- INITIAL APP PATH --%>
+    <c:set var="app_entry_path" value="${app}${entry_point_prefix}"/>
     <jsp:include page="/WEB-INF/pages/util/head.jsp"/>
     <title>Update user</title>
 </head>
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-4">
-            <c:if test="${not empty error}">
-                <div class="alert alert-danger" role="alert">
-                    <c:out value="${error}"/>
-                </div>
-            </c:if>
-            <form action="${app}/dispatcher?command=update_user&id=${user.id}" method="post">
-                <div class="form-group">
-                    <label for="input_email">Email address</label>
-                    <input type="email" name="old_email" value="${user.email}"
-                           id="input_old_email" hidden>
-                    <input type="email" name="old_email" value="${user.email}" class="form-control"
-                           aria-describedby="emailHelp"
-                           placeholder="mail@mail.com" disabled>
-                    <input type="email" name="email" value="${email}" class="form-control" id="input_email"
-                           aria-describedby="emailHelp"
-                           placeholder="mail@mail.com">
-                </div>
-                <div class="form-group">
-                    <label for="input_password">Password</label>
-                    <input type="password" name="old_password" value="${user.password}" class="form-control"
-                           placeholder="********" disabled>
-                    <input type="password" name="password" value="${password}" class="form-control" id="input_password"
-                           placeholder="********">
-                </div>
-                <div class="form-group">
-                    <label for="input_first_name">First name</label>
-                    <input type="text" name="old_first_name" value="${user.firstName}" class="form-control"
-                           placeholder="John" disabled>
-                    <input type="text" name="first_name" value="${first_name}" class="form-control"
-                           id="input_first_name"
-                           placeholder="John">
-                </div>
-                <div class="form-group">
-                    <label for="input_last_name">Last name</label>
-                    <input type="text" name="old_last_name" value="${user.lastName}" class="form-control"
-                           placeholder="Doe" disabled>
-                    <input type="text" name="last_name" value="${last_name}" class="form-control" id="input_last_name"
-                           placeholder="Doe">
-                </div>
-                <div class="form-group">
-                    <label for="input_phone_number">Phone number</label>
-                    <input type="text" name="old_phone_number" value="${user.phoneNumber}" class="form-control"
-                           placeholder="1-800-1" disabled>
-                    <input type="text" name="phone_number" value="${phone_number}" class="form-control"
-                           id="input_phone_number"
-                           placeholder="1-800-1">
-                </div>
-                <div class="form-group">
-                    <label for="input_additional_info">Add info</label>
-                    <input type="text" name="old_additional_info" value="${user.additionalInfo}" class="form-control"
-                           placeholder="info" disabled>
-                    <input type="text" name="additional_info" value="${additional_info}" class="form-control" id="input_additional_info"
-                           placeholder="info">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
-        <div class="col-md-4">
-            <c:out value="${sessionScope.user.name}"/>
+        <div class="col-xl-2">
             <jsp:include page="/WEB-INF/pages/util/ads.jsp"/>
-            <a href="${pageContext.request.contextPath}/dispatcher?command=users" class="btn btn-primary"
-               aria-pressed="true" role="button">USERS PAGE</a>
-            <a href="${pageContext.request.contextPath}/dispatcher?command=items" class="btn btn-light"
-               aria-pressed="true" role="button">ITEMS PAGE</a>
+        </div>
+        <div class="col-xl-8">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Email</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Disabled</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>${user.email}</td>
+                                <td>${user.firstName} ${user.lastName}</td>
+                                <td>${user.profile.address}</td>
+                                <td>${user.profile.phoneNumber}</td>
+                                <td>${user.role.name}</td>
+                                <td>${user.isDisabled}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form:form action="${app_entry_path}/users/${user.id}/admin" modelAttribute="user" method="post">
+                        <form:errors path="password" cssClass="container-fluid" element="div"/>
+                        <div class="form-group">
+                            <form:label path="password">Password</form:label>
+                            <form:input type="password" path="password" class="form-control" id="password"/>
+                        </div>
+                        <div class="form-group">
+                            <c:set value="${user.role.name}" var="currRole"/>
+                            <form:select path="role.id" name="role.id">
+                                <c:forEach items="${roles}" var="role">
+                                    <c:set value="${role.name}" var="rolename"/>
+                                    <c:set value="${role.id}" var="roleid"/>
+                                    <c:choose>
+                                        <c:when test="${currRole==rolename}">
+                                            <option value="${roleid}" selected>${rolename}</option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option value="${roleid}">${rolename}</option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </form:select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form:form>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2">
+            <security:authorize access="isAuthenticated()">
+                Hello <security:authentication property="principal.name"/>
+            </security:authorize>
+            <security:authorize access="hasAuthority('view_users_all')">
+                <div class="row">
+                    <a href="${app_entry_path}/users"
+                       class="btn btn-outline-success" aria-pressed="true" role="button">USERS</a>
+                </div>
+            </security:authorize>
+            <jsp:include page="/WEB-INF/pages/util/ads.jsp"/>
+            <div class="row">
+                <a href="${app_entry_path}/logout"
+                   class="btn btn-outline-success" aria-pressed="true" role="button">LOG OUT</a>
+            </div>
         </div>
     </div>
 </div>

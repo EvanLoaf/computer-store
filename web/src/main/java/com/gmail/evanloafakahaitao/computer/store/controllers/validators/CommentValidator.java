@@ -23,10 +23,9 @@ public class CommentValidator implements Validator {
         CommentDTO comment = (CommentDTO) target;
         logger.info("Validating comment - create");
         logger.debug("Validating comment - create : {}", comment);
-        ValidationUtils.rejectIfEmpty(errors, "message", "comment.message.empty");
-
+        ValidationUtils.rejectIfEmpty(errors, "content", "comment.content.empty");
         if (comment.getContent() != null && !comment.getContent().equals("") && comment.getContent().length() > 300) {
-            errors.rejectValue("message", "comment.message.length");
+            errors.rejectValue("content", "comment.content.length");
         }
     }
 }

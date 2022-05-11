@@ -36,7 +36,7 @@ public class ItemDaoImpl extends GenericDaoImpl<Item> implements ItemDao {
     @SuppressWarnings("unchecked")
     @Override
     public List<Item> findAllNotDeleted(Integer startPosition, Integer maxResults) {
-        String hql = "FROM Item AS i WHERE i.isDeleted = false";
+        String hql = "FROM Item AS i WHERE i.isDeleted = false ORDER BY i.price ASC";
         Query query = getCurrentSession().createQuery(hql);
         query.setFirstResult(startPosition);
         query.setMaxResults(maxResults);

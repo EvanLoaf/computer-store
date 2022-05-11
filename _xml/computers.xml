@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <catalog xmlns="www.mypcstore.com"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="www.mypcstore.com ../web/src/main/resources/xml/computers_schema.xsd">
+         xsi:schemaLocation="www.mypcstore.com ../service/src/main/resources/xml/computers_schema.xsd">
     <item>
         <name>Work Start</name>
         <vendor_code>0000000001</vendor_code>

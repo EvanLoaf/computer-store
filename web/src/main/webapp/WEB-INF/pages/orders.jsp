@@ -2,10 +2,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="www.mypcstore.com/functions" prefix="f" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!doctype html>
 <html lang="en">
 <head>
+    <%-- APPLICATION CONTEXT PATH --%>
     <c:set var="app" value="${pageContext.request.contextPath}"/>
+    <%-- PUBLIC ENTRY POINT PREFIX --%>
+    <c:set var="entry_point_prefix" value="/web"/>
+    <%-- INITIAL APP PATH --%>
+    <c:set var="app_entry_path" value="${app}${entry_point_prefix}"/>
     <jsp:include page="/WEB-INF/pages/util/head.jsp"/>
     <title>Orders</title>
 </head>
@@ -17,13 +23,11 @@
         </div>
         <div class="col-md-8">
             <div class="row">
-                <div class="col-md-12">
-                    <c:if test="${not empty error}">
-                        <div class="alert alert-danger" role="alert">
-                            <c:out value="${error}"/>
-                        </div>
-                    </c:if>
-                </div>
+                <c:if test="${param.status == 'true'}">
+                    <div class="alert alert-success" role="alert">
+                        <p> Order status updated successfully</p>
+                    </div>
+                </c:if>
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -31,39 +35,65 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">OrderID</th>
                             <th scope="col">Created</th>
-                            <th scope="col">Item vendor code</th>
+                            <th scope="col">User email</th>
                             <th scope="col">Item name</th>
-                            <th scope="col">Item desc</th>
+                            <th scope="col">Vendor code</th>
                             <th scope="col">Quantity</th>
-                            <th scope="col">Item price</th>
-                            <th scope="col">Total</th>
+                            <th scope="col">Total price</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:set var="counter" value="1" scope="page"/>
+                        <c:set var="counter" value="${pagination.startPosition}" scope="page"/>
                         <c:forEach items="${orders}" var="order">
                             <tr>
                                 <th scope="row">
                                     <c:out value="${counter}"/>
                                 </th>
-                                <td>${order.orderCode}</td>
                                 <td>${f:formatLocalDateTime(order.created, 'MM-dd-yyyy HH:mm')}</td>
-                                <td>${order.item.vendorCode}</td>
+                                <td>
+                                    <security:authorize access="hasAuthority('view_orders_all')">
+                                        ${order.user.email}
+                                    </security:authorize>
+                                    <security:authorize access="hasAuthority('view_orders_self')">
+                                        <security:authentication property="principal.username"/>
+                                    </security:authorize>
+                                </td>
                                 <td>${order.item.name}</td>
-                                <td>${order.item.description}</td>
+                                <td>${order.item.vendorCode}</td>
                                 <td>${order.quantity}</td>
-                                <fmt:formatNumber var="price" value="${order.item.price}"
-                                                  maxFractionDigits="2"/>
-                                <td>${price}</td>
-                                <fmt:formatNumber var="total" value="${order.item.price * order.quantity}"
+                                <fmt:formatNumber var="total" value="${order.totalPrice}"
                                                   maxFractionDigits="2"/>
                                 <td>${total}</td>
+                                <td>${order.status}</td>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/dispatcher?command=delete_order&order_code=${order.orderCode}"
-                                       class="btn btn-primary" aria-pressed="true" role="button">DELETE</a>
+                                    <security:authorize access="hasAuthority('update_order_status')">
+                                        <form action="${app_entry_path}/orders/${order.orderCode}" method="post">
+                                            <div class="form-group">
+                                                <label for="status"></label>
+                                                <select name="status" class="custom-select-lg" id="status">
+                                                    <c:set var="status" value="${order.status}"/>
+                                                    <c:forEach items="${statusEnum}" var="status">
+                                                        <c:choose>
+                                                            <c:when test="${status == order.status}">
+                                                                <option value="${status}" selected>${status}</option>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <option value="${status}">${status}</option>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">CHANGE STATUS</button>
+                                        </form>
+                                    </security:authorize>
+                                    <security:authorize access="hasAuthority('delete_order_self')">
+                                        <a href="${app_entry_path}/orders/${order.orderCode}/delete"
+                                           class="btn btn-outline-success" aria-pressed="true" role="button">DELETE</a>
+                                    </security:authorize>
                                 </td>
                             </tr>
                             <c:set var="counter" value="${counter + 1}" scope="page"/>
@@ -72,14 +102,93 @@
                     </table>
                 </div>
             </div>
+            <div class="row">
+                <nav aria-label="...">
+                    <ul class="pagination">
+
+                        <security:authorize access="hasAuthority('view_orders_all')">
+                            <c:forEach items="${pagination.pageNumbers}" var="page">
+                                <c:choose>
+                                    <c:when test="${page == pagination.page}">
+                                        <li class="page-item active">
+                                            <a class="page-link"
+                                               href="${app_entry_path}/orders/admin?page=${page}">${page}</a>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item"><a class="page-link"
+                                                                 href="${app_entry_path}/orders/admin?page=${page}">${page}</a>
+                                        </li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </security:authorize>
+                        <security:authorize access="hasAuthority('view_orders_self')">
+                            <c:forEach items="${pagination.pageNumbers}" var="page">
+                                <c:choose>
+                                    <c:when test="${page == pagination.page}">
+                                        <li class="page-item active">
+                                            <a class="page-link"
+                                               href="${app_entry_path}/orders?page=${page}">${page}</a>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item"><a class="page-link"
+                                                                 href="${app_entry_path}/orders?page=${page}">${page}</a>
+                                        </li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </security:authorize>
+                    </ul>
+                </nav>
+            </div>
         </div>
         <div class="col-md-2">
-            <c:out value="${sessionScope.user.name}"/>
-            <div class="row">
-                <a href="${app}/dispatcher?command=items" class="btn btn-dark"
-                   aria-pressed="true" role="button">ITEMS</a>
-            </div>
+            <security:authorize access="isAuthenticated()">
+                Hello <security:authentication property="principal.name"/>
+            </security:authorize>
+            <security:authorize access="hasAuthority('view_user_self')">
+                <div class="row">
+                    <a href="${app_entry_path}/users/profile"
+                       class="btn btn-outline-success" aria-pressed="true" role="button">PROFILE</a>
+                </div>
+            </security:authorize>
+            <security:authorize access="hasAuthority('view_items')">
+                <div class="row">
+                    <a href="${app_entry_path}/items"
+                       class="btn btn-outline-success" aria-pressed="true" role="button">ITEMS</a>
+                </div>
+            </security:authorize>
+            <security:authorize access="hasAuthority('view_feedback')">
+                <div class="row">
+                    <a href="${app_entry_path}/feedback"
+                       class="btn btn-outline-success" aria-pressed="true" role="button">SHOW FEEDBACK</a>
+                </div>
+            </security:authorize>
+            <security:authorize access="hasAuthority('view_news')">
+                <div class="row">
+                    <a href="${app_entry_path}/news"
+                       class="btn btn-outline-success" aria-pressed="true" role="button">NEWS</a>
+                </div>
+            </security:authorize>
+            <security:authorize access="hasAuthority('create_item')">
+                <div class="row">
+                    <a href="${app_entry_path}/items/create"
+                       class="btn btn-outline-success" aria-pressed="true" role="button">CREATE ITEM</a>
+                </div>
+            </security:authorize>
+            <security:authorize access="hasAuthority('upload_items')">
+                <div class="row">
+                    <a href="${app_entry_path}/items/upload"
+                       class="btn btn-outline-success" aria-pressed="true" role="button">UPLOAD ITEMS</a>
+                </div>
+            </security:authorize>
             <jsp:include page="/WEB-INF/pages/util/ads.jsp"/>
+            <div class="row">
+                <a href="${app_entry_path}/logout"
+                   class="btn btn-outline-success" aria-pressed="true" role="button">LOG OUT</a>
+            </div>
         </div>
     </div>
 </div>

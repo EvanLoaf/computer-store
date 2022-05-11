@@ -39,13 +39,13 @@ public class FeedbackDTO {
 
         FeedbackDTO that = (FeedbackDTO) o;
 
-        if (!id.equals(that.id)) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         return message.equals(that.message);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + message.hashCode();
         return result;
     }

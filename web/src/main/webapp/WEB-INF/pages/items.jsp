@@ -93,7 +93,7 @@
                                             </td>
                                             <td>
                                                 <security:authorize access="hasAuthority('create_order')">
-                                                    <a href="${app_entry_path}/orders/create/items/${item.id}"
+                                                    <a href="${app_entry_path}/orders/items/${item.id}"
                                                        class="btn btn-primary" aria-pressed="true" role="button">ORDER</a>
                                                 </security:authorize>
                                             </td>

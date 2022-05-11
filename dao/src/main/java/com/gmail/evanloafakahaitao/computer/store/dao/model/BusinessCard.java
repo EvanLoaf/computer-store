@@ -65,14 +65,16 @@ public class BusinessCard implements Serializable {
 
         BusinessCard that = (BusinessCard) o;
 
-        if (!id.equals(that.id)) return false;
-        return title.equals(that.title);
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (!title.equals(that.title)) return false;
+        return name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + title.hashCode();
+        result = 31 * result + name.hashCode();
         return result;
     }
 

@@ -65,7 +65,7 @@ public class ItemValidator implements Validator {
             );
             if (!(pattern.matcher(item.getPrice().toString()).matches())) {
                 errors.rejectValue("price", "item.price.invalid");
-            } else if (item.getPrice().compareTo(BigDecimal.valueOf(199.99)) >= 0) {
+            } else if (item.getPrice().compareTo(BigDecimal.valueOf(199.99)) <= 0) {
                 errors.rejectValue("price", "item.price.low");
             }
         }

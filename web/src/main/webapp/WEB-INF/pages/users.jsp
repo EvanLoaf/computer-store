@@ -27,6 +27,16 @@
                         <p> User updated successfully</p>
                     </div>
                 </c:if>
+                <c:if test="${param.disable_toggle == 'true'}">
+                    <div class="alert alert-success" role="alert">
+                        <p> User Disabled successfully</p>
+                    </div>
+                </c:if>
+                <c:if test="${param.disable_toggle == 'false'}">
+                    <div class="alert alert-success" role="alert">
+                        <p> User Enabled successfully</p>
+                    </div>
+                </c:if>
             </div>
             <div class="row">
                 <div class="col-md-8">
@@ -94,12 +104,12 @@
                                                 <security:authorize access="hasAuthority('disable_user')">
                                                     <c:choose>
                                                         <c:when test="${user.isDisabled}">
-                                                            <a href="${app_entry_path}/users/${user.id}/disable?disable=${!user.isDisabled}"
+                                                            <a href="${app_entry_path}/users/${user.id}/disable?disable=${!user.isDisabled}&page=${pagination.page}"
                                                                class="btn btn-primary" aria-pressed="true"
                                                                role="button">ENABLE</a>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <a href="${app_entry_path}/users/${user.id}/disable?disable=${!user.isDisabled}"
+                                                            <a href="${app_entry_path}/users/${user.id}/disable?disable=${!user.isDisabled}&page=${pagination.page}"
                                                                class="btn btn-primary" aria-pressed="true"
                                                                role="button">DISABLE</a>
                                                         </c:otherwise>
@@ -121,12 +131,12 @@
                                             <c:when test="${page == pagination.page}">
                                                 <li class="page-item active">
                                                     <a class="page-link"
-                                                       href="${app_entry_path}/items?page=${page}">${page}</a>
+                                                       href="${app_entry_path}/usets?page=${page}">${page}</a>
                                                 </li>
                                             </c:when>
                                             <c:otherwise>
                                                 <li class="page-item"><a class="page-link"
-                                                                         href="${app_entry_path}/items?page=${page}">${page}</a>
+                                                                         href="${app_entry_path}/users?page=${page}">${page}</a>
                                                 </li>
                                             </c:otherwise>
                                         </c:choose>

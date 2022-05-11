@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.function.Consumer;
 
 @Service
 @Transactional
@@ -104,7 +105,10 @@ public class ItemServiceImpl implements ItemService {
                     } else return true;
                 })
                 .map(itemEntityConverter::toEntity)
-                .forEach(itemDao::create);
+                .forEach(
+                        ((Consumer<Item>) item -> item.setDeleted(false))
+                                .andThen(itemDao::create)
+                );
         return itemVendorCodeDuplicates;
     }
 

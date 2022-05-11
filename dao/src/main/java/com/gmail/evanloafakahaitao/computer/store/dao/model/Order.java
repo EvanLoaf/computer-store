@@ -1,12 +1,11 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -30,7 +29,6 @@ public class Order extends SoftDeleteEntity implements Serializable {
     private LocalDateTime created;
     @NotNull
     @Column(nullable = false)
-    @Type(type = "short")
     private Integer quantity;
     @NotNull
     @Column(nullable = false)
@@ -38,7 +36,6 @@ public class Order extends SoftDeleteEntity implements Serializable {
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @Size(max = 20)
     private OrderStatusEnum status;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @MapsId("userId")

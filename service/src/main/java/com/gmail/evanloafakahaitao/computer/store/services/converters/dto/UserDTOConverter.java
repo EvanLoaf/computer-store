@@ -35,7 +35,7 @@ public class UserDTOConverter implements DTOConverter<UserDTO, User> {
         user.setLastName(entity.getLastName());
         user.setEmail(entity.getEmail());
         user.setPassword(entity.getPassword());
-        user.setDisabled(entity.getDisabled());
+        user.setIsDisabled(entity.getDisabled());
         user.setRole(
                 roleDTOConverter.toDto(entity.getRole())
         );

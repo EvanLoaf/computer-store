@@ -27,7 +27,6 @@ public class OrderValidator implements Validator {
         if (order.getQuantity() != null) {
             logger.info("Validating order - create");
             logger.debug("Validating order - create : {}", order);
-
             Pattern quantityPattern = Pattern.compile(
                     "^\\d{1,9}$"
             );

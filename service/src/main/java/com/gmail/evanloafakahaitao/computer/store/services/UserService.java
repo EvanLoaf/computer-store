@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface UserService {
 
     UserDTO save(UserDTO userDTO);
-    //TODO mby change if remove @Where
+
     List<UserDTO> findAllNotDeleted(Integer firstResult, Integer maxResults);
 
     Optional<SimpleUserDTO> findByEmail(SimpleUserDTO userDTO);
@@ -21,7 +21,7 @@ public interface UserService {
     UserDTO findById(SimpleUserDTO simpleUserDTO);
 
     void deleteById(SimpleUserDTO simpleUserDTO);
-    //TODO mby change if remove @Where
+
     Long countAllNotDeleted();
 
     DiscountDTO updateDiscountAll(DiscountDetails discountDetails);

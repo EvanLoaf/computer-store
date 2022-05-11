@@ -30,13 +30,13 @@ public class PermissionDTO {
 
         PermissionDTO that = (PermissionDTO) o;
 
-        if (!id.equals(that.id)) return false;
-        return name.equals(that.name);
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        return name == that.name;
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + name.hashCode();
         return result;
     }

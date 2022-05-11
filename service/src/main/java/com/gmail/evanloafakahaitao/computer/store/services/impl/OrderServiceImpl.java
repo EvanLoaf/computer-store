@@ -10,12 +10,9 @@ import com.gmail.evanloafakahaitao.computer.store.services.converters.EntityConv
 import com.gmail.evanloafakahaitao.computer.store.services.dto.NewOrderDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.OrderDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleOrderDTO;
-import com.gmail.evanloafakahaitao.computer.store.services.dto.SimpleUserDTO;
 import com.gmail.evanloafakahaitao.computer.store.services.util.CurrentUserUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -75,6 +72,7 @@ public class OrderServiceImpl implements OrderService {
         order.setQuantity(orderDTO.getQuantity());
         order.setCreated(LocalDateTime.now());
         order.setStatus(OrderStatusEnum.NEW);
+        order.setDeleted(false);
         order.getId().setOrderCode(UUID.randomUUID().toString());
         BigDecimal quantity = BigDecimal.valueOf(order.getQuantity());
         BigDecimal itemDiscountFactor = BigDecimal.valueOf(1).setScale(5, RoundingMode.CEILING);
@@ -147,7 +145,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(readOnly = true)
     public List<OrderDTO> findAll(Integer firstResult, Integer maxResults) {
         logger.info("Retrieving Orders");
-        List<Order> orders = orderDao.findAll(firstResult, maxResults);
+        List<Order> orders = orderDao.findAllNotDeleted(firstResult, maxResults);
         logger.debug("Retrieved Orders : {}", orders);
         return orderDTOConverter.toDTOList(orders);
     }

@@ -1,7 +1,5 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;

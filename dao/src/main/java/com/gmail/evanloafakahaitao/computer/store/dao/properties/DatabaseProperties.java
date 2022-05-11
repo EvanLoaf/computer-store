@@ -38,6 +38,10 @@ public class DatabaseProperties {
     private Integer poolCachePreparedStatementsSQLLimit;
     @Value("${pool.use.server.prepared.statements}")
     private String poolUseServerPreparedStatements;
+    @Value("${liquibase.drop.first}")
+    private String liquibaseDropFirst;
+    @Value("${liquibase.migration.log}")
+    private String liquibaseMigrationLog;
 
     public String getDatabaseUrl() {
         return databaseUrl;
@@ -101,5 +105,13 @@ public class DatabaseProperties {
 
     public String getPoolUseServerPreparedStatements() {
         return poolUseServerPreparedStatements;
+    }
+
+    public String getLiquibaseDropFirst() {
+        return liquibaseDropFirst;
+    }
+
+    public String getLiquibaseMigrationLog() {
+        return liquibaseMigrationLog;
     }
 }

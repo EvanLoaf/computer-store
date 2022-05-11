@@ -16,7 +16,6 @@ import java.util.Set;
         columnNames = "email"
 ))
 @SQLDelete(sql = "update t_user set f_is_deleted = true where f_id = ?")
-//TODO maybe add @Where and or specific methods for userdao
 public class User extends SoftDeleteAndDisableEntity implements Serializable {
 
     private static final long serialVersionUID = -5535456587453610531L;
@@ -45,12 +44,12 @@ public class User extends SoftDeleteAndDisableEntity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "roleId")
     private Role role;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
+    @OneToOne(mappedBy = "user", optional = false)
     private Profile profile;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "discountId")
     private Discount discount;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", nullable = false)
     private Set<BusinessCard> businessCards = new HashSet<>();
 

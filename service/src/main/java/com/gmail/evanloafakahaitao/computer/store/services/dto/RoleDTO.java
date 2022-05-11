@@ -42,13 +42,13 @@ public class RoleDTO {
 
         RoleDTO roleDTO = (RoleDTO) o;
 
-        if (!id.equals(roleDTO.id)) return false;
+        if (id != null ? !id.equals(roleDTO.id) : roleDTO.id != null) return false;
         return name.equals(roleDTO.name);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + name.hashCode();
         return result;
     }

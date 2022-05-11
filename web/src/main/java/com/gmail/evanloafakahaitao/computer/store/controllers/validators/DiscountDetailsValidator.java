@@ -28,7 +28,6 @@ public class DiscountDetailsValidator implements Validator {
         ValidationUtils.rejectIfEmpty(errors, "discountId", "discount.details.id.empty");
         ValidationUtils.rejectIfEmpty(errors, "minPrice", "discount.details.min.price.empty");
         ValidationUtils.rejectIfEmpty(errors, "maxPrice", "discount.details.max.price.empty");
-
         Pattern pattern = Pattern.compile(
                 "^\\d{3,5}\\.?\\d*$",
                 Pattern.CASE_INSENSITIVE

@@ -43,7 +43,6 @@ public class UserValidator implements Validator {
             ValidationUtils.rejectIfEmpty(errors, "lastName", "user.lastname.empty");
             ValidationUtils.rejectIfEmpty(errors, "profile.address", "user.address.empty");
             ValidationUtils.rejectIfEmpty(errors, "profile.phoneNumber", "user.phonenumber.empty");
-
             Pattern emailPattern = Pattern.compile(
                     "^[\\w\\d.]+@[a-zA-Z\\d]+\\.[a-zA-Z]{2,6}$",
                     Pattern.CASE_INSENSITIVE
@@ -56,7 +55,7 @@ public class UserValidator implements Validator {
             }
             if (user.getPassword() != null) {
                 Pattern passwordPattern = Pattern.compile(
-                        "^[\\w\\d.]{8,30}$",
+                        "^(?=.*?[A-Za-z])(?=.*?\\d)[\\w\\d.]{8,30}$",
                         Pattern.CASE_INSENSITIVE
                 );
                 if (!(passwordPattern.matcher(user.getPassword()).matches())) {
@@ -77,16 +76,26 @@ public class UserValidator implements Validator {
                     errors.rejectValue("email", "user.email.exists");
                 }
             }
+            if (user.getProfile().getAddress().length() > 100) {
+                errors.rejectValue("profile.address", "user.address.length");
+            }
+            if (user.getProfile().getPhoneNumber().length() > 15) {
+                errors.rejectValue("profile.phoneNumber", "user.phonenumber.length");
+            }
         } else {
             logger.info("Validating User - update");
             logger.debug("Validating User - update : {}", user);
             if (user.getPassword() != null && !user.getPassword().equals("")) {
-                Pattern passwordPattern = Pattern.compile(
-                        "^[\\w\\d.]{8,30}$",
-                        Pattern.CASE_INSENSITIVE
-                );
-                if (!(passwordPattern.matcher(user.getPassword()).matches())) {
-                    errors.rejectValue("password", "user.password.invalid");
+                if (user.getPassword().length() == 60) {
+                    user.setPassword(null);
+                } else {
+                    Pattern passwordPattern = Pattern.compile(
+                            "^(?=.*?[A-Za-z])(?=.*?\\d)[\\w\\d.]{8,30}$",
+                            Pattern.CASE_INSENSITIVE
+                    );
+                    if (!(passwordPattern.matcher(user.getPassword()).matches())) {
+                        errors.rejectValue("password", "user.password.invalid");
+                    }
                 }
             }
             if (user.getLastName() != null) {
@@ -104,14 +113,14 @@ public class UserValidator implements Validator {
                     errors.rejectValue("firstName", "user.firstname.length");
                 }
             }
-            if (user.getProfile().getAddress() != null) {
+            if (user.getProfile() != null && user.getProfile().getAddress() != null) {
                 if (user.getProfile().getAddress().equals("")) {
                     errors.rejectValue("profile.address", "user.address.empty");
                 } else if (user.getProfile().getAddress().length() > 100) {
                     errors.rejectValue("profile.address", "user.address.length");
                 }
             }
-            if (user.getProfile().getPhoneNumber() != null) {
+            if (user.getProfile() != null && user.getProfile().getPhoneNumber() != null) {
                 if (user.getProfile().getPhoneNumber().equals("")) {
                     errors.rejectValue("profile.phoneNumber", "user.phonenumber.empty");
                 } else if (user.getProfile().getPhoneNumber().length() > 15) {

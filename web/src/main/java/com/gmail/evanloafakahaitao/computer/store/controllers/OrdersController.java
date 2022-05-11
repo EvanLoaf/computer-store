@@ -70,7 +70,7 @@ public class OrdersController {
         PaginationDetails pagination = new PaginationDetails();
         pagination.setPage(page);
         pagination.setPageNumbers(
-                paginationUtil.getPageNumbers(orderService.countAll().intValue())
+                paginationUtil.getPageNumbers(orderService.countAllByCurrentUser().intValue())
         );
         pagination.setStartPosition(paginationUtil.getPageNumerationStart(page));
         modelMap.addAttribute("pagination", pagination);
@@ -94,7 +94,7 @@ public class OrdersController {
         PaginationDetails pagination = new PaginationDetails();
         pagination.setPage(page);
         pagination.setPageNumbers(
-                paginationUtil.getPageNumbers(userService.countAllNotDeleted().intValue())
+                paginationUtil.getPageNumbers(orderService.countAll().intValue())
         );
         pagination.setStartPosition(paginationUtil.getPageNumerationStart(page));
         modelMap.addAttribute("pagination", pagination);
@@ -151,6 +151,12 @@ public class OrdersController {
         UserDTO user = userService.findById(userDTO);
         modelMap.addAttribute("user", user);
         NewOrderDTO order = new NewOrderDTO();
+        SimpleUserDTO orderUserDTO = new SimpleUserDTO();
+        orderUserDTO.setEmail(user.getEmail());
+        SimpleItemDTO orderItemDTO = new SimpleItemDTO();
+        orderItemDTO.setVendorCode(item.get().getVendorCode());
+        order.setUser(orderUserDTO);
+        order.setItem(orderItemDTO);
         modelMap.addAttribute("order", order);
         return pageProperties.getOrderCreatePagePath();
     }

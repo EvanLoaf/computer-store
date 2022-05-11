@@ -70,14 +70,14 @@ public class ItemDTO {
 
         ItemDTO itemDTO = (ItemDTO) o;
 
-        if (!id.equals(itemDTO.id)) return false;
+        if (id != null ? !id.equals(itemDTO.id) : itemDTO.id != null) return false;
         if (!vendorCode.equals(itemDTO.vendorCode)) return false;
         return price.equals(itemDTO.price);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + vendorCode.hashCode();
         result = 31 * result + price.hashCode();
         return result;

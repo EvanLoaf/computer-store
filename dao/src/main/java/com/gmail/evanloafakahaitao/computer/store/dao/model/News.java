@@ -1,6 +1,5 @@
 package com.gmail.evanloafakahaitao.computer.store.dao.model;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -34,7 +33,7 @@ public class News extends SoftDeleteEntity implements Serializable {
     @NotNull
     @Column(nullable = false)
     private LocalDateTime created;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "userId", nullable = false, updatable = false)
     private User user;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -98,14 +97,14 @@ public class News extends SoftDeleteEntity implements Serializable {
 
         News news = (News) o;
 
-        if (!id.equals(news.id)) return false;
-        return created.equals(news.created);
+        if (!title.equals(news.title)) return false;
+        return content.equals(news.content);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + created.hashCode();
+        int result = title.hashCode();
+        result = 31 * result + content.hashCode();
         return result;
     }
 

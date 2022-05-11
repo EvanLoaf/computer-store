@@ -90,11 +90,11 @@ public class UserDTO {
         this.businessCards = businessCards;
     }
 
-    public Boolean getDisabled() {
+    public Boolean getIsDisabled() {
         return isDisabled;
     }
 
-    public void setDisabled(Boolean disabled) {
+    public void setIsDisabled(Boolean disabled) {
         isDisabled = disabled;
     }
 

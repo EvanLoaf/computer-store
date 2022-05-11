@@ -113,7 +113,7 @@ databaseChangeLog:
             constraints:
               nullable: false
             name: f_percent
-            type: TINYINT(3) UNSIGNED
+            type: INT(3) UNSIGNED
         - column:
             constraints:
               nullable: false
@@ -257,7 +257,7 @@ databaseChangeLog:
             constraints:
               nullable: false
             name: f_quantity
-            type: SMALLINT UNSIGNED
+            type: INT UNSIGNED
         - column:
             constraints:
               nullable: false
@@ -1466,7 +1466,7 @@ databaseChangeLog:
             value: security@pc.com
         - column:
             name: f_password
-            value: rootroot
+            value: $2a$10$Dcz1LXa5sptsptTVrSqMBukpUnZs7RzGpBa/YfYW2v0vmH7X4mgo2
         - column:
             name: f_is_disabled
             valueBoolean: false
@@ -1495,7 +1495,7 @@ databaseChangeLog:
             value: api@pc.com
         - column:
             name: f_password
-            value: rootroot
+            value: $2a$10$1PHLJd7bWmI.054m473Wo.Mkp/MBbgGI.iscqr0Nvob7gv3DJFd4S
         - column:
             name: f_is_disabled
             valueBoolean: false
@@ -1524,7 +1524,7 @@ databaseChangeLog:
             value: sales@pc.com
         - column:
             name: f_password
-            value: rootroot
+            value: $2a$10$LCQiU6qKktwp0gAtmM4cgu0XHdcrpcyPbISMAoZ9UnBS98u1FY8P2
         - column:
             name: f_is_disabled
             valueBoolean: false
@@ -1553,7 +1553,7 @@ databaseChangeLog:
             value: user@pc.com
         - column:
             name: f_password
-            value: rootroot
+            value: $2a$10$hCqefkdjEVqxxXi84OjG4e/K0.Wz17IF8p8oq6fR8mZmBvw0hlgM.
         - column:
             name: f_is_disabled
             valueBoolean: false

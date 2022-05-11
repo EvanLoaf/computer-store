@@ -33,7 +33,7 @@ public class PaginationUtil {
         if (objectCount == 0) {
             return new int[] {1};
         } else {
-            int pagesCount = (objectCount + pageProperties.getPaginationMaxResults() - 1) / pageProperties.getPaginationMaxResults();
+            int pagesCount = (int) Math.ceil((double) objectCount / pageProperties.getPaginationMaxResults());
             int[] pageNumbers = new int[pagesCount];
             for (int i = 1; i <= pagesCount; i++) {
                 pageNumbers[i - 1] = i;

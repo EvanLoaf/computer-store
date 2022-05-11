@@ -50,8 +50,8 @@ public class DatabaseConfig {
     public SpringLiquibase springLiquibase(DataSource dataSource) {
         SpringLiquibase springLiquibase = new SpringLiquibase();
         springLiquibase.setDataSource(dataSource);
-        springLiquibase.setDropFirst(Boolean.TRUE);
-        springLiquibase.setChangeLog("classpath:migration/db-changelog.yaml");
+        springLiquibase.setDropFirst(Boolean.valueOf(databaseProperties.getLiquibaseDropFirst()));
+        springLiquibase.setChangeLog(databaseProperties.getLiquibaseMigrationLog());
         return springLiquibase;
     }
 
@@ -62,9 +62,8 @@ public class DatabaseConfig {
         factoryBean.setDataSource(dataSource);
         factoryBean.setPhysicalNamingStrategy(new CustomPhysicalNamingStrategy());
         Properties properties = new Properties();
-        //TODO probably clean-up dialect, engine when testing full app
-        //properties.put(DIALECT, databaseProperties.getHibernateDialect());
-        //properties.put(STORAGE_ENGINE, databaseProperties.getHibernateStorageEngine());
+        properties.put(DIALECT, databaseProperties.getHibernateDialect());
+        properties.put(STORAGE_ENGINE, databaseProperties.getHibernateStorageEngine());
         properties.put(SHOW_SQL, databaseProperties.getHibernateShowSQL());
         properties.put(FORMAT_SQL, databaseProperties.getHibernateFormatSQL());
         properties.put(HBM2DDL_AUTO, databaseProperties.getHibernateHBM2DDLAuto());

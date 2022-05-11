@@ -11,12 +11,9 @@ public class CommentEntityConverter implements EntityConverter<CommentDTO, Comme
     @Override
     public Comment toEntity(CommentDTO dto) {
         Comment comment = new Comment();
-        if (dto.getId() != null) {
-            comment.setId(dto.getId());
-        }
         if (dto.getContent() != null) {
             comment.setContent(dto.getContent());
         }
-        return null;
+        return comment;
     }
 }

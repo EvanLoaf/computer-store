@@ -128,7 +128,7 @@ public class NewsController {
     }
 
     @PostMapping(value = "/{id}")
-    @PreAuthorize("hasAuthority('update_news_all')")
+    @PreAuthorize("hasAuthority('update_news')")
     public String updateNews(
             @PathVariable("id") Long id,
             @ModelAttribute("user") NewsDTO news,
@@ -150,7 +150,7 @@ public class NewsController {
     }
 
     @GetMapping(value = "/{id}/delete")
-    @PreAuthorize("hasAuthority('delete_news_all')")
+    @PreAuthorize("hasAuthority('delete_news')")
     public String deleteNewsPiece(
             @PathVariable("id") Long id
     ) {
@@ -163,7 +163,7 @@ public class NewsController {
     }
 
     @PostMapping(value = "/delete")
-    @PreAuthorize("hasAuthority('delete_news_all')")
+    @PreAuthorize("hasAuthority('delete_news')")
     public String deleteNews(
             @RequestParam("ids") Long[] ids
     ) {
@@ -185,7 +185,7 @@ public class NewsController {
             BindingResult result,
             ModelMap modelMap
     ) {
-        logger.debug("Executing News Controller method : createComment : {}", comment);
+        logger.debug("Executing News Controller method : createComment : {}", comment.getContent());
         logger.info("Creating Comment");
         comment = fieldTrimmer.trim(comment);
         commentValidator.validate(comment, result);
@@ -201,13 +201,14 @@ public class NewsController {
             NewsDTO news = new NewsDTO();
             news.setId(id);
             news.getComments().add(comment);
+            logger.info(comment);
             commentService.save(news);
             return "redirect:" + WebProperties.PUBLIC_ENTRY_POINT_PREFIX + "/news/" + id;
         }
     }
 
     @GetMapping(value = "/{newsId}/comments/{commentId}/delete")
-    @PreAuthorize("hasAuthority('delete_comments_all')")
+    @PreAuthorize("hasAuthority('delete_comments')")
     public String deleteComment(
             @PathVariable("newsId") Long newsId,
             @PathVariable("commentId") Long commentId

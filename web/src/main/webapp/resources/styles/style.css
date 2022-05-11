@@ -1,15 +1,22 @@
 /* Custom style settings */
-a.btn-danger {
-    color: yellow;
-}
-
-.error-img {
-    margin: 0 auto;
-    display: block;
-}
 
 @media (min-width: 1600px) {
     div.wide {
         max-width: 1600px;
     }
+}
+
+.news {
+    width: 100%;
+    text-align: center;
+    color: #533f03;
+    font-size: 24px;
+}
+
+.develop_warn {
+    width: 100%;
+    text-align: center;
+    color: #6f42c1;
+    font-size: 30px;
+    font-family: "Comic Sans MS", sans-serif;
 }

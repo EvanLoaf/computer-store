@@ -50,14 +50,14 @@ public class CommentDTO {
 
         CommentDTO that = (CommentDTO) o;
 
-        if (!id.equals(that.id)) return false;
-        return created.equals(that.created);
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        return created != null ? created.equals(that.created) : that.created == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + created.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (created != null ? created.hashCode() : 0);
         return result;
     }
 

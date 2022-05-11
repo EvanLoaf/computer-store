@@ -4,7 +4,6 @@ import com.gmail.evanloafakahaitao.computer.store.dao.DiscountDao;
 import com.gmail.evanloafakahaitao.computer.store.dao.RoleDao;
 import com.gmail.evanloafakahaitao.computer.store.dao.UserDao;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.Discount;
-import com.gmail.evanloafakahaitao.computer.store.dao.model.Profile;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.Role;
 import com.gmail.evanloafakahaitao.computer.store.dao.model.User;
 import com.gmail.evanloafakahaitao.computer.store.services.UserService;
@@ -19,8 +18,6 @@ import com.gmail.evanloafakahaitao.computer.store.services.model.DiscountDetails
 import com.gmail.evanloafakahaitao.computer.store.services.util.CurrentUserUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,7 +25,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -72,9 +72,7 @@ public class UserServiceImpl implements UserService {
         logger.debug("Saving User : {}", userDTO);
         Role role = roleDao.findDefault();
         User user = userEntityConverter.toEntity(userDTO);
-        Profile profile = new Profile();
-        profile.setUser(user);
-        user.setProfile(profile);
+        user.getProfile().setUser(user);
         user.setDisabled(false);
         user.setDeleted(false);
         user.setRole(role);
@@ -100,8 +98,8 @@ public class UserServiceImpl implements UserService {
             }
         }
         User user = userDao.findOne(userDTO.getId());
-        if (userDTO.getDisabled() != null) {
-            user.setDisabled(userDTO.getDisabled());
+        if (userDTO.getIsDisabled() != null) {
+            user.setDisabled(userDTO.getIsDisabled());
             userDao.update(user);
         } else {
             if (userDTO.getFirstName() != null) {
@@ -187,11 +185,6 @@ public class UserServiceImpl implements UserService {
         logger.info("Retrieving User by Email");
         logger.debug("Retrieving User by Email : {}", userDTO.getEmail());
         User user = userDao.findByEmail(userDTO.getEmail());
-        /*if (user != null) {
-            return simpleUserDTOConverter.toDto(user);
-        } else {
-            throw new UserNotFoundException("User was not found with Email : " + userDTO.getEmail());
-        }*/
         return Optional.ofNullable(user != null ? simpleUserDTOConverter.toDto(user) : null);
     }
 }
