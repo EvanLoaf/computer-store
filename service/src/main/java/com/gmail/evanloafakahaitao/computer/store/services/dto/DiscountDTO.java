@@ -1,8 +1,11 @@
 package com.gmail.evanloafakahaitao.computer.store.services.dto;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class DiscountDTO {
+public class DiscountDTO implements Serializable {
+
+    private static final long serialVersionUID = 2607441432481033451L;
 
     private Long id;
     private String name;

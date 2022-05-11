@@ -1,7 +1,8 @@
 /*
-boot.sql file is there to make sure
-all the necessary tables and data
-are present in our DB on the app start-up
+boot.sql file is provided to make sure
+there is a fallback way to create
+database structure and basic mock data
+manually by executing this file
 */
 CREATE TABLE IF NOT EXISTS t_role (
   f_id         SERIAL,

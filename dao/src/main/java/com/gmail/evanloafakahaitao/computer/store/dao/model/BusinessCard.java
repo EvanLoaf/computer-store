@@ -3,6 +3,7 @@ package com.gmail.evanloafakahaitao.computer.store.dao.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table
@@ -67,7 +68,8 @@ public class BusinessCard implements Serializable {
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (!title.equals(that.title)) return false;
-        return name.equals(that.name);
+        if (!name.equals(that.name)) return false;
+        return phoneNumber.equals(that.phoneNumber);
     }
 
     @Override
@@ -75,6 +77,7 @@ public class BusinessCard implements Serializable {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + title.hashCode();
         result = 31 * result + name.hashCode();
+        result = 31 * result + phoneNumber.hashCode();
         return result;
     }
 

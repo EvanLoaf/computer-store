@@ -49,7 +49,7 @@ public class User extends SoftDeleteAndDisableEntity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "discountId")
     private Discount discount;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "userId", nullable = false)
     private Set<BusinessCard> businessCards = new HashSet<>();
 

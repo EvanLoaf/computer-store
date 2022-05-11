@@ -1,6 +1,10 @@
 package com.gmail.evanloafakahaitao.computer.store.services.dto;
 
-public class BusinessCardDTO {
+import java.io.Serializable;
+
+public class BusinessCardDTO implements Serializable {
+
+    private static final long serialVersionUID = -6640182824187966832L;
 
     private Long id;
     private String title;
