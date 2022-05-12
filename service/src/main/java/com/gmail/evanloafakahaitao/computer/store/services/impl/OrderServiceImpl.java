@@ -34,8 +34,6 @@ public class OrderServiceImpl implements OrderService {
     private final OrderDao orderDao;
     private final ItemDao itemDao;
     private final UserDao userDao;
-    private final EntityConverter<OrderDTO, Order> orderEntityConverter;
-    private final EntityConverter<NewOrderDTO, Order> newOrderEntityConverter;
     private final DTOConverter<OrderDTO, Order> orderDTOConverter;
     private final DTOConverter<SimpleOrderDTO, Order> simpleOrderDTOConverter;
 
@@ -44,16 +42,12 @@ public class OrderServiceImpl implements OrderService {
             OrderDao orderDao,
             ItemDao itemDao,
             UserDao userDao,
-            @Qualifier("orderEntityConverter") EntityConverter<OrderDTO, Order> orderEntityConverter,
-            @Qualifier("newOrderEntityConverter") EntityConverter<NewOrderDTO, Order> newOrderEntityConverter,
             @Qualifier("orderDTOConverter") DTOConverter<OrderDTO, Order> orderDTOConverter,
             @Qualifier("simpleOrderDTOConverter") DTOConverter<SimpleOrderDTO, Order> simpleOrderDTOConverter
     ) {
         this.orderDao = orderDao;
         this.itemDao = itemDao;
         this.userDao = userDao;
-        this.orderEntityConverter = orderEntityConverter;
-        this.newOrderEntityConverter = newOrderEntityConverter;
         this.orderDTOConverter = orderDTOConverter;
         this.simpleOrderDTOConverter = simpleOrderDTOConverter;
     }
@@ -158,7 +152,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Long countAllByCurrentUser() {
         logger.info("Counting all Orders from User");
         logger.debug("Counting all Orders from User : {}", CurrentUserUtil.getCurrentId());

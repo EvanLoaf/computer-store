@@ -2,10 +2,13 @@ package com.gmail.evanloafakahaitao.computer.store.services.xml.dto;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.util.List;
 
 @XmlRootElement(name = "catalog")
-public class CatalogXmlDTO {
+public class CatalogXmlDTO implements Serializable {
+
+    private static final long serialVersionUID = 8071701104667782465L;
 
     private List<ItemXmlDTO> items;
 

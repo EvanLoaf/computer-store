@@ -16,7 +16,6 @@ import java.util.regex.Pattern;
 public class ItemAPIValidator {
 
     private static final Logger logger = LogManager.getLogger(ItemAPIValidator.class);
-    private static final ResourceBundle rb = ResourceBundle.getBundle("messages", Locale.ENGLISH);
 
     private final ItemService itemService;
 
@@ -31,58 +30,58 @@ public class ItemAPIValidator {
             logger.info("Validating item - create API");
             logger.debug("Validating item - create API : {}", item);
             if (item.getVendorCode() == null || item.getVendorCode().equals("")) {
-                errors.add(rb.getString("item.vendorcode.empty"));
+                errors.add("item.vendorcode.empty");
             } else if (item.getVendorCode().length() != 10) {
-                errors.add(rb.getString("item.vendorcode.length"));
+                errors.add("item.vendorcode.length");
             } else {
                 SimpleItemDTO simpleItemDTO = new SimpleItemDTO();
                 simpleItemDTO.setVendorCode(item.getVendorCode());
                 Optional<ItemDTO> existingItem = itemService.findByVendorCode(simpleItemDTO);
                 if (existingItem.isPresent()) {
-                    errors.add(rb.getString("item.vendorcode.exists"));
+                    errors.add("item.vendorcode.exists");
                 }
             }
             if (item.getName() == null || item.getName().equals("")) {
-                errors.add(rb.getString("item.name.empty"));
+                errors.add("item.name.empty");
             } else if (item.getName().length() > 50) {
-                errors.add(rb.getString("item.name.length"));
+                errors.add("item.name.length");
             }
 
             if (item.getDescription() == null || item.getDescription().equals("")) {
-                errors.add(rb.getString("item.description.empty"));
+                errors.add("item.description.empty");
             } else if (item.getDescription().length() > 100) {
-                errors.add(rb.getString("item.description.length"));
+                errors.add("item.description.length");
             }
             if (item.getPrice() == null) {
-                errors.add(rb.getString("item.price.empty"));
+                errors.add("item.price.empty");
             } else {
                 Pattern pattern = Pattern.compile(
                         "^\\d{3,5}\\.?\\d*$",
                         Pattern.CASE_INSENSITIVE
                 );
                 if (!(pattern.matcher(item.getPrice().toString()).matches())) {
-                    errors.add(rb.getString("item.price.invalid"));
+                    errors.add("item.price.invalid");
                 } else if (item.getPrice().compareTo(BigDecimal.valueOf(199.99)) <= 0) {
-                    errors.add(rb.getString("item.price.low"));
+                    errors.add("item.price.low");
                 }
             }
         } else {
             logger.info("Validating item - update API");
             logger.debug("Validating item - update API : {}", item);
             if (item.getVendorCode() != null && item.getVendorCode().equals("")) {
-                errors.add(rb.getString("item.vendorcode.empty"));
+                errors.add("item.vendorcode.empty");
             } else if (item.getVendorCode() != null && item.getVendorCode().length() != 10) {
-                errors.add(rb.getString("item.vendorcode.length"));
+                errors.add("item.vendorcode.length");
             }
             if (item.getName() != null && item.getName().equals("")) {
-                errors.add(rb.getString("item.name.empty"));
+                errors.add("item.name.empty");
             } else if (item.getName() != null && item.getName().length() > 50) {
-                errors.add(rb.getString("item.name.length"));
+                errors.add("item.name.length");
             }
             if (item.getDescription() != null && item.getDescription().equals("")) {
-                errors.add(rb.getString("item.description.empty"));
+                errors.add("item.description.empty");
             } else if (item.getDescription() != null && item.getDescription().length() > 100) {
-                errors.add(rb.getString("item.description.length"));
+                errors.add("item.description.length");
             }
             if (item.getPrice() != null) {
                 Pattern pattern = Pattern.compile(
@@ -90,9 +89,9 @@ public class ItemAPIValidator {
                         Pattern.CASE_INSENSITIVE
                 );
                 if (!(pattern.matcher(item.getPrice().toString()).matches())) {
-                    errors.add(rb.getString("item.price.invalid"));
+                    errors.add("item.price.invalid");
                 } else if (item.getPrice().compareTo(BigDecimal.valueOf(199.99)) <= 0) {
-                    errors.add(rb.getString("item.price.low"));
+                    errors.add("item.price.low");
                 }
             }
         }

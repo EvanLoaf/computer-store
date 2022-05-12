@@ -81,7 +81,6 @@ public class CustomPhysicalNamingStrategy implements PhysicalNamingStrategy {
             List<String> list = new ArrayList<>();
             int tokenStart = 0;
             int currentType = Character.getType(c[tokenStart]);
-
             for(int pos = tokenStart + 1; pos < c.length; ++pos) {
                 int type = Character.getType(c[pos]);
                 if (type != currentType && type != Character.CONNECTOR_PUNCTUATION) {
@@ -99,7 +98,6 @@ public class CustomPhysicalNamingStrategy implements PhysicalNamingStrategy {
                     currentType = type;
                 }
             }
-
             list.add(new String(c, tokenStart, c.length - tokenStart));
             return list.toArray(new String[list.size()]);
         }

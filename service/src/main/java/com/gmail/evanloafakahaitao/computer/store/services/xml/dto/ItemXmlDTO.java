@@ -7,6 +7,8 @@ import java.util.Objects;
 
 public class ItemXmlDTO implements Serializable {
 
+    private static final long serialVersionUID = 7185900815301640851L;
+
     private String name;
     private String vendorCode;
     private String description;

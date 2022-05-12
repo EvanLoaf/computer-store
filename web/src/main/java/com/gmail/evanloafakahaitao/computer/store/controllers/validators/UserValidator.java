@@ -44,7 +44,7 @@ public class UserValidator implements Validator {
             ValidationUtils.rejectIfEmpty(errors, "profile.address", "user.address.empty");
             ValidationUtils.rejectIfEmpty(errors, "profile.phoneNumber", "user.phonenumber.empty");
             Pattern emailPattern = Pattern.compile(
-                    "^[\\w\\d.]+@[a-zA-Z\\d]+\\.[a-zA-Z]{2,6}$",
+                    "^[\\w\\d._]+@[a-z\\d]+\\.[a-z]{2,6}$",
                     Pattern.CASE_INSENSITIVE
             );
             if (!(emailPattern.matcher(user.getEmail()).matches())) {
@@ -55,7 +55,7 @@ public class UserValidator implements Validator {
             }
             if (user.getPassword() != null) {
                 Pattern passwordPattern = Pattern.compile(
-                        "^(?=.*?[A-Za-z])(?=.*?\\d)[\\w\\d.]{8,30}$",
+                        "^(?=.*?[a-z])(?=.*?\\d)[\\w\\d.]{8,30}$",
                         Pattern.CASE_INSENSITIVE
                 );
                 if (!(passwordPattern.matcher(user.getPassword()).matches())) {
@@ -90,7 +90,7 @@ public class UserValidator implements Validator {
                     user.setPassword(null);
                 } else {
                     Pattern passwordPattern = Pattern.compile(
-                            "^(?=.*?[A-Za-z])(?=.*?\\d)[\\w\\d.]{8,30}$",
+                            "^(?=.*?[a-z])(?=.*?\\d)[\\w\\d.]{8,30}$",
                             Pattern.CASE_INSENSITIVE
                     );
                     if (!(passwordPattern.matcher(user.getPassword()).matches())) {

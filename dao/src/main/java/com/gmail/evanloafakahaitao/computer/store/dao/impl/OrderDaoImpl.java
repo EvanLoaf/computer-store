@@ -27,7 +27,6 @@ public class OrderDaoImpl extends GenericDaoImpl<Order> implements OrderDao {
 
     @Override
     public Order findByOrderCode(String orderCode) {
-        //TODO possibly o.id.orderCode
         String hql = "FROM Order AS o WHERE o.id.orderCode = :orderCode AND o.isDeleted = false";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("orderCode", orderCode);
@@ -36,13 +35,10 @@ public class OrderDaoImpl extends GenericDaoImpl<Order> implements OrderDao {
 
     @Override
     public void deleteByOrderCode(String orderCode) {
-        //TODO check
         String hql = "UPDATE Order AS o SET o.isDeleted = true WHERE o.id.orderCode = :orderCode";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("orderCode", orderCode);
         query.executeUpdate();
-        /*Order order = findByOrderCode(orderCode);
-        getCurrentSession().delete(order);*/
     }
 
     @Override

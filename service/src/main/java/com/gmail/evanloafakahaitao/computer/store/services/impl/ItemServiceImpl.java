@@ -100,7 +100,10 @@ public class ItemServiceImpl implements ItemService {
                     Item item = itemDao.findByVendorCode(itemDTO.getVendorCode());
                     if (item != null) {
                         itemVendorCodeDuplicates.add(itemDTO.getVendorCode());
-                        logger.debug("Found duplicate vendor code value while saving Item : {}", itemDTO.getVendorCode());
+                        logger.debug(
+                                "Found duplicate vendor code value while saving Item : {}",
+                                itemDTO.getVendorCode()
+                        );
                         return false;
                     } else return true;
                 })
@@ -176,7 +179,12 @@ public class ItemServiceImpl implements ItemService {
     public List<String> updateDiscountInPriceRange(DiscountDetails discountDetails) {
         logger.info("Updating Discount for Items");
         Discount discount = discountDao.findOne(discountDetails.getDiscountId());
-        logger.info("Updating Discount ({}) for Items with price : {} - {}", discount.getName(), discountDetails.getMinPrice(), discountDetails.getMaxPrice());
+        logger.info(
+                "Updating Discount ({}) for Items with price : {} - {}",
+                discount.getName(),
+                discountDetails.getMinPrice(),
+                discountDetails.getMaxPrice()
+        );
         List<Item> items = itemDao.findInPriceRange(discountDetails.getMinPrice(), discountDetails.getMaxPrice());
         List<String> updatedItemVendorCodes = new ArrayList<>();
         for (Item item : items) {

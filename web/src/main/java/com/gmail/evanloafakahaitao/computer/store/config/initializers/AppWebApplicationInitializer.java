@@ -1,7 +1,6 @@
 package com.gmail.evanloafakahaitao.computer.store.config.initializers;
 
 import com.gmail.evanloafakahaitao.computer.store.config.AppConfig;
-import com.gmail.evanloafakahaitao.computer.store.config.WebConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class AppWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {

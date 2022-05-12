@@ -4,7 +4,5 @@ import com.gmail.evanloafakahaitao.computer.store.dao.model.Role;
 
 public interface RoleDao extends GenericDao<Role> {
 
-    Role findByName(String name);
-
     Role findDefault();
 }

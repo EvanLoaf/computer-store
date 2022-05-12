@@ -28,7 +28,7 @@ public class OrderValidator implements Validator {
             logger.info("Validating order - create");
             logger.debug("Validating order - create : {}", order);
             Pattern quantityPattern = Pattern.compile(
-                    "^\\d{1,9}$"
+                    "^\\d{1,2}$"
             );
             if (!(quantityPattern.matcher(order.getQuantity().toString()).matches())) {
                 errors.rejectValue("quantity", "order.quantity.invalid");
